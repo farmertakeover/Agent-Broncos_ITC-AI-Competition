@@ -1,0 +1,359 @@
+**Source:** https://www.cpp.edu/financial-aid/credentials/prospective-students.shtml
+
+---
+
+[Skip to content](#main)
+
+[![Cal Poly Pomona Logo](/common/green-and-gold/assets/logos/cpp_horizontal_2c_green_rgb.png)](/)
+
+[![Cal Poly Pomona Logo](/common/green-and-gold/assets/logos/cpp_primary_2c_green_cmyk.png)](/)
+
+[apply](/apply/)
+[visit](/outreach/tours.shtml)
+[info](https://engage.cpp.edu/register/ask_us_a_question)
+[give](/giving/)
+[mycpp](https://my.cpp.edu)
+
+![Open search box](/common/green-and-gold/assets/icons/nav/search-dark-green.svg)
+
+![menu](/common/green-and-gold/assets/icons/nav/menu.svg)
+
+Search
+
+![Close search menu](/common/green-and-gold/assets/icons/nav/close.svg)
+
+[![Cal Poly Pomona Logo](/common/green-and-gold/assets/logos/cpp_horizontal_1c_gold_rgb.png)](/)
+
+[apply](/apply/)
+[visit](/outreach/tours.shtml)
+[info](https://engage.cpp.edu/register/ask_us_a_question)
+[give](/giving/)
+[mycpp](https://my.cpp.edu)
+
+![Open search box](/common/green-and-gold/assets/icons/nav/search-white.svg)
+
+![Close menu](/common/green-and-gold/assets/icons/nav/close.svg)
+
+[Commencement](/commencement/)
+[apply](/apply/)
+[visit](/outreach/tours.shtml)
+[info](https://engage.cpp.edu/register/ask_us_a_question)
+[give](/giving/)
+[mycpp](https://my.cpp.edu)
+
+* [Home](/)
+* about
+* admissions & aid
+* academics
+* life at CPP
+
+* [athletics](https://broncoathletics.com/)
+* [alumni](/alumni/)
+* [news & events](/news/)
+
+* [future students](/prospective-student-gateway/)
+  |
+* [current students](/student-gateway/)
+  |
+* [families](/family/)
+  |
+* [faculty & staff](/faculty-staff-gateway/)
+
+* [![Instagram](/common/green-and-gold/assets/icons/social/insta.svg)](https://www.instagram.com/calpolypomona/)
+* [![LinkedIn](/common/green-and-gold/assets/icons/social/li.svg)](https://www.linkedin.com/school/cal-poly-pomona/)
+* [![Youtube](/common/green-and-gold/assets/icons/social/yt.svg)](https://www.youtube.com/user/calpolypomona)
+* [![Facebook](/common/green-and-gold/assets/icons/social/fb.svg)](https://www.facebook.com/calpolypomona)
+* [![X](/common/green-and-gold/assets/icons/social/x.svg)](https://twitter.com/calpolypomona)
+
+* Home
+
+  + [Enrollment Management and Services](https://www.cpp.edu/enrollment/)
+  + [Office of Financial Aid and Scholarships](/financial-aid/index.shtml)
+  + [Office of Admissions](https://www.cpp.edu/admissions/index.shtml)
+  + [Registrar's Office](https://www.cpp.edu/registrar/)
+  + [Student Systems and Operations](https://www.cpp.edu/student-systems/)
+  + [TRIO Pre-College](https://www.cpp.edu/pre-college/index.shtml)
+  + [Contact Us](/financial-aid/resources/contact.shtml)
+* Undergraduate
+
+  + [Parent & Family Financial Aid Information](/financial-aid/undergraduate/parent-and-family.shtml)
+  + [Prospective Students](/financial-aid/undergraduate/prospective/index.shtml)
+  + [Newly Admitted Students](/financial-aid/undergraduate/newly-admitted/index.shtml)
+  + [Current Students](/financial-aid/undergraduate/current/index.shtml)
+* Credentials
+
+  + [Financial Aid Course Eligibility](/financial-aid/credentials/course-eligibility.shtml)
+  + [Prospective Students](/financial-aid/credentials/prospective/index.shtml)
+  + [Current Credential Students](/financial-aid/credentials/current/index.shtml)
+  + [Newly Admitted Students](/financial-aid/credentials/newly-admitted/index.shtml)
+* Graduate
+
+  + [Financial Aid Course Eligibility](/financial-aid/graduate/course-eligibility.shtml)
+  + [Prospective Students](/financial-aid/graduate/prospective/index.shtml)
+  + [Admitted & Current Students](/financial-aid/graduate/newly-admitted-and-current/index.shtml)
+* Other Programs
+
+  + [Summer Session](/financial-aid/other-programs/summer/index.shtml)
+  + [Veterans](/financial-aid/other-programs/veterans.shtml)
+  + [College of Professional and Global Education](/financial-aid/other-programs/college-of-professional-and-global-education.shtml)
+  + [Certificate Programs](/financial-aid/other-programs/certificate-programs.shtml)
+  + [Cross Enrollment](/financial-aid/other-programs/cross-enrollment.shtml)
+  + [Study Abroad](/financial-aid/other-programs/study-abroad.shtml)
+* Scholarships
+
+  + [Information for Department Staff and Faculty](/financial-aid/scholarships/department-staff-and-faculty-information.shtml)
+  + [Cal Poly Pomona Scholarships](/financial-aid/scholarships/cal-poly-pomona-scholarships.shtml)
+  + [CSU Systemwide Scholarships](/financial-aid/scholarships/csu-systemwide-scholarships.shtml)
+  + [Outside Scholarships](/financial-aid/scholarships/outside-scholarships.shtml)
+  + [Scholarship FAQs](/financial-aid/scholarships/scholarship-faqs.shtml)
+* Federal Work Study
+
+  + [Federal Work Study](/financial-aid/federal-work-study/index.shtml)
+  + [Information for Students](/financial-aid/federal-work-study/student-information.shtml)
+  + [Information for On Campus Employers](/financial-aid/federal-work-study/on-campus-employers-information.shtml)
+  + [Frequently Asked Questions](/financial-aid/federal-work-study/faqs.shtml)
+* Resources
+
+  + [FAFSA Simplification](/financial-aid/resources/fafsa-simplification/index.shtml)
+  + [Using BroncoDirect- Financial Aid Information](/financial-aid/resources/using-broncodirect-financial-aid-information.shtml)
+  + [Appeals](/financial-aid/resources/appeals.shtml)
+  + [Announcements](/financial-aid/resources/announcements.shtml)
+  + [Campus Resources](/financial-aid/resources/campus-resources.shtml)
+  + [FAFSA/CA Dream Act Workshops](/financial-aid/resources/fafsa-dream-workshops.shtml)
+  + [Financial Aid Policies](/financial-aid/resources/financial-aid-policies.shtml)
+  + [Financial Aid Presentations and Outreach Requests](/financial-aid/resources/financial-aid-outreach.shtml)
+  + [Financial Wellness](/financial-aid/resources/financial-wellness.shtml)
+  + [Frequently Asked Questions](/financial-aid/resources/faqs.shtml)
+  + [HEERF Student Aid](/financial-aid/resources/heerf/index.shtml)
+  + [Loan Information](/financial-aid/resources/loan-information.shtml)
+  + [Question of the Month](/financial-aid/resources/question-of-the-month.shtml)
+  + [Understanding Aid Program Limits](/financial-aid/resources/understanding-aid-program-limits.shtml)
+  + [Understanding Enrollment Requirements](/financial-aid/resources/understanding-enrollment-requirements.shtml)
+  + [Understanding Repeat Coursework and Aid Eligibility](/financial-aid/resources/understanding-repeat-coursework-and-aid-eligibility.shtml)
+  + [Understanding Return of Federal Aid Due to Withdrawals (R2T4)](/financial-aid/resources/understanding-return-of-federal-aid.shtml)
+  + [Understanding SAP](/financial-aid/resources/understanding-sap.shtml)
+  + [Understanding State University Grant Eligibility](/financial-aid/resources/understanding-state-university-grant-eligibility.shtml)
+  + [Understanding Unit Maximums](/financial-aid/resources/understanding-unit-maximums.shtml)
+  + [Understanding Verification](/financial-aid/resources/understanding-verification.shtml)
+  + [Understanding Your Aid Offer and Next Steps](/financial-aid/resources/aid-offer-notification.shtml)
+  + [Writing a Successful SAP Appeal](/financial-aid/resources/writing-a-successful-sap-appeal.shtml)
+
+Menu
+
+- Home
+
+  [Enrollment Management and Services](https://www.cpp.edu/enrollment/)
+
+  [Office of Financial Aid and Scholarships](/financial-aid/index.shtml)
+
+  [Office of Admissions](https://www.cpp.edu/admissions/index.shtml)
+
+  [Registrar's Office](https://www.cpp.edu/registrar/)
+
+  [Student Systems and Operations](https://www.cpp.edu/student-systems/)
+
+  [TRIO Pre-College](https://www.cpp.edu/pre-college/index.shtml)
+
+  [Contact Us](/financial-aid/resources/contact.shtml)
+- Undergraduate
+
+  [Parent & Family Financial Aid Information](/financial-aid/undergraduate/parent-and-family.shtml)
+
+  [Prospective Students](/financial-aid/undergraduate/prospective/index.shtml)
+
+  [Newly Admitted Students](/financial-aid/undergraduate/newly-admitted/index.shtml)
+
+  [Current Students](/financial-aid/undergraduate/current/index.shtml)
+- Credentials
+
+  [Financial Aid Course Eligibility](/financial-aid/credentials/course-eligibility.shtml)
+
+  [Prospective Students](/financial-aid/credentials/prospective/index.shtml)
+
+  [Current Credential Students](/financial-aid/credentials/current/index.shtml)
+
+  [Newly Admitted Students](/financial-aid/credentials/newly-admitted/index.shtml)
+- Graduate
+
+  [Financial Aid Course Eligibility](/financial-aid/graduate/course-eligibility.shtml)
+
+  [Prospective Students](/financial-aid/graduate/prospective/index.shtml)
+
+  [Admitted & Current Students](/financial-aid/graduate/newly-admitted-and-current/index.shtml)
+- Other Programs
+
+  [Summer Session](/financial-aid/other-programs/summer/index.shtml)
+
+  [Veterans](/financial-aid/other-programs/veterans.shtml)
+
+  [College of Professional and Global Education](/financial-aid/other-programs/college-of-professional-and-global-education.shtml)
+
+  [Certificate Programs](/financial-aid/other-programs/certificate-programs.shtml)
+
+  [Cross Enrollment](/financial-aid/other-programs/cross-enrollment.shtml)
+
+  [Study Abroad](/financial-aid/other-programs/study-abroad.shtml)
+- Scholarships
+
+  [Information for Department Staff and Faculty](/financial-aid/scholarships/department-staff-and-faculty-information.shtml)
+
+  [Cal Poly Pomona Scholarships](/financial-aid/scholarships/cal-poly-pomona-scholarships.shtml)
+
+  [CSU Systemwide Scholarships](/financial-aid/scholarships/csu-systemwide-scholarships.shtml)
+
+  [Outside Scholarships](/financial-aid/scholarships/outside-scholarships.shtml)
+
+  [Scholarship FAQs](/financial-aid/scholarships/scholarship-faqs.shtml)
+- Federal Work Study
+
+  [Federal Work Study](/financial-aid/federal-work-study/index.shtml)
+
+  [Information for Students](/financial-aid/federal-work-study/student-information.shtml)
+
+  [Information for On Campus Employers](/financial-aid/federal-work-study/on-campus-employers-information.shtml)
+
+  [Frequently Asked Questions](/financial-aid/federal-work-study/faqs.shtml)
+- Resources
+
+  [FAFSA Simplification](/financial-aid/resources/fafsa-simplification/index.shtml)
+
+  [Using BroncoDirect- Financial Aid Information](/financial-aid/resources/using-broncodirect-financial-aid-information.shtml)
+
+  [Appeals](/financial-aid/resources/appeals.shtml)
+
+  [Announcements](/financial-aid/resources/announcements.shtml)
+
+  [Campus Resources](/financial-aid/resources/campus-resources.shtml)
+
+  [FAFSA/CA Dream Act Workshops](/financial-aid/resources/fafsa-dream-workshops.shtml)
+
+  [Financial Aid Policies](/financial-aid/resources/financial-aid-policies.shtml)
+
+  [Financial Aid Presentations and Outreach Requests](/financial-aid/resources/financial-aid-outreach.shtml)
+
+  [Financial Wellness](/financial-aid/resources/financial-wellness.shtml)
+
+  [Frequently Asked Questions](/financial-aid/resources/faqs.shtml)
+
+  [HEERF Student Aid](/financial-aid/resources/heerf/index.shtml)
+
+  [Loan Information](/financial-aid/resources/loan-information.shtml)
+
+  [Question of the Month](/financial-aid/resources/question-of-the-month.shtml)
+
+  [Understanding Aid Program Limits](/financial-aid/resources/understanding-aid-program-limits.shtml)
+
+  [Understanding Enrollment Requirements](/financial-aid/resources/understanding-enrollment-requirements.shtml)
+
+  [Understanding Repeat Coursework and Aid Eligibility](/financial-aid/resources/understanding-repeat-coursework-and-aid-eligibility.shtml)
+
+  [Understanding Return of Federal Aid Due to Withdrawals (R2T4)](/financial-aid/resources/understanding-return-of-federal-aid.shtml)
+
+  [Understanding SAP](/financial-aid/resources/understanding-sap.shtml)
+
+  [Understanding State University Grant Eligibility](/financial-aid/resources/understanding-state-university-grant-eligibility.shtml)
+
+  [Understanding Unit Maximums](/financial-aid/resources/understanding-unit-maximums.shtml)
+
+  [Understanding Verification](/financial-aid/resources/understanding-verification.shtml)
+
+  [Understanding Your Aid Offer and Next Steps](/financial-aid/resources/aid-offer-notification.shtml)
+
+  [Writing a Successful SAP Appeal](/financial-aid/resources/writing-a-successful-sap-appeal.shtml)
+
+# Prospective Credential Students
+
+## Financial Aid Information
+
+Students interested in pursuing teaching as a career are choosing a noble profession. Like all college-bound students, however, they face the obstacle of paying for their education. Fortunately, there are many programs that make college more accessible to students who have chosen to embrace this critical need career path.
+
+If your program requires you to be **dually enrolled as a credential and****masters****student**, you are considered a graduate student for financial aid purposes; please review the sections of this site for [Graduate students](https://cpp.cascadecms.com/entity/open.act?type=page&id=79adde57ac1e0049375003f195d1ff8f&confId=020b75608647f71f74b7f89fbfafc67f).
+
+## 2025-26 FAFSA & CADAA Priority Filing Deadline Extended!
+
+**The 2026-27 FAFSA and CADAA are Now Open - Apply Today!**
+
+![The 2026-27 FAFSA and CADAA are now open. Apply by 9pm on March 2, 2026.](../../img/fafsa-cadaa-homepage.png)
+
+The **2026-27 [FAFSA](https://studentaid.gov/h/apply-for-aid/fafsa) and [CADAA](https://dream.csac.ca.gov/landing)** are now available. These are the applications for the 2026-27 academic year (Fall 2026, Spring 2027, Summer 2027).
+
+**Priority Deadline**: **9pm, March 2, 2026**
+
+Broncos become by Doing - and that includes securing your financial aid.
+
+## Program Eligibility
+
+### Eligible Programs
+
+The U.S. Department of Education limits aid eligibility for credential programs to those programs that prepare a student for teaching in a classroom.
+
+In order to be eligible to receive financial aid for your Credential Program, you must be enrolled in a program that prepares you for teaching in a classroom.
+
+***Programs at C******al Poly Pomona******Eligible for Financial Aid:***
+
+* All Single Subject Credential Programs
+* All Multiple Subject Credential Programs
+* Intern Credential Program
+* Preliminary Education Specialist Credential (Mild/Moderate Disabilities)
+* Preliminary Education Specialist Credential (Moderate/Severe Disabilities)
+* Adapted Physical Education Added Authorization (*if taken concurrently**with a basic credential program*)
+* Bilingual Authorization (*if taken concurrently with a Single or Multiple Subject Credential program*)
+
+***The following Added Authorizations are only eligible for federal loans****(**if**taken **after****possess**ing**an initial California State Credential**)**:*
+
+* Adapted Physical Education Added Authorization
+* Bilingual Authorization
+
+### Non-Eligible Programs
+
+The U.S. Department of Education limits aid eligibility for credential programs to those programs that prepare a student for teaching in a classroom.
+
+The following programs **do not** prepare a student for teaching in a classroom setting.  As a result, students enrolled in the following programs are not eligible for financial aid (Federal, State, Institutional Grants, Federal Direct Loans):
+
+* Administrative Services Credential
+* Agriculture Specialist Credential
+* Reading and Literacy Added Authorization
+
+## Learn More
+
+[Aid Programs](aid-programs.shtml)
+
+[Costs](costs.shtml)
+
+[How to Apply for Aid (FAFSA)](how-to-apply-for-aid-fafsa.shtml)
+
+[How to Apply for Aid (DREAM)](how-to-apply-for-aid-dream.shtml)
+
+[After you Apply](after-you-apply.shtml)
+
+## Financial Aid and Scholarships
+
+### Follow Us:
+
+[Instagram opens a new window
+![Instagram](/common/green-and-gold/assets/icons/social/insta-reverse.svg)](https://www.instagram.com/cpp.enrollmentservices/)
+
+![Ripped green paper.](/common/green-and-gold/assets/images/green-rip.svg)
+
+[![Cal Poly Pomona logo, building with a palm tree.](/common/green-and-gold/assets/logos/cpp_primary_1c_gold_rgb.png)](https://www.cpp.edu/)
+
+[Apply](https://www.cpp.edu/apply/)
+[Maps](https://maps.cpp.edu/)
+[Visit](https://www.cpp.edu/outreach/tours.shtml)
+[Contact Us](https://www.cpp.edu/contact.shtml)
+
+[![Instagram opens a new window](/common/green-and-gold/assets/icons/social/insta.svg)](https://www.instagram.com/calpolypomona/)
+[![LinkedIn opens a new window](/common/green-and-gold/assets/icons/social/li.svg)](https://www.linkedin.com/school/cal-poly-pomona/)
+[![YouTube opens a new window](/common/green-and-gold/assets/icons/social/yt.svg)](https://www.youtube.com/user/calpolypomona)
+[![Facebook opens a new window](/common/green-and-gold/assets/icons/social/fb.svg)](https://www.facebook.com/calpolypomona)
+[![X opens a new window](/common/green-and-gold/assets/icons/social/x.svg)](https://twitter.com/calpolypomona)
+
+Copyright ©2026 California State Polytechnic University, Pomona. All Rights Reserved
+
+A campus of
+[The California State University](https://www.calstate.edu/).
+
+[Feedback](https://www.cpp.edu/website-feedback.shtml)
+[Privacy](https://calstate.policystat.com/policy/18808065/latest/#autoid-z2p98)
+[Accessibility](https://www.cpp.edu/accessibility.shtml)
+[Document Readers](https://www.cpp.edu/file-viewers.shtml)

@@ -1,0 +1,38 @@
+{# Stylized brown pony / Billy — friendly, not an official trademarked mark. #}
+<div class="billy-mascot {{ size_class|default('') }}" aria-hidden="true">
+  <svg class="billy-svg" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+    <g class="billy-body-group">
+      <!-- Rounded body -->
+      <ellipse cx="60" cy="64" rx="30" ry="20" fill="#6B4423" stroke="#d9a441" stroke-width="1.3"/>
+      <ellipse cx="58" cy="66" rx="18" ry="12" fill="#8B5a3c" opacity="0.55"/>
+      <!-- Neck + head (chunky) -->
+      <path class="billy-neck" d="M 40 54 Q 24 40 20 26 Q 22 12 36 14 Q 44 16 46 26 L 50 46 Z" fill="#7a4a2a" stroke="#d9a441" stroke-width="1"/>
+      <!-- Mane (fluffy) -->
+      <path class="billy-mane" d="M 32 20 Q 26 30 28 42 M 24 24 Q 18 34 22 44 M 28 16 Q 20 26 24 38 M 34 12 Q 30 8 26 14" fill="none" stroke="#4a3018" stroke-width="2.4" stroke-linecap="round"/>
+      <!-- Ear -->
+      <path class="billy-ear" d="M 34 16 L 30 6 L 40 12 Z" fill="#c9a06c"/>
+      <!-- Big friendly eye -->
+      <ellipse cx="32" cy="24" rx="3.5" ry="4" fill="#f5ebe0"/>
+      <circle cx="31" cy="24" r="2" fill="#2a1810"/>
+      <circle cx="32" cy="23" r="0.7" fill="#fff"/>
+      <!-- Snout -->
+      <ellipse cx="17" cy="26" rx="8" ry="6" fill="#5c3d24" stroke="#d9a441" stroke-width="0.9"/>
+      <ellipse cx="14" cy="26" rx="2" ry="1.5" fill="#3d2818"/>
+      <!-- Legs -->
+      <rect x="44" y="76" width="6" height="20" rx="3" fill="#5c3d24"/>
+      <rect x="55" y="78" width="6" height="18" rx="3" fill="#5c3d24"/>
+      <rect x="68" y="76" width="6" height="20" rx="3" fill="#5c3d24"/>
+      <rect x="79" y="78" width="6" height="18" rx="3" fill="#5c3d24"/>
+      <!-- Hooves -->
+      <rect x="44" y="92" width="6" height="4" rx="1" fill="#2a1810"/>
+      <rect x="55" y="92" width="6" height="4" rx="1" fill="#2a1810"/>
+      <rect x="68" y="92" width="6" height="4" rx="1" fill="#2a1810"/>
+      <rect x="79" y="92" width="6" height="4" rx="1" fill="#2a1810"/>
+      <!-- Tail -->
+      <path class="billy-tail" d="M 88 60 Q 106 50 112 34 Q 108 52 96 62" fill="none" stroke="#4a3018" stroke-width="3.2" stroke-linecap="round"/>
+    </g>
+  </svg>
+  {% if not hide_caption|default(false) %}
+  <span class="mascot-caption">Billy Bronco</span>
+  {% endif %}
+</div>

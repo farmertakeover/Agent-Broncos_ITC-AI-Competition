@@ -1,0 +1,118 @@
+**Source:** http://www.cpp.edu/summer/schedule.shtml
+
+---
+
+* [![Cal Poly Pomona Logo](/common/green-and-gold/assets/logos/cpp_horizontal_2c_green_rgb.png)](https://www.cpp.edu/)
+* [apply](https://www.cpp.edu/apply/)
+  [visit](https://www.cpp.edu/outreach/tours.shtml)
+  [info](https://engage.cpp.edu/register/ask_us_a_question)
+  [give](https://www.cpp.edu/giving/)
+  [mycpp](https://my.cpp.edu)
+
+  ![Open search box](/common/green-and-gold/assets/icons/nav/search-dark-green.svg)
+
+  ![menu](/common/green-and-gold/assets/icons/nav/menu.svg)
+
+Search
+
+![Close icon](/common/green-and-gold/assets/icons/nav/close.svg)
+
+* [![Cal Poly Pomona Logo](/common/green-and-gold/assets/logos/cpp_horizontal_1c_gold_rgb.png)](https://www.cpp.edu/)
+
+* [apply](https://www.cpp.edu/apply/)
+  [visit](https://www.cpp.edu/outreach/tours.shtml)
+  [info](https://engage.cpp.edu/register/ask_us_a_question)
+  [give](https://www.cpp.edu/giving/)
+  [mycpp](https://my.cpp.edu)
+* ![Open search box](/common/green-and-gold/assets/icons/nav/search-white.svg)
+
+  ![Close menu](/common/green-and-gold/assets/icons/nav/close.svg)
+
+[apply](https://www.cpp.edu/apply/)
+[visit](https://www.cpp.edu/outreach/tours.shtml)
+[info](https://engage.cpp.edu/register/ask_us_a_question)
+[give](https://www.cpp.edu/giving/)
+[mycpp](https://my.cpp.edu)
+
+* [Home](https://www.cpp.edu/)
+* about
+* admissions & aid
+* academics
+* life at CPP
+
+* [athletics](https://broncoathletics.com/)
+* [alumni](https://www.cpp.edu/alumni/)
+* [news & events](https://www.cpp.edu/news/)
+
+* [future students](https://www.cpp.edu/prospective-student-gateway/)
+  |
+* [current students](https://www.cpp.edu/student-gateway/)
+  |
+* [families](https://www.cpp.edu/family/)
+  |
+* [faculty & staff](https://www.cpp.edu/faculty-staff-gateway/)
+
+* [![Instagram](/common/green-and-gold/assets/icons/social/insta.svg)](https://www.instagram.com/calpolypomona/)
+* [![LinkedIn](/common/green-and-gold/assets/icons/social/li.svg)](https://www.linkedin.com/school/cal-poly-pomona/)
+* [![Youtube](/common/green-and-gold/assets/icons/social/yt.svg)](https://www.youtube.com/user/calpolypomona)
+* [![Facebook](/common/green-and-gold/assets/icons/social/fb.svg)](https://www.facebook.com/calpolypomona)
+* [![X](/common/green-and-gold/assets/icons/social/x.svg)](https://twitter.com/calpolypomona)
+
+Summer at Cal Poly Pomona
+
+* [Home](/summer/index.shtml)
+* [Summer Course Schedule](/summer/schedule.shtml)
+* [Summer Tuition & Fees](/summer/fees.shtml)
+* [Financial Aid](/summer/financial-aid.shtml)
+* [Summer Registration](/summer/registration.shtml)
+* [Payment & Refunds](/summer/payment.shtml)
+* [Academic Policies](/summer/policies.shtml)
+* [Summer Session FAQs](/summer/faqs.shtml)
+* [Summer Housing](https://www.cpp.edu/housing/futureresidents/apply-to-uhs.shtml)
+* [Contact Us](/summer/contact.shtml)
+* [Summer Dining Information](/summer/dining.shtml)
+
+# Summer 2026 Course Schedule
+
+Cal Poly Pomona will offer classes in one 10-week session and two 5-week sessions through the College of Professional and Global Education.
+
+\* All dates are subject to change
+
+## ![19summer-t-shirt.jpg](img/19summer-t-shirt.jpg)**10-Week Session:** June 3 - August 7
+
+## (Finals will be August 10 -14)
+
+## **5-Week Session I:** June 3 - July 3
+
+## (Finals will be July 6 - 7)
+
+## **5-Week Session II:** July 9 - August 7
+
+## (Finals will be August 10 - 11)
+
+The [Summer 2026 Course Schedule](http://schedule.cpp.edu/) is in development and subject to change throughout the registration period and until the first day of classes. Visit the [Registration](https://www.cpp.edu/~summer/registration.shtml) page for details and dates. All classes will be offered as Open University sessions. Open University classes have class section numbers that start with an “E” (e.g., E01). Students should register as early as possible, as classes may be added or canceled without notice based on student demand.
+
+![Ripped green paper.](/common/green-and-gold/assets/images/green-rip.svg)
+
+[![Cal Poly Pomona logo, building with a palm tree.](/common/green-and-gold/assets/logos/cpp_primary_1c_gold_rgb.png)](https://www.cpp.edu/)
+
+[Apply](https://www.cpp.edu/apply/)
+[Maps](https://maps.cpp.edu/)
+[Visit](https://www.cpp.edu/outreach/tours.shtml)
+[Contact Us](https://www.cpp.edu/contact.shtml)
+
+[![Instagram opens a new window](/common/green-and-gold/assets/icons/social/insta.svg)](https://www.instagram.com/calpolypomona/)
+[![LinkedIn opens a new window](/common/green-and-gold/assets/icons/social/li.svg)](https://www.linkedin.com/school/cal-poly-pomona/)
+[![YouTube opens a new window](/common/green-and-gold/assets/icons/social/yt.svg)](https://www.youtube.com/user/calpolypomona)
+[![Facebook opens a new window](/common/green-and-gold/assets/icons/social/fb.svg)](https://www.facebook.com/calpolypomona)
+[![X opens a new window](/common/green-and-gold/assets/icons/social/x.svg)](https://twitter.com/calpolypomona)
+
+Copyright ©2026 California State Polytechnic University, Pomona. All Rights Reserved
+
+A campus of
+[The California State University](https://www.calstate.edu/).
+
+[Feedback](https://www.cpp.edu/website-feedback.shtml)
+[Privacy](https://calstate.policystat.com/policy/18808065/latest/#autoid-z2p98)
+[Accessibility](https://www.cpp.edu/accessibility.shtml)
+[Document Readers](https://www.cpp.edu/file-viewers.shtml)

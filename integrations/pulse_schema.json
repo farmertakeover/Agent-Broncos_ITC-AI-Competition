@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "generated_at": null,
+  "weather": {
+    "summary": null,
+    "temp_c": null,
+    "source": null
+  },
+  "reddit_cpp": {
+    "items": []
+  },
+  "academic_dates": {
+    "items": []
+  },
+  "links": {
+    "portal": "https://www.cpp.edu/",
+    "rate_my_professor_search": "https://www.ratemyprofessors.com/search/professors?query="
+  },
+  "disclaimers": [
+    "Unofficial digest. Verify deadlines on official CPP sites. No portal credentials stored."
+  ]
+}

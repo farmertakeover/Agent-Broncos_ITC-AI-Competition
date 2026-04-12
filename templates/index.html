@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<section class="hero">
+  <div class="hero-text">
+    <h1>Cal Poly Pomona campus answers, cited.</h1>
+    <p class="lead">
+      Ask natural-language questions about CPP public web content. Responses use retrieval from a local
+      markdown corpus with source paths and links when available.
+    </p>
+    <div class="cta-row">
+      <a class="btn primary" href="{{ url_for('main.chat_page') }}">Open chat</a>
+      <a class="btn ghost" href="{{ url_for('main.corpus_map_page') }}">Corpus map</a>
+      {% if not index_ready %}
+      <span class="badge warn">Search index not built — run <code>python scripts/build_index.py</code></span>
+      {% else %}
+      <span class="badge ok">Search index ready</span>
+      {% endif %}
+    </div>
+  </div>
+  <div class="mascot-wrap">
+    {% include "_bronco_mascot.html" %}
+  </div>
+</section>
+<section class="grid-2">
+  <div class="card">
+    <h2>What it does</h2>
+    <ul>
+      <li>Multi-turn chat with tool-based corpus search (FAISS + embeddings)</li>
+      <li>Grounded answers with source attribution</li>
+      <li>Optional voice input and read-aloud on the chat page</li>
+      <li><a href="{{ url_for('main.corpus_map_page') }}">Topic map</a> of crawled filenames (not graph RAG)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>How retrieval works</h2>
+    <p class="muted small">
+      This project uses <strong>vector RAG</strong> (semantic search over chunk embeddings stored in FAISS), not graph RAG.
+      The <a href="{{ url_for('main.corpus_map_page') }}">corpus map</a> is a visual overview of page topics from filenames only.
+    </p>
+  </div>
+</section>
+<section class="card">
+  <h2>Operators</h2>
+  <p class="muted small">
+    JSON status: <a href="{{ url_for('main.api_health') }}">/api/health</a>
+    · anonymous counters: <a href="{{ url_for('main.api_stats') }}">/api/stats</a>
+    · raw retrieval: <a href="{{ url_for('main.api_retrieve', q='academic calendar') }}">/api/retrieve?q=…</a>
+    · corpus structure: <a href="{{ url_for('main.api_corpus_overview') }}">/api/corpus-overview</a>
+  </p>
+</section>
+{% endblock %}

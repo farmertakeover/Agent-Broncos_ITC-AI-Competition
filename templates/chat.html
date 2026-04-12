@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Chat{% endblock %}
+{% block body %}
+<div class="chat-layout">
+  <aside class="chat-sidebar">
+    <h2>Starter questions</h2>
+    <ul class="starters" id="starters">
+      {% for q in starter_questions %}
+      <li><button type="button" class="starter-btn" data-q="{{ q|e }}">{{ q }}</button></li>
+      {% endfor %}
+    </ul>
+    <div class="sidebar-tools">
+      <label class="toggle"><input type="checkbox" id="speakToggle"> Speak assistant replies</label>
+      <p class="muted small">Voice input: click the mic to record, click again to stop — the server transcribes with faster-whisper (needs ffmpeg on the host). HTTPS or localhost for the microphone.</p>
+    </div>
+    {% if not index_ready %}
+    <p class="badge warn">Index missing — retrieval will fail until <code>build_index.py</code> is run.</p>
+    {% endif %}
+  </aside>
+  <section class="chat-main">
+    <div class="chat-header-row">
+      <div class="mascot-inline">
+        {% set size_class = "is-small" %}
+        {% set hide_caption = true %}
+        {% include "_bronco_mascot.html" %}
+      </div>
+      <h1>Chat</h1>
+    </div>
+    <div id="messages" class="messages" role="log" aria-live="polite"></div>
+    <form id="chatForm" class="composer">
+      <label for="msg" class="sr-only">Message</label>
+      <div class="composer-input-row">
+        <textarea id="msg" rows="2" placeholder="Ask about admissions, advising, campus services…" required></textarea>
+        <div class="composer-side-actions">
+          <button
+            type="button"
+            class="btn-mic"
+            id="micBtn"
+            aria-pressed="false"
+            aria-label="Toggle microphone"
+            title="Microphone: click to record, click again to transcribe"
+          >
+            <svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true" width="22" height="22">
+              <path fill="currentColor" d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="composer-actions">
+        <span class="mic-hint muted small" id="micHint" hidden></span>
+        <button type="submit" class="btn primary" id="sendBtn">Send</button>
+      </div>
+    </form>
+    <section id="graphPanel" class="graph-panel hidden">
+      <h3>Related pages (this answer)</h3>
+      <canvas id="graphCanvas" width="480" height="220" aria-label="Related documents graph"></canvas>
+    </section>
+  </section>
+</div>
+<script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
+{% endblock %}

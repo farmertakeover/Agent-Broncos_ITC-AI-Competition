@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Agent Broncos Companion (dev)",
+  "version": "0.0.1",
+  "description": "Opt-in companion for cpp.edu pages. Does not send personal data to third parties unless you explicitly enable future features.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://*.cpp.edu/*"],
+  "action": { "default_title": "Agent Broncos", "default_popup": "popup.html" },
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://*.cpp.edu/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

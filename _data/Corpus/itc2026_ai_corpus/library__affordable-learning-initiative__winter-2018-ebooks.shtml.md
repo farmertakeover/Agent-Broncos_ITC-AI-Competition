@@ -1,0 +1,257 @@
+**Source:** https://www.cpp.edu/library/affordable-learning-initiative/winter-2018-ebooks.shtml
+
+---
+
+* [![Cal Poly Pomona Logo](/common/green-and-gold/assets/logos/cpp_horizontal_2c_green_rgb.png)](/)
+* [commencement](/commencement/)
+  [apply](/apply/)
+  [visit](/outreach/tours.shtml)
+  [info](https://engage.cpp.edu/register/ask_us_a_question)
+  [give](/giving/)
+  [mycpp](https://my.cpp.edu)
+
+  ![Search](/common/green-and-gold/assets/icons/nav/search-dark-green.svg)
+
+  ![menu](/common/green-and-gold/assets/icons/nav/menu.svg)
+
+Search
+
+![Close icon](/common/green-and-gold/assets/icons/nav/close.svg)
+
+* [![Cal Poly Pomona Logo](/common/green-and-gold/assets/logos/cpp_horizontal_1c_gold_rgb.png)](/)
+
+* [Commencement](/commencement/)
+  [apply](/apply/)
+  [visit](/outreach/tours.shtml)
+  [info](https://engage.cpp.edu/register/ask_us_a_question)
+  [give](/giving/)
+  [mycpp](https://my.cpp.edu)
+* ![Search](/common/green-and-gold/assets/icons/nav/search-white.svg)
+
+  ![Close menu](/common/green-and-gold/assets/icons/nav/close.svg)
+
+[Commencement](/commencement/)
+[apply](/apply/)
+[visit](/outreach/tours.shtml)
+[info](https://engage.cpp.edu/register/ask_us_a_question)
+[give](/giving/)
+[mycpp](https://my.cpp.edu)
+
+* [Home](/)
+* about
+* admissions & aid
+* academics
+* life at CPP
+
+* [athletics](https://broncoathletics.com/)
+* [alumni](/alumni/)
+* [news & events](/news/)
+
+* [future students](/prospective-student-gateway/)
+  |
+* [current students](/student-gateway/)
+  |
+* [families](/family/)
+  |
+* [faculty & staff](/faculty-staff-gateway/)
+
+* [![Instagram](/common/green-and-gold/assets/icons/social/insta.svg)](https://www.instagram.com/calpolypomona/)
+* [![LinkedIn](/common/green-and-gold/assets/icons/social/li.svg)](https://www.linkedin.com/school/cal-poly-pomona/)
+* [![Youtube](/common/green-and-gold/assets/icons/social/yt.svg)](https://www.youtube.com/user/calpolypomona)
+* [![Facebook](/common/green-and-gold/assets/icons/social/fb.svg)](https://www.facebook.com/calpolypomona)
+* [![X](/common/green-and-gold/assets/icons/social/x.svg)](https://twitter.com/calpolypomona)
+
+[![university library](https://www.cpp.edu/library/img/library-justus-small1.png)](https://www.cpp.edu/library/index.shtml)
+
+* [Research Help](https://www.cpp.edu/library/library-research-help.shtml)
+* [Services](https://www.cpp.edu/library/library-services.shtml)
+* [Spaces & Tech](https://www.cpp.edu/library/library-spaces-tech.shtml)
+* [About](https://www.cpp.edu/library/library-about.shtml)
+* [Give to the Library](https://www.cpp.edu/library/about/support-library/giving.shtml)
+
+[Today's Hours:](https://cpp.libcal.com/hours/)
+
+[Events Calendar](https://cpp.libcal.com/calendar/events/?cid=5014&t=m&d=0000-00-00&cal=5014&inc=0)
+
+[Reserve a Study Room](https://www.cpp.edu/library/access-services/group-study-rooms/reserve-a-room.shtml)
+
+[Current Services](https://libguides.library.cpp.edu/library-current-services)
+
+Affordable Learning Initiative
+
+* [Home](/library/affordable-learning-initiative/index.shtml)
+* [Contact Us](/library/affordable-learning-initiative/contact.shtml)
+* [About](/library/affordable-learning-initiative/about.shtml)
+* [OER Materials](/library/affordable-learning-initiative/oer-materials.shtml)
+* [Library Resources](/library/affordable-learning-initiative/library-resources.shtml)
+* [Bookstore Resources](/library/affordable-learning-initiative/bookstore-resources.shtml)
+* [Faculty Stories](/library/affordable-learning-initiative/faculty-stories.shtml)
+
+# Textbooks Available as eBooks in the Library: Winter 2018
+
+Below is a list of textbooks for **Winter 2018** that are available to students for **free from the library ebook collection**. In partnership with the Bronco Bookstore, each term the Library will be providing you with a list of links to ebooks for the assigned texts that is owned by the library. In the comments column, those noted as “Single user” can only be read by one student at a time. The specific ebook collection is also noted (e.g., ebrary, EBSCO Ebooks, JSTOR ebook Collection, Safari Books Online, and Wiley Online Library), as well as information about a different edition or ISBN.
+
+For other assigned or recommended readings that may be available in the library, check [course reserves](http://reserves.calstate.edu/pomona/) by course or professor.
+
+For information on searching for ebooks, check answers to frequently asked questions about [eBooks](http://libanswers.library.cpp.edu/search/?t=0&q=ebooks).
+
+Click on the book title for access to the ebook.
+
+| Department | Course | Section | Professor | Author/Title | Comments |
+| --- | --- | --- | --- | --- | --- |
+| AG | 401 | 05 | Farias, Dorothy | Paarlberg / [Food Politics](http://web.b.ebscohost.com/ehost/detail/detail?vid=0&sid=309f9a38-73cb-4e3a-bd48-fa8e004d597f%40sessionmgr102&bdata=JkF1dGhUeXBlPWlwLHVpZCZzaXRlPWVob3N0LWxpdmUmc2NvcGU9c2l0ZQ%3d%3d#AN=621467&db=nlebk) | Single user. EBSCOhost ebooks. |
+| AG | 401 | 06 | Hammack, Nicole | Paarlberg / [Food Politics](http://web.b.ebscohost.com/ehost/detail/detail?vid=0&sid=309f9a38-73cb-4e3a-bd48-fa8e004d597f%40sessionmgr102&bdata=JkF1dGhUeXBlPWlwLHVpZCZzaXRlPWVob3N0LWxpdmUmc2NvcGU9c2l0ZQ%3d%3d#AN=621467&db=nlebk) | Single user. EBSCOhost ebooks. |
+| AG | 401 | 10 | Hammack, Nicole | Paarlberg / [Food Politics](http://web.b.ebscohost.com/ehost/detail/detail?vid=0&sid=309f9a38-73cb-4e3a-bd48-fa8e004d597f%40sessionmgr102&bdata=JkF1dGhUeXBlPWlwLHVpZCZzaXRlPWVob3N0LWxpdmUmc2NvcGU9c2l0ZQ%3d%3d#AN=621467&db=nlebk) | Single user. EBSCOhost ebooks. |
+| AG | 401 | 02 | Hammack, Nicole | Paarlberg / [Food Politics](http://web.b.ebscohost.com/ehost/detail/detail?vid=0&sid=309f9a38-73cb-4e3a-bd48-fa8e004d597f%40sessionmgr102&bdata=JkF1dGhUeXBlPWlwLHVpZCZzaXRlPWVob3N0LWxpdmUmc2NvcGU9c2l0ZQ%3d%3d#AN=621467&db=nlebk) | Single user. EBSCOhost ebooks. |
+| AG | 464 | 02 | Merlino, Nancy | George / [True North](https://ebookcentral.proquest.com/lib/csupomona/detail.action?docID=288208 ) | Multiple concurrent users. ProQuest Ebook Central. |
+| AG | 464 | 01 | Merlino, Nancy | George / [True North](https://ebookcentral.proquest.com/lib/csupomona/detail.action?docID=288208) | Multiple concurrent users. ProQuest Ebook Central. |
+| AG | 464 | 02 | Merlino, Nancy | Rosenberg / [Nonviolent Communication](https://ebookcentral.proquest.com/lib/csupomona/detail.action?docID=296292) | Unlimited concurrent users. ProQuest Ebook Central. |
+| AG | 464 | 01 | Merlino, Nancy | Rosenberg / [Nonviolent Communication](https://ebookcentral.proquest.com/lib/csupomona/detail.action?docID=296292) | Unlimited concurrent users. ProQuest Ebook Central. |
+| AMM | 463 | 03 | Che, Jiangning | Cargill / [Writing Scientific Research Articles](https://ebookcentral.proquest.com/lib/csupomona/detail.action?docID=1170564) | Unlimited concurrent users. ProQuest Ebook Central. |
+| AMM | 463A | 03 | Che, Jiangning | Davis / [Scientific Papers & Presentations](https://ebookcentral.proquest.com/lib/csupomona/detail.action?docID=943707) | Unlimited concurrent users. ProQuest Ebook Central. |
+| AMM | 463A | 03 | Che, Jiangning | Davis / [Scientific Papers And Presentations (Dc)](https://ebookcentral.proquest.com/lib/csupomona/detail.action?docID=943707) | Unlimited concurrent users. ProQuest Ebook Central. |
+| ANT | 358 | 01 | Whittle, Matthew | Muehlmann / [When I Wear My Alligator Boots](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439685750002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,MUEHLMANN%20%2F%20WHEN%20I%20WEAR%20MY%20ALLIGATOR%20BOOTS&sortby=rank&offset=0) | Unlimited concurrent users. ProQuest Ebook Central. |
+| ARO | 406 | 01 | Nakhjiri, Navid | Thorby / [Structural Dynamics And Vibration In Practice](https://app.knovel.com/web/toc.v/cid%3AkpSDVPAEH1/viewerType%3Atoc/root_slug%3AviewerType%3Atoc/url_slug%3Aroot_slug%3Astructural-dynamics-vibration?kpromoter=federation) | Unlimited concurrent users. Knovel. |
+| ARO | 406 | 03 | Nakhjiri, Navid | Thorby / [Structural Dynamics And Vibration In Practice](https://app.knovel.com/web/toc.v/cid%3AkpSDVPAEH1/viewerType%3Atoc/root_slug%3AviewerType%3Atoc/url_slug%3Aroot_slug%3Astructural-dynamics-vibration?kpromoter=federation) | Unlimited concurrent users. Knovel. |
+| ARO | 406 | 02 | Nakhjiri, Navid | Thorby / [Structural Dynamics And Vibration In Practice](https://app.knovel.com/web/toc.v/cid%3AkpSDVPAEH1/viewerType%3Atoc/root_slug%3AviewerType%3Atoc/url_slug%3Aroot_slug%3Astructural-dynamics-vibration?kpromoter=federation) | Unlimited concurrent users. Knovel. |
+| ART | 254A | 01 | Meyer, Sarah | Elam / [Grid Systems](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71377934830002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&tab=books_local&query=any,contains,ELAM%20%2F%20GRID%20SYSTEMS&sortby=rank&offset=0) | Unlimited concurrent users. ProQuest Ebook Central. |
+| ART | 254A | 02 | Meyer, Sarah | Elam / [Grid Systems](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71377934830002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&tab=books_local&query=any,contains,ELAM%20%2F%20GRID%20SYSTEMS&sortby=rank&offset=0) | Unlimited concurrent users. ProQuest Ebook Central. |
+| ART | 352A | 01 | Lang, Alyssa | Wheeler / [Designing Brand Identity](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71376288010002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,WHEELER%20%2F%20DESIGNING%20BRAND%20IDENTITY&sortby=rank&offset=0) | Unlimited concurrent users. ProQuest Ebook Central. |
+| CE | 305L | 03 | Gershfeld, Mikhail | Asce / [Minimum Design Loads & Associated Criteria For Buildings & Other Structures](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991008319770402915&context=L&vid=01CALS_PUP&lang=en_US&search_scope=EVERYTHING&adaptor=Local%20Search%20Engine&tab=everything&query=any,contains,ASCE%20%2F%20MINIMUM%20DESIGN%20LOADS%20&%20ASSOCIATED%20CRITERIA%20FOR%20BUILDINGS%20&%20OTHER%20STRUCTURES&sortby=rank&offset=0) | Single user. EBSCOhost ebooks. |
+| CE | 305L | 04 | Gershfeld, Mikhail | Asce / [Minimum Design Loads & Associated Criteria For Buildings & Other Structures](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991008319770402915&context=L&vid=01CALS_PUP&lang=en_US&search_scope=EVERYTHING&adaptor=Local%20Search%20Engine&tab=everything&query=any,contains,ASCE%20%2F%20MINIMUM%20DESIGN%20LOADS%20&%20ASSOCIATED%20CRITERIA%20FOR%20BUILDINGS%20&%20OTHER%20STRUCTURES&sortby=rank&offset=0) | Single user. EBSCOhost ebooks. |
+| CE | 305L | 02 | Gershfeld, Mikhail | Asce / [Minimum Design Loads & Associated Criteria For Buildings & Other Structures](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991008319770402915&context=L&vid=01CALS_PUP&lang=en_US&search_scope=EVERYTHING&adaptor=Local%20Search%20Engine&tab=everything&query=any,contains,ASCE%20%2F%20MINIMUM%20DESIGN%20LOADS%20&%20ASSOCIATED%20CRITERIA%20FOR%20BUILDINGS%20&%20OTHER%20STRUCTURES&sortby=rank&offset=0) | Single user. EBSCOhost ebooks. |
+| CE | 305L | 01 | Lomiento, Giuseppe | Asce / [Minimum Design Loads & Associated Criteria For Buildings & Other Structures](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991008319770402915&context=L&vid=01CALS_PUP&lang=en_US&search_scope=EVERYTHING&adaptor=Local%20Search%20Engine&tab=everything&query=any,contains,ASCE%20%2F%20MINIMUM%20DESIGN%20LOADS%20&%20ASSOCIATED%20CRITERIA%20FOR%20BUILDINGS%20&%20OTHER%20STRUCTURES&sortby=rank&offset=0) | Single user. EBSCOhost ebooks. |
+| CEU | CAD100 | 01 | Staff Staff | Onstott / [Autocad 2016 & Autocad Lt 2016 Essentials](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71400102940002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=EVERYTHING&adaptor=Local%20Search%20Engine&tab=everything&query=any,contains,ONSTOTT%20%2F%20AUTOCAD%202016%20&%20AUTOCAD%20LT%202016%20ESSENTIALS&sortby=rank&offset=0) | Single user. ProQuest Ebook Central. |
+| CIS | 421 | 01 | Miller, Jill | Tullis / [Measuring The User Experience](https://ebookcentral.proquest.com/lib/csupomona/detail.action?docID=1204543) | Unlimited concurrent users. ProQuest Ebook Central. |
+| CIS | 421 | 01 | Miller, Jill | Tullis / [Measuring The User Experience (Dc)](https://ebookcentral.proquest.com/lib/csupomona/detail.action?docID=1204543) | Unlimited concurrent users. ProQuest Ebook Central. |
+| CIS | 425 | 01 | Salehan, Mohammad | Franceschi / [Android App Development](http://proquest.safaribooksonline.com/9781284092134?uicode=Incommon-member@co.calstate.edu) | Single user. ProQuest Ebook Central. |
+| CIS | 425 | 01 | Salehan, Mohammad | Franceschi / [Android App Development (Dc)](http://proquest.safaribooksonline.com/9781284092134?uicode=Incommon-member@co.calstate.edu) | Single user. ProQuest Ebook Central. |
+| CIS | 481 | 01 | Carlton, Gregory | Sammons / [Basics Of Digital Forensics](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71374751480002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=EVERYTHING&adaptor=Local%20Search%20Engine&isFrbr=true&tab=everything&query=any,contains,SAMMONS%20%2F%20BASICS%20OF%20DIGITAL%20FORENSICS&sortby=rank&offset=0) | Unlimited concurrent users. ProQuest Ebook Central. |
+| CIS | 481 | 01 | Carlton, Gregory | Sammons / [The Basics Of Digital Forensics (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71374751480002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=EVERYTHING&adaptor=Local%20Search%20Engine&isFrbr=true&tab=everything&query=any,contains,SAMMONS%20%2F%20BASICS%20OF%20DIGITAL%20FORENSICS&sortby=rank&offset=0) | Unlimited concurrent users. ProQuest Ebook Central. |
+| CS | 256 | 01 | Huang, Thomas | Deitel / [C++: How To Program](http://proquest.safaribooksonline.com/9780134448930?uicode=Incommon-member@co.calstate.edu) | Multiple concurrent users. Safari. |
+| CS | 311 | 01 | Chen, Tingting | Linz / [An Introduction To Formal Languages And Automata (Dc)](http://proquest.safaribooksonline.com/9781284077254?uicode=Incommon-member@co.calstate.edu) | Multiple concurrent users. Safari. |
+| CS | 311 | 01 | Chen, Tingting | Linz / [Intro To Formal Languages & Automata (W/Cd Only)](http://proquest.safaribooksonline.com/9781284077254?uicode=Incommon-member@co.calstate.edu) | Multiple concurrent users. Safari. |
+| CS | 311 | 02 | Sang, Fuh | Linz / [An Introduction To Formal Languages And Automata (Dc)](http://proquest.safaribooksonline.com/9781284077254?uicode=Incommon-member@co.calstate.edu) | Multiple concurrent users. Safari. |
+| CS | 311 | 02 | Sang, Fuh | Linz / [Intro To Formal Languages & Automata (W/Cd Only)](http://proquest.safaribooksonline.com/9781284077254?uicode=Incommon-member@co.calstate.edu) | Multiple concurrent users. Safari. |
+| ECE | 310 | 02 | Fitzgerald, Dennis | Guru / [Electric Machinery & Transformers](https://app.knovel.com/web/toc.v/cid%3AkpEMTE0002/viewerType%3Atoc/root_slug%3AviewerType%3Atoc/url_slug%3Aroot_slug%3Aelectric-machinery-transformers?kpromoter=federation) | Unlimited concurrent users. Knovel. |
+| ECE | 310 | 01 | Fitzgerald, Dennis | Guru / [Electric Machinery & Transformers](https://app.knovel.com/web/toc.v/cid%3AkpEMTE0002/viewerType%3Atoc/root_slug%3AviewerType%3Atoc/url_slug%3Aroot_slug%3Aelectric-machinery-transformers?kpromoter=federation) | Unlimited concurrent users. Knovel. |
+| EDD | 734 | 01 | Martinez, Eligio | Ayers / [Transforming Educational Pathways For Chicana O Students: A Critical R](https://ebookcentral.proquest.com/lib/csupomona/detail.action?docID=4803511) | Single user. Proquest Ebook Central. |
+| EDS | 526 | 01 | Staff | Billingsley / [A Survival Guide For New Special Educators (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439461920002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,BILLINGSLEY%20%2F%20SURVIVAL%20GUIDE%20FOR%20NEW%20SPECIAL%20EDUCATORS&sortby=rank&offset=0) | Unlimited concurrent users. ProQuest Ebook Central. |
+| EDS | 526 | 01 | Staff | Billingsley / [Survival Guide For New Special Educators](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439461920002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,BILLINGSLEY%20%2F%20SURVIVAL%20GUIDE%20FOR%20NEW%20SPECIAL%20EDUCATORS&sortby=rank&offset=0) | Unlimited concurrent users. ProQuest Ebook Central. |
+| ENG | 303 | 01 | Prins, Kristin | Harris / [Rewriting](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71390820320002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&tab=books_local&query=any,contains,HARRIS%20%2F%20REWRITING&sortby=rank&offset=0) | Two concurrent users. EBSCOhost ebooks. |
+| ENG | 303 | 01 | Prins, Kristin | Wallack / [Crafting Presence](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991010894794402916&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,WALLACK%20%2F%20CRAFTING%20PRESENCE&sortby=rank&offset=0) | Single user. ProQuest Ebook Central. |
+| ENG | 303 | 01 | Prins, Kristin | Wallack / [Crafting Presence (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991010894794402916&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,WALLACK%20%2F%20CRAFTING%20PRESENCE&sortby=rank&offset=0) | Single usser. ProQuest Ebook Central. |
+| ENG | 443 | 01 | Rocklin, Edward | Holbrook / [English Renaissance Tragedy](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991015625842402918&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,9781472572806&sortby=rank&offset=0) | Single usser. ProQuest Ebook Central. |
+| ENG | 583 | 01 | Edlund, John | Berlin / [Rhetorics, Poetics, And Cultures](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439356250002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,BERLIN%20%2F%20RHETORICS,%20POETICS,%20AND%20CULTURES&sortby=rank&facet=frbrgroupid,include,263942207&offset=0) | Unlimited concurrent users. ProQuest Ebook Central. |
+| ENG | 583 | 01 | Edlund, John | Crosswhite / [Deep Rhetoric](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71388102530002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&tab=books_local&query=any,contains,9780226016481&sortby=rank&offset=0) | Multiple concurrent users.Proquest ebook Central. |
+| ETT | 499 | 01 | Aryafar, Hamarz | Parr / [Hydraulics And Pneumatics](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71453996530002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&tab=books_local&query=any,contains,PARR%20%2F%20HYDRAULICS%20AND%20PNEUMATICS&sortby=rank&offset=0) | Unlimited concurrent users. Knovel. |
+| ETT | 499 | 01 | Aryafar, Hamarz | Parr / [Hydraulics And Pneumatics (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71453996530002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&tab=books_local&query=any,contains,PARR%20%2F%20HYDRAULICS%20AND%20PNEUMATICS&sortby=rank&offset=0) | Unlimited concurrent users. Knovel. |
+| EWS | 145 | 04 | Keith, Thomas | Keith / [Masculinities In Contemporary American Culture](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71390603700002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&tab=books_local&query=any,contains,9781138818071&sortby=rank&offset=0) | Three concurrent users. EBSCOhost ebooks. |
+| EWS | 204 | 02 | Liu, Haiming | Liu / [Transnational History Of A Chinese Family](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51437399690002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,9780813535975&sortby=rank&facet=frbrgroupid,include,260858291&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| EWS | 204 | 03 | Liu, Haiming | Liu / [Transnational History Of A Chinese Family](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51437399690002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,9780813535975&sortby=rank&facet=frbrgroupid,include,260858291&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| EWS | 301 | 03 | Aguilar, Jose | Gonzales / [Lives In Limbo](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71388456100002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,GONZALES%20%2F%20LIVES%20IN%20LIMBO&sortby=rank&facet=frbrgroupid,include,266210976&offset=0) | Unlimited concurrent users. Proquext Ebook Central. |
+| EWS | 301 | 04 | Liu, Haiming | Chang / [Chinese In America](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71408807290002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,9780142004173&sortby=rank&facet=frbrgroupid,include,263905646&offset=0) | Single users. EBSCOhost. A print copy also available at Reserve Desk/2nd floor/2 Hrs No Overnight   E184.C5 C444 2003 |
+| EWS | 301 | 04 | Liu, Haiming | Liu / [Transnational History Of A Chinese Family](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51437399690002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,9780813535975&sortby=rank&facet=frbrgroupid,include,260858291&offset=0) | Unlimited concurrent users. Proquest Ebook Central. A print copy also available on 6th floor F870.C5 L58 2005 |
+| EWS | 301S | 03 | Aguilar, Jose | Gonzales / [Lives In Limbo](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71388456100002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,GONZALES%20%2F%20LIVES%20IN%20LIMBO&sortby=rank&facet=frbrgroupid,include,266210976&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| EWS | 402 | 03 | Aguilar, Jose | Abrego / [Sacrificing Families](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71434531630002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&tab=books_local&query=any,contains,9780804790512&sortby=rank&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| EWS | 402 | 01 | Lopez, Dennis | Barreto / [Latino America](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71407584370002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,9781610395014&sortby=rank&facet=frbrgroupid,include,268991226&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| FRL | 404 | 01 | Sun, Libo | Benninga / [Financial Modeling](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71379083290002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,BENNINGA%20%2F%20FINANCIAL%20MODELING&sortby=rank&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| GBA | 681 | 01 | Carlton, Gregory | Sammons / [Basics Of Digital Forensics](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71374751480002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,9780128016350&sortby=rank&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| GBA | 681 | 01 | Carlton, Gregory | Sammons / [The Basics Of Digital Forensics (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71374751480002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,9780128016350&sortby=rank&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| GED | 507 | 01 | Tadeja, Chester | Pitler / [Using Technology With Classroom Instruction That Works](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71419413750002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,PITLER%20%2F%20USING%20TECHNOLOGY%20WITH%20CLASSROOM%20INSTRUCTION%20THAT%20WORKS&sortby=rank&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| GED | 507 | 01 | Tadeja, Chester | Pitler / [Using Technology With Classroom Instruction That Works, 2Nd Edition (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71419413750002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,PITLER%20%2F%20USING%20TECHNOLOGY%20WITH%20CLASSROOM%20INSTRUCTION%20THAT%20WORKS&sortby=rank&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| GED | 595 | 01 | Touhey, Jennifer | Stronge / [Qualities Of Effective Teachers](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439309760002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,STRONGE%20%2F%20QUALITIES%20OF%20EFFECTIVE%20TEACHERS&sortby=rank&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| GED | 595 | 01 | Touhey, Jennifer | Stronge / [Qualities Of Effective Teachers, 2Nd Edition (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439309760002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&isFrbr=true&tab=books_local&query=any,contains,STRONGE%20%2F%20QUALITIES%20OF%20EFFECTIVE%20TEACHERS&sortby=rank&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| GED | 595 | 01 | Touhey, Jennifer | Tucker / [Handbook For Qualities Of Effective Teachers](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71417969130002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&tab=books_local&query=any,contains,TUCKER%20%2F%20HANDBOOK%20FOR%20QUALITIES%20OF%20EFFECTIVE%20TEACHERS&sortby=rank&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| GSC | 499 | 01 | Polet, Jascha | Busby / [Tectonics Of Sedimentary Basins](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439483590002901&context=L&vid=01CALS_PUP&lang=en_US&search_scope=01CALS_PUP&adaptor=Local%20Search%20Engine&tab=books_local&query=any,contains,BUSBY%20%2F%20TECTONICS%20OF%20SEDIMENTARY%20BASINS&sortby=rank&offset=0) | Unlimited concurrent users. Proquest Ebook Central. |
+| HST | 100 | 02 | Lewis, Daniel | Restall / [Seven Myths Of The Spanish Conquest](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439394260002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| HST | 365 | 01 | Mickey, Georgia | Yang / [Spider Eaters W/New Preface](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439434750002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| HST | 370 | 06 | Hoikkala, Paivi | Osborne / [Pacific Eldorado](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439203070002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| HST | 370 | 05 | Hoikkala, Paivi | Osborne / [Pacific Eldorado](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439203070002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| HST | 370 | 03 | Mollno, Linda | Osborne / [Pacific Eldorado](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439203070002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| HST | 370 | 07 | Mollno, Linda | Osborne / [Pacific Eldorado](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439203070002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| HST | 370 | 04 | Staff | Osborne / [Pacific Eldorado](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439203070002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| HST | 390 | 02 | Podany, Amanda | Kelley / [Versions Of History From Antiquity To The Enlightenment](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439655500002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| HST | 541 | 01 | Ibrahim, Mahmood | Bennison / [Great Caliphs](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71370502880002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| HST | 541 | 01 | Ibrahim, Mahmood | Wickham / [Medieval Europe](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71392908580002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| IBM | 415 | 03 | Ong, Luei Lin | Rivoli / [Travels Of A T-Shirt In The Global Economy 2Nd W/New Preface & Epil](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439628340002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| IBM | 491 | 01 | Bryant, Frank | Marich / [Marketing To Moviegoers](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439075250002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| IME | 402 | 01 | Rodriguez, Henry | Bazerman / [Blind Spots](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71368943940002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| IME | 402 | 06 | Yazdy, Mostafa | Bazerman / [Blind Spots](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71368943940002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| LA | 402 | 01 | Lehrman, Barry | Wade / [Scenario Planning](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439371500002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| LA | 402 | 01 | Lehrman, Barry | Wade / [Scenario Planning (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439371500002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| LS | 301 | 04 | Lloro-Bidart, Teresa | Murray, Robin L / [Monstrous Nature:Environment And Horror On The Big Screen](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71454248250002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| MAT | 314 | 01 | Mihaila, Ioana | Abbott / [Understanding Analysis](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71410728290002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Springer Ebook. |
+| MAT | 314 | 01 | Mihaila, Ioana | Abbott / [Understanding Analysis (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71410728290002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Springer Ebook. |
+| MAT | 314 | 02 | Xie, Weiqing | Abbott / [Understanding Analysis](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71410728290002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Springer Ebook. |
+| MAT | 314 | 02 | Xie, Weiqing | Abbott / [Understanding Analysis (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71410728290002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Springer Ebook. |
+| ME | 233 | 01 | Castro Candelas, Carlos | Oberg / [Machinery'S Handbook (Toolbox Ed)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71454075810002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Knovel. |
+| ME | 233 | 02 | Castro Candelas, Carlos | Oberg / [Machinery'S Handbook (Toolbox Ed)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71454075810002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Knovel. |
+| ME | 233 | 03 | Ijadi Maghsoodi, Bejan | Oberg / [Machinery'S Handbook (Toolbox Ed)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71454075810002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Knovel. |
+| ME | 427 | 01 | Anderson, Kevin | Lee / [Thermal Design](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51438347200002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| ME | 427 | 01 | Anderson, Kevin | Lee / [Thermal Design (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51438347200002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| ME | 584 | 01 | Shafahi, Maryam | Bejan / [Convection Heat Transfer](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51438605300002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| ME | 584 | 01 | Shafahi, Maryam | Bejan / [Convection Heat Transfer (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51438605300002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| MIC | 425 | 01 | Adler-Moore, Jill | Reiss / [Fundamental Medical Mycology](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51438814350002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| MPA | 504 | 01 | Emerson, Sandra | Johnson / [Research Methods For Public Administrators](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439347240002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| MPA | 520 | 01 | Gossett, Charles | Agranoff / [Crossing Boundaries For Intergovernmental Management](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991013083095602908&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| MTE | 422 | 01 | Jata, Kumar | Mcevily / [Metal Failures](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51459942230002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| MTE | 422 | 01 | Jata, Kumar | Mcevily / [Metal Failures (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51459942230002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| MU | 228 | 01 | Winer, Arthur | Bartlett / [Practical Recording Techniques](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71454013960002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| MU | 228 | 01 | Winer, Arthur | Bartlett / [Practical Recording Techniques](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71454013960002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| PHL | 206 | 01 | Reardan, Linda | Wartenberg, Thomas E / [A Sneetch Is A Sneetch And Other Philosophical Discoveries:Finding Wisdom In Chi](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71375487900002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| PHL | 435 | 01 | Adams, David | Ford / [Complex Ethics Consultations](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71411213770002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) |  |
+| PHL | 440 | 01 | Cholbi, Michael | Anderson / [Private Government](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71459735310002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Single user. Proquest Ebook Central. |
+| PHL | 440 | 01 | Cholbi, Michael | Anderson / [Private Government: How Employers Rule Our Lives (And Why We Don'T Talk Abo (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71459735310002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Single user. Proquest Ebook Central. |
+| PHL | 440 | 01 | Cholbi, Michael | Svendsen / [Work](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439704860002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| PLS | 207 | 01 | Speak, David | Cole / [Engines Of Liberty](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71435625880002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Single user. Proquest Ebook Central. |
+| PLS | 405 | 01 | Speak, David | Scalia / [A Matter Of Interpretation: Federal Courts And The Law (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439083480002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| PLS | 405 | 01 | Speak, David | Scalia / [Matter Of Interpretation](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439083480002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| PLS | 451 | 01 | Scarcelli, Marc | Kilcullen / [Accidental Guerrilla](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439493470002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Unlimited concurrent users. Proquest Ebook Central. |
+| PLS | 452 | 01 | Dean, Joshua | Cohen / [Currency Power](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991015625488302918&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| PLS | 452 | 01 | Dean, Joshua | Cohen / [Currency Power (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991015625488302918&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| PLS | 452 | 01 | Dean, Joshua | Rodrik / [Straight Talk On Trade](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991015654542602918&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Single user. Proquest Ebook Central. |
+| PLS | 452 | 01 | Dean, Joshua | Rodrik / [Straight Talk On Trade (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991015654542602918&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Single user. Proquest Ebook Central. |
+| PSY | 452 | 01 | Nemiro, Jill | Kouzes / [Leadership Challenge](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991008321554902915&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Single user. Proquest Ebook Central. |
+| PSY | 452 | 01 | Nemiro, Jill | Kouzes / [The Leadership Challenge (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA991008321554902915&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Single user. Proquest Ebook Central. |
+| PSY | 498 | 01 | Morales, Alejandro | Lopez / [Positive Psychology](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51438864360002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| PSY | 498 | 03 | Seyranian, Viviane | Clayton / [Conservation Psychology](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51438596940002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| STA | 425 | 01 | Risk, James | Lee / [Statistical Methods For Survival Data Analysis](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439446580002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| STA | 425 | 01 | Risk, James | Lee / [Statistical Methods For Survival Data Analysis (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439446580002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| TED | 431 | 01 | Volsey, Janeen | Bybee / [Learning Science & The Science Of Learning](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439027580002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| TED | 432 | 01 | Maupin, Mary | Marzano / [Classroom Instruction That Works](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51438570530002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| TED | 446 | 01 | Neumann, David | Schoenbach / [Reading For Understanding](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439313930002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| TED | 446 | 01 | Neumann, David | Schoenbach / [Reading For Understanding (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439313930002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| TED | 446 | 01 | Neumann, David | Wiggins / [The Understanding By Design Guide To Creating High-Quality Units (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71428575800002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| TED | 446 | 01 | Neumann, David | Wiggins / [Understanding By Design Guide To Creating High-Quality Units](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71428575800002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| TED | 515 | 01 | Casimir, Myriam | Grosjean / [Bilingual](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71395888200002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. Print copy on 5th floor P115 .G75 2010 |
+| URP | 411 | 01 | Abdul Karim, Dina | Hall / [Cities Of Tomorrow](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51438554750002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| URP | 411 | 01 | Abdul Karim, Dina | Hall / [Cities Of Tomorrow (Dc)](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51438554750002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| URP | 411 | 01 | Abdul Karim, Dina | Warner / [American Urban Form](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA71383318460002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| URP | 499 | 02 | Willson, Richard | Willson / [Parking Management For Smart Growth](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51459951550002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+| URP | 499 | 02 | Willson, Richard | Willson / [Parking Reform Made Easy](https://cpp-primo.hosted.exlibrisgroup.com/primo-explore/fulldisplay?docid=01CALS_ALMA51439220410002901&context=L&vid=01CALS_PUP&search_scope=01CALS_PUP&isFrbr=true&tab=books_local&lang=en_US) | Multiple concurrent users. Proquest Ebook Central. |
+
+![Ripped green paper.](/common/green-and-gold/assets/images/green-rip.svg)
+
+[![Cal Poly Pomona logo, building with a palm tree.](/common/green-and-gold/assets/logos/cpp_primary_1c_gold_rgb.png)](https://www.cpp.edu/)
+
+[Apply](https://www.cpp.edu/apply/)
+[Maps](https://maps.cpp.edu/)
+[Visit](https://www.cpp.edu/outreach/tours.shtml)
+[Contact Us](https://www.cpp.edu/contact.shtml)
+
+[![Instagram opens a new window](/common/green-and-gold/assets/icons/social/insta.svg)](https://www.instagram.com/calpolypomona/)
+[![LinkedIn opens a new window](/common/green-and-gold/assets/icons/social/li.svg)](https://www.linkedin.com/school/cal-poly-pomona/)
+[![YouTube opens a new window](/common/green-and-gold/assets/icons/social/yt.svg)](https://www.youtube.com/user/calpolypomona)
+[![Facebook opens a new window](/common/green-and-gold/assets/icons/social/fb.svg)](https://www.facebook.com/calpolypomona)
+[![X opens a new window](/common/green-and-gold/assets/icons/social/x.svg)](https://twitter.com/calpolypomona)
+
+Copyright ©2026 California State Polytechnic University, Pomona. All Rights Reserved
+
+A campus of
+[The California State University](https://www.calstate.edu/).
+
+[Feedback](https://www.cpp.edu/website-feedback.shtml)
+[Privacy](https://calstate.policystat.com/policy/18808065/latest/#autoid-z2p98)
+[Accessibility](https://www.cpp.edu/accessibility.shtml)
+[Document Readers](https://www.cpp.edu/file-viewers.shtml)

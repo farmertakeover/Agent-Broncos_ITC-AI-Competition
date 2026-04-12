@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Campus pulse{% endblock %}
+{% block body %}
+<div class="hero">
+  <div>
+    <h1>Campus pulse</h1>
+    <p class="lead">
+      Read-only digest (weather, public Reddit titles, dates, link-outs). Populated by
+      <code>POST /api/student-pulse/ingest</code> (e.g. n8n) or <code>CPP_PULSE_URL</code>.
+      Not official CPP data—use Chat + corpus for policies.
+    </p>
+  </div>
+</div>
+<pre id="pulseOut" class="pulse-json card">Loading…</pre>
+<script>
+  fetch("/api/student-pulse")
+    .then(function (r) {
+      return r.json();
+    })
+    .then(function (j) {
+      document.getElementById("pulseOut").textContent = JSON.stringify(j, null, 2);
+    })
+    .catch(function () {
+      document.getElementById("pulseOut").textContent = "Could not load /api/student-pulse.";
+    });
+</script>
+{% endblock %}

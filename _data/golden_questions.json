@@ -1,0 +1,42 @@
+[
+  {
+    "id": "billy_chat",
+    "question": "What is Billy Chat?",
+    "path_substrings": ["billy-chat", "billy_chat", "studentsuccess"]
+  },
+  {
+    "id": "academic_calendar",
+    "question": "Where is the academic calendar?",
+    "path_substrings": ["academic-calendar", "calendar", "registrar"]
+  },
+  {
+    "id": "advising",
+    "question": "Bronco Advising Center contact",
+    "path_substrings": ["advising", "bronco-advising", "studentsuccess"]
+  },
+  {
+    "id": "accessibility",
+    "question": "campus accessibility services",
+    "path_substrings": ["accessibility", "dsa", "disability"]
+  },
+  {
+    "id": "parking",
+    "question": "visitor parking information",
+    "path_substrings": ["parking", "transportation", "visitor"]
+  },
+  {
+    "id": "graduation",
+    "question": "How do I apply for graduation?",
+    "path_substrings": ["graduation", "registrar", "commencement"]
+  },
+  {
+    "id": "financial_aid",
+    "question": "Where is financial aid information for students?",
+    "path_substrings": ["financial", "sfs", "scholarship", "aid"]
+  },
+  {
+    "id": "library",
+    "question": "university library hours or services",
+    "path_substrings": ["library", "_library"]
+  }
+]

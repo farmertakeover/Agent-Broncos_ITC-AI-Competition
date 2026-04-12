@@ -1,0 +1,12 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+_data/index/
+_data/pulse/*.json
+*.faiss
+chunks.jsonl
+.DS_Store
+.pytest_cache/
+_data/eval_results.json

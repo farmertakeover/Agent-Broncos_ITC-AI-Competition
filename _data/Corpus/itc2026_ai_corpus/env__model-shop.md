@@ -1,0 +1,143 @@
+**Source:** http://www.cpp.edu/env/model-shop
+
+---
+
+* [![Cal Poly Pomona Logo](/common/green-and-gold/assets/logos/cpp_horizontal_2c_green_rgb.png)](https://www.cpp.edu/)
+* [apply](https://www.cpp.edu/apply/)
+  [visit](https://www.cpp.edu/outreach/tours.shtml)
+  [info](https://engage.cpp.edu/register/ask_us_a_question)
+  [give](https://www.cpp.edu/giving/)
+  [mycpp](https://my.cpp.edu)
+
+  ![Open search box](/common/green-and-gold/assets/icons/nav/search-dark-green.svg)
+
+  ![menu](/common/green-and-gold/assets/icons/nav/menu.svg)
+
+Search
+
+![Close icon](/common/green-and-gold/assets/icons/nav/close.svg)
+
+* [![Cal Poly Pomona Logo](/common/green-and-gold/assets/logos/cpp_horizontal_1c_gold_rgb.png)](https://www.cpp.edu/)
+
+* [apply](https://www.cpp.edu/apply/)
+  [visit](https://www.cpp.edu/outreach/tours.shtml)
+  [info](https://engage.cpp.edu/register/ask_us_a_question)
+  [give](https://www.cpp.edu/giving/)
+  [mycpp](https://my.cpp.edu)
+* ![Open search box](/common/green-and-gold/assets/icons/nav/search-white.svg)
+
+  ![Close menu](/common/green-and-gold/assets/icons/nav/close.svg)
+
+[apply](https://www.cpp.edu/apply/)
+[visit](https://www.cpp.edu/outreach/tours.shtml)
+[info](https://engage.cpp.edu/register/ask_us_a_question)
+[give](https://www.cpp.edu/giving/)
+[mycpp](https://my.cpp.edu)
+
+* [Home](https://www.cpp.edu/)
+* about
+* admissions & aid
+* academics
+* life at CPP
+
+* [athletics](https://broncoathletics.com/)
+* [alumni](https://www.cpp.edu/alumni/)
+* [news & events](https://www.cpp.edu/news/)
+
+* [future students](https://www.cpp.edu/prospective-student-gateway/)
+  |
+* [current students](https://www.cpp.edu/student-gateway/)
+  |
+* [families](https://www.cpp.edu/family/)
+  |
+* [faculty & staff](https://www.cpp.edu/faculty-staff-gateway/)
+
+* [![Instagram](/common/green-and-gold/assets/icons/social/insta.svg)](https://www.instagram.com/calpolypomona/)
+* [![LinkedIn](/common/green-and-gold/assets/icons/social/li.svg)](https://www.linkedin.com/school/cal-poly-pomona/)
+* [![Youtube](/common/green-and-gold/assets/icons/social/yt.svg)](https://www.youtube.com/user/calpolypomona)
+* [![Facebook](/common/green-and-gold/assets/icons/social/fb.svg)](https://www.facebook.com/calpolypomona)
+* [![X](/common/green-and-gold/assets/icons/social/x.svg)](https://twitter.com/calpolypomona)
+
+[![The College of Environmental Design](https://www.cpp.edu/common/2018/assets/img/env-justice.png)](/env/index.shtml)
+
+* About
+
+  [Mission](/env/about/mission.shtml) [History](/env/about/history.shtml) [Dean's Office](/env/about/deans-office.shtml) [Dean's Advisory Council](/env/about/deans-advisory-council/index.shtml) [Organizational Chart](/env/about/org-chart/index.shtml) [Open Positions](/env/open-positions/index.shtml) [Contact Us](/env/about/contact-us.shtml)
+* Departments
+
+  [Architecture](/env/architecture/index.shtml) [Art](/env/art/index.shtml) [Landscape Architecture](/env/landscape-architecture/index.shtml) [Urban and Regional Planning](/env/urp/index.shtml) [Lyle Center for Regenerative Studies](/env/lyle/index.shtml)
+* Programs
+
+  Undergraduate Programs
+
+   [- Architecture](/env/architecture/program-degrees-admissions/bachelor-of-architecture.shtml)  [- Art History](/env/art/degrees-admissions/ba-art-history.shtml)  [- Landscape Architecture](/env/landscape-architecture/degrees-admissions/bachelors.shtml)  [- Urban and Regional Planning](/env/urp/degrees-admissions/undergraduate-program.shtml)  [- Visual Communication Design](/env/art/degrees-admissions/bfa-visual-communication-design.shtml)
+
+  Graduate Programs
+
+   [- Architecture](/env/architecture/program-degrees-admissions/master-of-architecture.shtml)  [- Interior Architecture](/env/architecture/program-degrees-admissions/master-of-interior-architecture.shtml)  [- Landscape Architecture](/env/landscape-architecture/degrees-admissions/masters.shtml)  [- Urban and Regional Planning](/env/urp/degrees-admissions/graduate-program.shtml)  [- Regenerative Studies](/env/lyle/degrees-admissions/ms-regenerative-studies.shtml) [- Minor Programs](/env/programs/minors.shtml)  [- General Education Courses](/env/programs/ge-courses.shtml)
+* Academic Resources
+
+  [ENV Student Success Advising Center](/env/student-success-advising-center/index.shtml) [Instructional Services Bureau + Print Labs](/env/resources/isb.shtml) [ENV Model Shop](/env/model-shop/index.shtml) [Architecture Fabrication Lab](/env/architecture/resources/arc-fab-lab.shtml) [GIS Lab](/env/urp/academic-resources/gis-lab.shtml)
+* News & Events
+
+  [News](/env/news-events/news/index.shtml) [Events / Calendar](/env/news-events/events/index.shtml) [ENV Publications](https://issuu.com/cppenv) [National Rankings & Recognition](/env/news-events/national-rankings.shtml)
+* Culture
+
+  [ENV Archives-Special Collections](/env/culture/env-archives.shtml) [Neutra VDL House](/env/culture/neutra-vdl.shtml) [W.Keith & Janet Kellogg University Art Gallery](/kellogg-gallery/index.shtml) [Don B. Huntley Gallery](/huntley-gallery/index.shtml)
+* Giving
+
+  [How to Give](/env/make-a-gift/index.shtml)
+
+ENV Model Shop
+
+* [Welcome](https://www-test.cpp.edu/env/model-shop/index.shtml)
+* [Pricing & Other Services](/~env/model-shop/pricing-and-other-services.shtml)
+
+# Welcome
+
+Welcome to the College of Environmental Design (ENV) Model Shop. This facility is available to ENV students who have successfully completed the certification process. Students must have their Bronco ID to access the Model Shop.
+
+Passing the Online Safety Exam and knowledge of shop tools are the minimum requirements. Students are required to show common sense, courtesy and responsibility as they develop and hone their skills from this point forward.
+
+## Location
+
+The ENV Model Shop is located in the Apparel Merchandising and Management Building (Bldg. 45, Room 103) east of the Interim Design Center (Bldg. 89). Need help? Find [Bldg. 45 on the Campus Map](https://www.cpp.edu/maps/dynamic/?structureID=Bg-45).
+
+### Fall and Spring Hours
+
+> #### Monday - Thursday:    8:30 AM - 12 PM,  1 PM - 8:45 PM (PST)
+>
+> #### Friday:    10:00 AM - 12 PM, 1 PM - 8:45 PM (PST)
+
+By appointment during the breaks.
+
+## Contact
+
+**Delmer Guillen**
+Instructional Support Technician III
+dlguillen@cpp.edu | (909) 979-6695
+
+![Ripped green paper.](/common/green-and-gold/assets/images/green-rip.svg)
+
+[![Cal Poly Pomona logo, building with a palm tree.](/common/green-and-gold/assets/logos/cpp_primary_1c_gold_rgb.png)](https://www.cpp.edu/)
+
+[Apply](https://www.cpp.edu/apply/)
+[Maps](https://maps.cpp.edu/)
+[Visit](https://www.cpp.edu/outreach/tours.shtml)
+[Contact Us](https://www.cpp.edu/contact.shtml)
+
+[![Instagram opens a new window](/common/green-and-gold/assets/icons/social/insta.svg)](https://www.instagram.com/calpolypomona/)
+[![LinkedIn opens a new window](/common/green-and-gold/assets/icons/social/li.svg)](https://www.linkedin.com/school/cal-poly-pomona/)
+[![YouTube opens a new window](/common/green-and-gold/assets/icons/social/yt.svg)](https://www.youtube.com/user/calpolypomona)
+[![Facebook opens a new window](/common/green-and-gold/assets/icons/social/fb.svg)](https://www.facebook.com/calpolypomona)
+[![X opens a new window](/common/green-and-gold/assets/icons/social/x.svg)](https://twitter.com/calpolypomona)
+
+Copyright ©2026 California State Polytechnic University, Pomona. All Rights Reserved
+
+A campus of
+[The California State University](https://www.calstate.edu/).
+
+[Feedback](https://www.cpp.edu/website-feedback.shtml)
+[Privacy](https://calstate.policystat.com/policy/18808065/latest/#autoid-z2p98)
+[Accessibility](https://www.cpp.edu/accessibility.shtml)
+[Document Readers](https://www.cpp.edu/file-viewers.shtml)

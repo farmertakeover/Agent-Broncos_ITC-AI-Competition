@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Corpus map{% endblock %}
+{% block body %}
+<section class="card corpus-map-intro">
+  <h1>Knowledge corpus map</h1>
+  <p class="lead muted">
+    This diagram groups crawled pages by the <strong>leading part of each filename</strong> (before <code>__</code>).
+    Bubble size reflects how many markdown files sit in each topic bucket.
+  </p>
+  <p class="muted small" id="ragNote">Loading…</p>
+</section>
+<section class="card">
+  <canvas id="corpusCanvas" width="900" height="560" aria-label="Corpus topic map"></canvas>
+  <p class="muted small" style="margin-top:0.75rem">
+    <strong>Not graph RAG:</strong> the assistant retrieves with <strong>FAISS vector search</strong> over chunk embeddings.
+    This map is only a structural overview of the crawl.
+  </p>
+</section>
+<script src="{{ url_for('static', filename='js/corpus_map.js') }}" defer></script>
+{% endblock %}
