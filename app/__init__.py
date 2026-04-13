@@ -1,5 +1,10 @@
 import os
 
+from dotenv import load_dotenv
+
+# Apply `.env` before `retrieval.config` reads OLLAMA_* (otherwise URLs/model stay at import-time defaults).
+load_dotenv()
+
 from flask import Flask
 
 from retrieval import config

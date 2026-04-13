@@ -30,7 +30,7 @@ if LLM_BACKEND not in ("ollama", "openai"):
 
 ALLOW_OPENAI = os.getenv("CPP_ALLOW_OPENAI", "false").lower() in ("1", "true", "yes")
 
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL") or os.getenv("CPP_OLLAMA_MODEL") or "gemma4"
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL") or os.getenv("CPP_OLLAMA_MODEL") or "gemma4:e2b"
 
 WHISPER_MODEL_SIZE = os.getenv("CPP_WHISPER_MODEL_SIZE", "base")
 
@@ -77,3 +77,12 @@ URL_MAP_PATH = os.path.join(INDEX_DIR, "url_map.json")
 OPENAI_MODEL = os.getenv("CPP_OPENAI_MODEL", "gpt-4o-mini")
 MAX_TOOL_ROUNDS = int(os.getenv("CPP_MAX_TOOL_ROUNDS", "2"))
 MAX_CONVERSATION_MESSAGES = int(os.getenv("CPP_MAX_CONVERSATION_MESSAGES", "10"))
+
+# Ollama OpenAI-compat: caps KV cache RAM (lower = less peak RAM during long prompts). Unset = server default.
+# See https://github.com/ollama/ollama — num_ctx / context_length on chat completions.
+_ctx = (os.getenv("CPP_OLLAMA_NUM_CTX") or os.getenv("CPP_LLM_NUM_CTX") or "").strip()
+OLLAMA_CHAT_NUM_CTX: int | None
+if _ctx.isdigit() and int(_ctx) > 0:
+    OLLAMA_CHAT_NUM_CTX = int(_ctx)
+else:
+    OLLAMA_CHAT_NUM_CTX = None

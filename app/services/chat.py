@@ -11,7 +11,11 @@ from typing import Any
 
 from openai import OpenAI
 
-from app.services.ollama_client import openai_client_cloud, openai_client_ollama
+from app.services.ollama_client import (
+    openai_client_cloud,
+    openai_client_ollama,
+    resolve_ollama_model_for_api,
+)
 from app.services import pulse as pulse_service
 from retrieval import config
 from retrieval.store import CorpusIndex, get_store
@@ -41,8 +45,9 @@ def _resolve_client_and_model() -> tuple[OpenAI | None, str | None, str | None]:
             return None, None, "missing_api_key"
         return openai_client_cloud(key), config.OPENAI_MODEL, None
 
-    # Ollama (default)
-    return openai_client_ollama(), config.OLLAMA_MODEL, None
+    # Ollama (default): use exact installed tag (e.g. gemma4:e2b), not bare gemma4 when only :e2b is pulled.
+    model, _note = resolve_ollama_model_for_api(config.OLLAMA_MODEL)
+    return openai_client_ollama(), model, None
 
 
 def _tools_schema() -> list[dict[str, Any]]:
@@ -244,13 +249,17 @@ def run_agent_turn(
     try:
         while True:
             force_no_tools = tool_waves >= max_waves
-            completion = client.chat.completions.create(
-                model=model,
-                messages=api_messages,
-                tools=_tools_schema(),
-                tool_choice="none" if force_no_tools else "auto",
-                temperature=0.2,
-            )
+            create_kw: dict[str, Any] = {
+                "model": model,
+                "messages": api_messages,
+                "tools": _tools_schema(),
+                "tool_choice": "none" if force_no_tools else "auto",
+                "temperature": 0.2,
+            }
+            if config.LLM_BACKEND == "ollama" and config.OLLAMA_CHAT_NUM_CTX is not None:
+                # Ollama-specific; lowers KV cache vs server default (helps tight-RAM hosts).
+                create_kw["extra_body"] = {"num_ctx": config.OLLAMA_CHAT_NUM_CTX}
+            completion = client.chat.completions.create(**create_kw)
             msg = completion.choices[0].message
             _record_usage(completion)
 
@@ -300,10 +309,21 @@ def run_agent_turn(
                     all_sources.append(s)
                 api_messages.append({"role": "tool", "tool_call_id": tc.id, "content": out_json})
     except Exception as e:
+        detail = str(e)
+        low = detail.lower()
+        content = "The assistant could not complete this request. Please try again later."
+        err_kind = "llm_error"
+        if "system memory" in low or "more system memory" in low or "requires more system memory" in low:
+            err_kind = "ollama_oom"
+            content = (
+                "Ollama refused to load the model: not enough free RAM for this tag. "
+                "Restarting Flask does not fix this—you need a smaller model/quant, more memory, or swap. "
+                "See README “Ollama out of memory”. Technical detail below."
+            )
         return {
-            "content": "The assistant could not complete this request. Please try again later.",
+            "content": content,
             "sources": all_sources,
             "usage": usage_total,
-            "error": "llm_error",
-            "detail": str(e),
+            "error": err_kind,
+            "detail": detail,
         }

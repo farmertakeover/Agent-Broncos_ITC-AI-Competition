@@ -179,7 +179,13 @@
         if (!reply && data && data.detail) reply = String(data.detail);
         if (!reply) reply = "Request failed (HTTP " + res.status + ").";
         if (data && data.error) reply += " [" + data.error + "]";
-        if (data && data.detail && (data.error === "llm_error" || reply.indexOf(String(data.detail)) < 0)) {
+        if (
+          data &&
+          data.detail &&
+          (data.error === "llm_error" ||
+            data.error === "ollama_oom" ||
+            reply.indexOf(String(data.detail)) < 0)
+        ) {
           reply += "\n\nDetails: " + String(data.detail);
         }
         appendBubble("assistant", reply, { sources: data.sources, usage: data.usage });
