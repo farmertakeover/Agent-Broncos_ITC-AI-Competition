@@ -45,7 +45,7 @@ def _resolve_client_and_model() -> tuple[OpenAI | None, str | None, str | None]:
             return None, None, "missing_api_key"
         return openai_client_cloud(key), config.OPENAI_MODEL, None
 
-    # Ollama (default): use exact installed tag (e.g. gemma4:e2b), not bare gemma4 when only :e2b is pulled.
+    # Ollama (default): use exact installed tag (e.g. gemma3:4b), not bare gemma3 when only one variant is pulled.
     model, _note = resolve_ollama_model_for_api(config.OLLAMA_MODEL)
     return openai_client_ollama(), model, None
 
@@ -313,6 +313,17 @@ def run_agent_turn(
         low = detail.lower()
         content = "The assistant could not complete this request. Please try again later."
         err_kind = "llm_error"
+        if "connection error" in low or "connecterror" in low:
+            if config.LLM_BACKEND == "ollama":
+                content = (
+                    "Could not connect to Ollama. Check OLLAMA_BASE_URL, confirm the Ollama server is reachable, "
+                    "and if using Ollama Cloud ensure OLLAMA_API_KEY is set. See README 'Connection error' checks."
+                )
+            else:
+                content = (
+                    "Could not reach OpenAI. Check internet egress and verify OPENAI_API_KEY/Agent_Broncos_API_Key "
+                    "for CPP_LLM_BACKEND=openai."
+                )
         if "system memory" in low or "more system memory" in low or "requires more system memory" in low:
             err_kind = "ollama_oom"
             content = (

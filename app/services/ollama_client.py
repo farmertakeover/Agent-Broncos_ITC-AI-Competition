@@ -42,11 +42,11 @@ def get_cached_ollama_model_names() -> tuple[list[str] | None, str | None]:
 
 def resolve_ollama_model_for_api(requested: str) -> tuple[str, str | None]:
     """
-    Ollama OpenAI API requires an installed tag (e.g. gemma4:e2b), not always the library alias (gemma4).
+    Ollama OpenAI API requires an installed tag (e.g. gemma3:4b), not always the library alias (gemma3).
 
     Returns (model_name_for_api, resolution_note).
     - Exact match to an installed name -> use it.
-    - Exactly one installed model shares the same base name (before ':') -> use that tag (fixes gemma4 vs gemma4:e2b).
+    - Exactly one installed model shares the same base name (before ':') -> use that tag (fixes gemma3 vs gemma3:4b).
     - Zero or multiple base matches without exact match -> return requested unchanged (may 404); note explains.
     """
     req = (requested or "").strip()

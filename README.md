@@ -20,16 +20,23 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
+### Current default profile (recommended)
+
+- Backend: `CPP_LLM_BACKEND=ollama`
+- Base URL: `OLLAMA_BASE_URL=https://ollama.com`
+- Model: `OLLAMA_MODEL=gemma3:4b`
+- App URL: `http://127.0.0.1:5000/chat`
+
 ### Ollama Cloud (recommended if you want to save laptop RAM)
 
-Use this when **local GGUFs** (e.g. `gemma4:e2b`) do not fit in free RAM but you still want an Ollama-compatible stack.
+Use this when local models do not fit in free RAM but you still want an Ollama-compatible stack.
 
 1. Create an API key at [ollama.com/settings/keys](https://ollama.com/settings/keys).
 2. In `.env` (see [`.env.example`](.env.example)):
 
    - `OLLAMA_BASE_URL=https://ollama.com` (no `/v1`; the app appends it).
    - `OLLAMA_API_KEY=<your key>` (**required** for cloud; health and `/api/tags` use the same Bearer token).
-   - `OLLAMA_MODEL=<a [cloud model](https://ollama.com/search?c=cloud)>` (example in `.env.example`: `gpt-oss:120b-cloud`).
+   - `OLLAMA_MODEL=<a [cloud model](https://ollama.com/search?c=cloud)>` (example in `.env.example`: `gemma3:4b`).
 
 3. Confirm:
 
@@ -45,18 +52,18 @@ Use this when **local GGUFs** (e.g. `gemma4:e2b`) do not fit in free RAM but you
 ### Local Ollama (optional)
 
 1. Install and start [Ollama](https://ollama.com).
-2. Pull a model, e.g. **Gemma 4** ([library](https://ollama.com/library/gemma4)):
+2. Pull a model, e.g. **Gemma 3 4B** ([library](https://ollama.com/library/gemma3)):
 
    ```bash
-   ollama pull gemma4:e2b
+   ollama pull gemma3:4b
    ollama list
    ```
 
-   The app can **auto-resolve** a short name like `gemma4` to the only installed `gemma4:*` tag. **`GET /api/health`** includes `ollama_model_for_api` and optional `ollama_model_resolution_note`.
+   The app can auto-resolve a short name like `gemma3` to a single installed `gemma3:*` tag. **`GET /api/health`** includes `ollama_model_for_api` and optional `ollama_model_resolution_note`.
 
 3. Env: `OLLAMA_BASE_URL=http://127.0.0.1:11434`, `OLLAMA_MODEL=<exact tag>`. Leave **`OLLAMA_API_KEY`** unset for typical local installs.
 
-For GGUFs outside Ollama, see [Unsloth — Gemma 4](https://unsloth.ai/docs/models/gemma-4).
+For GGUFs outside Ollama, see [Unsloth — Gemma models](https://docs.unsloth.ai/models).
 
 **TurboQuant / KV cache:** Only affect **local** (or self-hosted) Ollama; set on the **Ollama process** (e.g. `OLLAMA_KV_CACHE_TYPE`). Not applicable to weights hosted on Ollama Cloud.
 
@@ -89,7 +96,7 @@ Override paths with `CPP_CORPUS_DIR` / `CPP_INDEX_DIR` if needed (see `retrieval
 Run the app:
 
 ```bash
-python run.py
+./.venv/bin/python run.py
 ```
 
 Open `http://127.0.0.1:5000/chat`. Browse **`/corpus-map`** for a topic overview of the crawl; retrieval itself is **FAISS vector RAG**, not graph RAG.
@@ -108,7 +115,7 @@ Writes `_data/eval_results.json` with match rate against `_data/golden_questions
 
 See `retrieval/config.py` for defaults: `CPP_DEFAULT_TOP_K`, `CPP_MAX_CHUNK_CHARS`, `CPP_MAX_TOOL_ROUNDS`, `CPP_USE_RERANKER`, `CPP_LLM_BACKEND`, Ollama URL/model, whisper size, `CPP_LLM_READ_TIMEOUT` / `CPP_LLM_CONNECT_TIMEOUT`, optional **pulse** (`CPP_ENABLE_PULSE_TOOL`, `CPP_PULSE_INGEST_SECRET`, `CPP_PULSE_URL`).
 
-## Verification (Ollama + Gemma 4 + STT)
+## Verification (Ollama + Gemma 3 + STT)
 
 Run these from the machine where **Flask and Ollama** run (or fix `OLLAMA_BASE_URL`).
 
@@ -127,15 +134,43 @@ Example health check:
 curl -sS http://127.0.0.1:5000/api/health | python3 -m json.tool
 ```
 
-Chat errors with **`llm_error`** now include a **Details** line in the UI (server `detail` field). Typical fixes: start Ollama, `ollama pull <tag>`, set **`OLLAMA_MODEL`** to the **exact** tag (or rely on auto-resolve when only one `gemma4:*` variant is installed).
+### Connection error (`/api/chat` → `detail: "Connection error."`)
 
-### Why `404 model 'gemma4' not found`?
+This means Flask is running but the configured LLM backend is unreachable.
 
-Ollama often only has **`gemma4:e2b`** (or another variant) installed. The OpenAI-compatible endpoint must receive that **full** name. **`ollama_model_present`** could still be true when the app treated `gemma4` as matching the same *family* as `gemma4:e2b`, while the API rejected the short name. Chat now resolves **one** matching variant automatically; use **`ollama_model_for_api`** from **`/api/health`** to see what will be called.
+For **Ollama backend** (`CPP_LLM_BACKEND=ollama`, default):
 
-### Gemma 4 “native” audio vs faster-whisper
+```bash
+# 1) Confirm backend selection and Ollama target
+echo "$CPP_LLM_BACKEND"
+echo "$OLLAMA_BASE_URL"
+echo "$OLLAMA_MODEL"
 
-Neither is automatically “better” for every use case. **faster-whisper** is specialized STT; **`CPP_WHISPER_MODEL_SIZE=tiny`** can run in hundreds of MB while your **chat** model is separate. **Gemma 4 E2B/E4B** can handle audio in some **native** multimodal stacks (Unsloth / llama.cpp, etc.), but **this app** only sends **text** to Ollama after transcription. Doing ASR **inside** Gemma as well as chat usually needs **more** total memory, not less—your current error is the **LLM** load failing RAM checks, not Whisper.
+# 2) Check Ollama daemon reachability
+curl -sS "${OLLAMA_BASE_URL%/}/api/version"
+curl -sS "${OLLAMA_BASE_URL%/}/api/tags"
+
+# 3) Check app view of backend health
+curl -sS http://127.0.0.1:5000/api/health | python3 -m json.tool
+```
+
+- If using **local Ollama**, start/restart the daemon and ensure `OLLAMA_BASE_URL=http://127.0.0.1:11434`.
+- If using **Ollama Cloud**, set a valid `OLLAMA_API_KEY` in `.env` and use a cloud-capable `OLLAMA_MODEL`.
+
+For **OpenAI backend** (`CPP_LLM_BACKEND=openai`):
+
+- Ensure `CPP_ALLOW_OPENAI=true` and set `OPENAI_API_KEY` (or `Agent_Broncos_API_Key`).
+- Verify outbound internet access from the runtime.
+
+Chat errors with **`llm_error`** now include a **Details** line in the UI (server `detail` field). Typical fixes: start Ollama, `ollama pull <tag>`, set **`OLLAMA_MODEL`** to the exact tag (or rely on auto-resolve when only one `gemma3:*` variant is installed).
+
+### Why `404 model 'gemma3' not found`?
+
+Ollama often only has **`gemma3:4b`** (or another variant) installed. The OpenAI-compatible endpoint must receive that full name. **`ollama_model_present`** can still be true when the app treats `gemma3` as matching the same family as `gemma3:4b`, while the API rejects the short name. Chat resolves one matching variant automatically; use **`ollama_model_for_api`** from **`/api/health`** to see what will be called.
+
+### Gemma models and audio vs faster-whisper
+
+Neither is automatically better for every use case. **faster-whisper** is specialized STT; **`CPP_WHISPER_MODEL_SIZE=tiny`** can run in hundreds of MB while your chat model is separate. Some Gemma variants can handle audio in native multimodal stacks, but this app only sends text to Ollama after transcription. Doing ASR inside the chat model usually needs more total memory, not less.
 
 **Rewriting for Gemma-only audio** would mean sending **audio** through an API that your Ollama tag actually supports (check Ollama’s current multimodal docs; plain text `chat.completions` may not be enough). That is separate from fixing out-of-memory on the chat model.
 

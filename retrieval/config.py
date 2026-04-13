@@ -30,7 +30,7 @@ if LLM_BACKEND not in ("ollama", "openai"):
 
 ALLOW_OPENAI = os.getenv("CPP_ALLOW_OPENAI", "false").lower() in ("1", "true", "yes")
 
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL") or os.getenv("CPP_OLLAMA_MODEL") or "gemma4:e2b"
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL") or os.getenv("CPP_OLLAMA_MODEL") or "gemma3:4b"
 
 WHISPER_MODEL_SIZE = os.getenv("CPP_WHISPER_MODEL_SIZE", "base")
 
