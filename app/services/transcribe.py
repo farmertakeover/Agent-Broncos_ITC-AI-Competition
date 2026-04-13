@@ -1,7 +1,9 @@
 """Local speech-to-text via faster-whisper (lazy-loaded)."""
 from __future__ import annotations
 
+import importlib.util
 import os
+import shutil
 import tempfile
 import threading
 from functools import lru_cache
@@ -12,6 +14,29 @@ from retrieval import config
 
 _warmup_lock = threading.Lock()
 _warmup_thread_started = False
+
+
+@lru_cache(maxsize=1)
+def transcribe_runtime_status() -> dict[str, object]:
+    """
+    Fast dependency preflight for STT runtime.
+    Used at startup and health checks to surface missing runtime dependencies clearly.
+    """
+    faster_whisper_ok = importlib.util.find_spec("faster_whisper") is not None
+    ffmpeg_path = shutil.which("ffmpeg")
+    ffmpeg_ok = ffmpeg_path is not None
+    issues: list[str] = []
+    if not faster_whisper_ok:
+        issues.append("python package `faster_whisper` not installed in current interpreter")
+    if not ffmpeg_ok:
+        issues.append("`ffmpeg` binary not found on PATH")
+    return {
+        "ok": faster_whisper_ok and ffmpeg_ok,
+        "faster_whisper_available": faster_whisper_ok,
+        "ffmpeg_available": ffmpeg_ok,
+        "ffmpeg_path": ffmpeg_path,
+        "issues": issues,
+    }
 
 
 @lru_cache(maxsize=1)

@@ -22,6 +22,7 @@ from app.services.ollama_client import (
 from app.services.transcribe import (
     schedule_whisper_warmup_background,
     transcribe_upload,
+    transcribe_runtime_status,
     whisper_model_cached,
 )
 from retrieval import config
@@ -139,6 +140,7 @@ def api_health():
         "ollama_version": ollama_version,
         "ollama_host_is_cloud": "ollama.com" in config.ollama_daemon_root().lower(),
         "whisper_model_cached": whisper_model_cached(),
+        "transcribe_runtime": transcribe_runtime_status(),
         "pulse_tool_enabled": config.PULSE_ENABLED,
     }
     if config.WHISPER_WARMUP:
