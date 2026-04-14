@@ -9,7 +9,9 @@ Default backend in `.env.example` is OpenAI. Ollama is also supported.
 
 ## Demo Video
 
-- [Agent Broncos Demo](https://youtu.be/dwWcijElnjc)
+[![Watch the demo](https://img.youtube.com/vi/dwWcijElnjc/hqdefault.jpg)](https://youtu.be/dwWcijElnjc)
+
+[Watch on YouTube](https://youtu.be/dwWcijElnjc)
 
 ## What Is In Use
 
