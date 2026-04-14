@@ -25,31 +25,31 @@ Default backend in `.env.example` is OpenAI. Ollama is also supported.
 | STT | `faster-whisper` + `ffmpeg` |
 | Optional pulse feed | JSON ingest/read via `/api/student-pulse` and `/api/student-pulse/ingest` |
 
-## Architecture Diagram
+## Architecture
 
 ```mermaid
 flowchart LR
-    U[Browser UI<br/>/chat /corpus-map /pulse] --> F[Flask Routes<br/>app/routes.py]
+    UI["Browser UI: chat, corpus-map, pulse"] --> ROUTES["Flask routes: app/routes.py"]
 
-    F --> C[Chat Service<br/>run_agent_turn]
-    C --> T1[Tool: search_corpus]
-    C --> T2[Tool: get_source_excerpt]
-    C --> T3[Optional Tool:<br/>get_student_pulse]
+    ROUTES --> CHAT["Chat service: run_agent_turn"]
+    CHAT --> TOOL1["Tool: search_corpus"]
+    CHAT --> TOOL2["Tool: get_source_excerpt"]
+    CHAT --> TOOL3["Optional tool: get_student_pulse"]
 
-    T1 --> R[Retrieval Store]
-    T2 --> R
-    R --> I[_data/index<br/>FAISS + metadata]
-    I --> M[_data/Corpus<br/>CPP markdown corpus]
+    TOOL1 --> STORE["Retrieval store"]
+    TOOL2 --> STORE
+    STORE --> INDEX["Index files in _data/index"]
+    INDEX --> CORPUS["Corpus markdown in _data/Corpus/itc2026_ai_corpus"]
 
-    C -->|CPP_LLM_BACKEND=openai| OAI[OpenAI Chat API]
-    C -->|CPP_LLM_BACKEND=ollama| OLL[Ollama OpenAI-compatible API]
+    CHAT --> OPENAI["OpenAI backend"]
+    CHAT --> OLLAMA["Ollama backend"]
 
-    F --> STT["/api/transcribe"]
-    STT --> W[faster-whisper model]
-    STT --> FF[ffmpeg]
+    ROUTES --> STT["API transcribe endpoint"]
+    STT --> WHISPER["faster-whisper"]
+    STT --> FFMPEG["ffmpeg"]
 
-    F --> P["/api/student-pulse"]
-    P --> PF[_data/pulse/latest.json<br/>or CPP_PULSE_URL]
+    ROUTES --> PULSE["API student-pulse endpoint"]
+    PULSE --> PULSE_DATA["Pulse data from file or URL"]
 ```
 
 ## Quick Start
