@@ -7,6 +7,10 @@ Agent Broncos is a Flask app that answers Cal Poly Pomona questions using:
 
 Default backend in `.env.example` is OpenAI. Ollama is also supported.
 
+## Demo Video
+
+- [Agent Broncos Demo](https://youtu.be/dwWcijElnjc)
+
 ## What Is In Use
 
 | Area | Implementation |
@@ -38,7 +42,7 @@ flowchart LR
     C -->|CPP_LLM_BACKEND=openai| OAI[OpenAI Chat API]
     C -->|CPP_LLM_BACKEND=ollama| OLL[Ollama OpenAI-compatible API]
 
-    F --> STT[/api/transcribe]
+    F --> STT["/api/transcribe"]
     STT --> W[faster-whisper model]
     STT --> FF[ffmpeg]
 
