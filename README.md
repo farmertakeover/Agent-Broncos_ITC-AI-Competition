@@ -48,7 +48,7 @@ flowchart LR
     STT --> W[faster-whisper model]
     STT --> FF[ffmpeg]
 
-    F --> P[/api/student-pulse]
+    F --> P["/api/student-pulse"]
     P --> PF[_data/pulse/latest.json<br/>or CPP_PULSE_URL]
 ```
 
