@@ -1,251 +1,144 @@
-# Agent Broncos — Cal Poly Pomona ITC AI Competition
+# Agent Broncos — CPP ITC AI Competition
 
-Flask web app with **OpenAI (ChatGPT API)** or **Ollama** (local or [Ollama Cloud](https://docs.ollama.com/cloud)) for tool-calling chat, plus a **local FAISS** index over the CPP markdown corpus. **[`.env.example`](.env.example)** defaults to **OpenAI**; switch `CPP_LLM_BACKEND` to `ollama` if you prefer Ollama.
+Agent Broncos is a Flask app that answers Cal Poly Pomona questions using:
+- tool-calling chat (`/api/chat`)
+- local FAISS retrieval over the CPP markdown corpus
+- optional local speech-to-text (`/api/transcribe`) via `faster-whisper`
 
-Everything lives under **`_data/`** (underscore avoids a bare `data/` folder, which is easy to confuse with CPP site paths like `/data/...` in the crawl):
+Default backend in `.env.example` is OpenAI. Ollama is also supported.
 
-| Path | Contents |
-|------|----------|
-| `_data/Corpus/itc2026_ai_corpus/` | Source markdown + `index.json` (tracked) |
-| `_data/index/` | Generated FAISS index (gitignored; large binaries) |
-| `_data/golden_questions.json` | Retrieval eval questions (tracked) |
-| `_data/eval_results.json` | Output of `golden_eval.py` (gitignored) |
+## What Is In Use
 
-## Setup
+| Area | Implementation |
+|---|---|
+| Web app | Flask + Jinja templates (`/chat`, `/corpus-map`, `/pulse`) |
+| Chat orchestration | `app/services/chat.py` with tools `search_corpus`, `get_source_excerpt` (+ optional `get_student_pulse`) |
+| Retrieval | FAISS (`faiss-cpu`) + sentence-transformers embeddings |
+| Corpus source | `_data/Corpus/itc2026_ai_corpus/*.md` + `_data/Corpus/itc2026_ai_corpus/index.json` |
+| Index artifacts | `_data/index/cpp_corpus.faiss`, `_data/index/cpp_corpus.meta.jsonl`, `_data/index/url_map.json` |
+| STT | `faster-whisper` + `ffmpeg` |
+| Optional pulse feed | JSON ingest/read via `/api/student-pulse` and `/api/student-pulse/ingest` |
+
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    U[Browser UI<br/>/chat /corpus-map /pulse] --> F[Flask Routes<br/>app/routes.py]
+
+    F --> C[Chat Service<br/>run_agent_turn]
+    C --> T1[Tool: search_corpus]
+    C --> T2[Tool: get_source_excerpt]
+    C --> T3[Optional Tool:<br/>get_student_pulse]
+
+    T1 --> R[Retrieval Store]
+    T2 --> R
+    R --> I[_data/index<br/>FAISS + metadata]
+    I --> M[_data/Corpus<br/>CPP markdown corpus]
+
+    C -->|CPP_LLM_BACKEND=openai| OAI[OpenAI Chat API]
+    C -->|CPP_LLM_BACKEND=ollama| OLL[Ollama OpenAI-compatible API]
+
+    F --> STT[/api/transcribe]
+    STT --> W[faster-whisper model]
+    STT --> FF[ffmpeg]
+
+    F --> P[/api/student-pulse]
+    P --> PF[_data/pulse/latest.json<br/>or CPP_PULSE_URL]
+```
+
+## Quick Start
 
 ```bash
 cd /workspaces/Brono-Agents-ITC-AI-Competition
-python3 -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
 ```
 
-### Current default profile (`.env.example`)
-
-- Backend: `CPP_LLM_BACKEND=openai` with `CPP_ALLOW_OPENAI=true`
-- Key: `OPENAI_API_KEY`
-- Model: `CPP_OPENAI_MODEL=gpt-5-mini` (must match a model id your key can call)
-- App URL: `http://127.0.0.1:5000/chat`
-
-### Ollama Cloud (optional — swap backend in `.env`)
-
-Use this when local models do not fit in free RAM but you still want an Ollama-compatible stack.
-
-1. Create an API key at [ollama.com/settings/keys](https://ollama.com/settings/keys).
-2. In `.env` (see [`.env.example`](.env.example)):
-
-   - `OLLAMA_BASE_URL=https://ollama.com` (no `/v1`; the app appends it).
-   - `OLLAMA_API_KEY=<your key>` (**required** for cloud; health and `/api/tags` use the same Bearer token).
-   - `OLLAMA_MODEL=<a [cloud model](https://ollama.com/search?c=cloud)>` (example in `.env.example`: `gemma3:4b`).
-
-3. Confirm:
-
-   ```bash
-   curl -sS -H "Authorization: Bearer $OLLAMA_API_KEY" https://ollama.com/api/tags | head
-   curl -sS http://127.0.0.1:5000/api/health | python3 -m json.tool
-   ```
-
-   Expect **`ollama_reachable`**, **`ollama_host_is_cloud`**, and **`ollama_model_present`** to be true. Corpus + **faster-whisper** still run **locally**; only the **chat LLM** hits the cloud.
-
-**Tool calling:** depends on the cloud model you pick—verify with a real question in **`/chat`**.
-
-### Local Ollama (optional)
-
-1. Install and start [Ollama](https://ollama.com).
-2. Pull a model, e.g. **Gemma 3 4B** ([library](https://ollama.com/library/gemma3)):
-
-   ```bash
-   ollama pull gemma3:4b
-   ollama list
-   ```
-
-   The app can auto-resolve a short name like `gemma3` to a single installed `gemma3:*` tag. **`GET /api/health`** includes `ollama_model_for_api` and optional `ollama_model_resolution_note`.
-
-3. Env: `OLLAMA_BASE_URL=http://127.0.0.1:11434`, `OLLAMA_MODEL=<exact tag>`. Leave **`OLLAMA_API_KEY`** unset for typical local installs.
-
-For GGUFs outside Ollama, see [Unsloth — Gemma models](https://docs.unsloth.ai/models).
-
-**TurboQuant / KV cache:** Only affect **local** (or self-hosted) Ollama; set on the **Ollama process** (e.g. `OLLAMA_KV_CACHE_TYPE`). Not applicable to weights hosted on Ollama Cloud.
-
-### Speech-to-text (optional)
-
-Chat can **record audio in the browser** and send it to **`POST /api/transcribe`**, which runs **faster-whisper** on the server. Install **ffmpeg** on the host so decoding WebM/Opus works. Tune with `CPP_WHISPER_MODEL_SIZE` (default `base`; use `tiny` for faster dev), `CPP_WHISPER_DEVICE`, `CPP_WHISPER_COMPUTE_TYPE`. Set **`CPP_WHISPER_WARMUP=true`** to load the Whisper model in a background thread when **`GET /api/health`** is hit (reduces “stuck transcribing” on first mic use).
-
-Browser-side transcribe requests **abort after 180 seconds**; extend the limit in `static/js/chat.js` (`TRANSCRIBE_FETCH_MS`) if needed.
-
-### OpenAI (ChatGPT API) — default in `.env.example`
-
-Set **`CPP_ALLOW_OPENAI=true`**, **`CPP_LLM_BACKEND=openai`**, and **`OPENAI_API_KEY`** (only this name is read). Optional: **`CPP_OPENAI_MODEL`**.
-
-**`/api/health`:** `openai_configured` is true only when the key is set and not the literal placeholder from `.env.example`. If **`openai_key_is_placeholder`** is true, the saved `.env` on disk still has `replace_with_your_openai_api_key`—paste your real `sk-...` key, **save the file**, and restart Flask.
-
-**Temperature:** Some models (e.g. **gpt-5-mini**) reject custom `temperature`; the app **does not send** `temperature` for the OpenAI backend unless you set **`CPP_OPENAI_TEMPERATURE`**. Ollama still uses `0.2` for steadier tool use.
-
-### Build the index
+Build the index:
 
 ```bash
-# Full corpus (can take a long time)
 python scripts/build_index.py
-
-# Optional: only first N files while developing
-python scripts/build_index.py --limit-files 200
 ```
-
-The script prints resolved **corpus** and **index** paths first; confirm they point at `_data/...` before waiting on embeddings.
-
-If Hugging Face downloads fail, set a token (`HF_TOKEN`) or use an environment where `huggingface_hub` can reach the hub; after the embedding model is cached, rebuilds are mostly offline-friendly.
-
-Override paths with `CPP_CORPUS_DIR` / `CPP_INDEX_DIR` if needed (see `retrieval/config.py`).
-
-**Chat LLM vs RAG vs STT (three separate stacks):**
-
-| Piece | What drives it | OpenAI chat changes it? |
-|-------|----------------|-------------------------|
-| **FAISS + embeddings** | Local `sentence-transformers` (`CPP_EMBEDDING_MODEL`, default `all-MiniLM-L6-v2`) | **No** — same index and retrieval whether you use `gpt-5-mini`, `gpt-4o-mini`, or Ollama. |
-| **faster-whisper** (`/api/transcribe`) | `CPP_WHISPER_*` (device, model size) | **No** — switching to OpenAI does not make Whisper faster; tune **`CPP_WHISPER_MODEL_SIZE`** (e.g. `tiny` / `base`) and **`CPP_WHISPER_DEVICE`** (`cpu` vs `cuda`) instead. |
-| **Chat + tools** | `CPP_LLM_BACKEND` + `CPP_OPENAI_MODEL` (e.g. **`gpt-5-mini`**) | **Yes** — this is what your API key controls. |
-
-**When to re-run `build_index.py`:** Only if you change **`CPP_EMBEDDING_MODEL`**, **`scripts/build_index.py` chunking**, or **add/remove/replace corpus files** you want reflected in search. **You do not need to re-embed** just because you moved from Ollama to OpenAI.
-
-**VRAM / RAM for embedding (build + query):** Default **MiniLM** is small (~90 MB weights). On **CPU**, expect roughly **~1–4 GB system RAM** spikes during `build_index.py` batch encoding (batch size 64 in the script), often less once caches are warm. If **PyTorch sees a GPU**, `SentenceTransformer` may use **~0.5–2 GB VRAM** during encoding (varies by GPU and batch). **FAISS search** is cheap; the reranker (`CPP_USE_RERANKER`, cross-encoder) adds extra RAM/GPU if loaded.
-
-**Whisper VRAM:** With **`CPP_WHISPER_DEVICE=cuda`**, a **base** model often wants on the order of **~1–3 GB VRAM** depending on `CPP_WHISPER_COMPUTE_TYPE`; **`cpu`** uses **system RAM**, not VRAM.
 
 Run the app:
 
 ```bash
-./.venv/bin/python run.py
+python run.py
 ```
 
-Open `http://127.0.0.1:5000/chat`. Browse **`/corpus-map`** for a topic overview of the crawl; retrieval itself is **FAISS vector RAG**, not graph RAG.
+Open:
+- `http://127.0.0.1:5000/chat`
+- `http://127.0.0.1:5000/api/health`
 
-## Retrieval evaluation
+## LLM Backend Configuration
 
-After the index exists:
+### OpenAI (default)
+
+In `.env`:
+- `CPP_LLM_BACKEND=openai`
+- `CPP_ALLOW_OPENAI=true`
+- `OPENAI_API_KEY=...`
+- optional `CPP_OPENAI_MODEL` (default: `gpt-5-mini`)
+
+### Ollama
+
+In `.env`:
+- `CPP_LLM_BACKEND=ollama`
+- `CPP_ALLOW_OPENAI=false`
+- `OLLAMA_BASE_URL=http://127.0.0.1:11434` (or your remote/cloud endpoint)
+- `OLLAMA_MODEL=<installed tag>` (example `gemma3:4b`)
+- `OLLAMA_API_KEY` only when your Ollama endpoint requires auth
+
+## Speech-to-Text (Optional, Implemented)
+
+`POST /api/transcribe` is enabled in code. Requirements:
+- Python package `faster-whisper` (already in `requirements.txt`)
+- system `ffmpeg` on PATH
+
+Useful env vars:
+- `CPP_WHISPER_MODEL_SIZE` (default `base`, use `tiny` for lighter dev)
+- `CPP_WHISPER_DEVICE` (`cpu` or `cuda`)
+- `CPP_WHISPER_COMPUTE_TYPE` (default `int8`)
+- `CPP_WHISPER_WARMUP=true` to preload on health check
+
+## Pulse Feed (Optional, Implemented)
+
+Supported and wired:
+- `GET /api/student-pulse`
+- `POST /api/student-pulse/ingest` (requires `CPP_PULSE_INGEST_SECRET`)
+- `CPP_ENABLE_PULSE_TOOL=true` to expose `get_student_pulse` to chat
+
+Primary schema: `integrations/pulse_schema.json`.
+
+## Retrieval Evaluation
+
+After index build:
 
 ```bash
 python scripts/golden_eval.py
 ```
 
-Writes `_data/eval_results.json` with match rate against `_data/golden_questions.json`.
+Writes `_data/eval_results.json` from `_data/golden_questions.json`.
 
-## Configuration
-
-See `retrieval/config.py` for defaults: `CPP_DEFAULT_TOP_K`, `CPP_MAX_CHUNK_CHARS`, `CPP_MAX_TOOL_ROUNDS`, `CPP_USE_RERANKER`, `CPP_LLM_BACKEND`, Ollama URL/model, whisper size, `CPP_LLM_READ_TIMEOUT` / `CPP_LLM_CONNECT_TIMEOUT`, optional **pulse** (`CPP_ENABLE_PULSE_TOOL`, `CPP_PULSE_INGEST_SECRET`, `CPP_PULSE_URL`).
-
-## Verification (Ollama + Gemma 3 + STT)
-
-Run these from the machine where **Flask and Ollama** run (or fix `OLLAMA_BASE_URL`).
-
-| Step | Command / check | Pass |
-|------|-------------------|------|
-| V1 | `curl -sS http://127.0.0.1:11434/api/tags` | HTTP 200, JSON includes your model name |
-| V2 | `curl -sS …/v1/chat/completions` with minimal `messages` (no tools) | 200, assistant content |
-| V3 | Same with a minimal `tools` array | 200 (tool_calls or content) |
-| V4 | `curl -sS http://127.0.0.1:5000/api/health` | `ollama_reachable: true`, `ollama_model_present: true` |
-| V5 | Send a short message via **`POST /api/chat`** | HTTP 200, answer text, tokens or tool usage |
-| V6 | **`POST /api/transcribe`** with a short audio clip | JSON `text` within timeout |
-
-Example health check:
-
-```bash
-curl -sS http://127.0.0.1:5000/api/health | python3 -m json.tool
-```
-
-### Connection error (`/api/chat` → `detail: "Connection error."`)
-
-This means Flask is running but the configured LLM backend is unreachable.
-
-For **Ollama backend** (`CPP_LLM_BACKEND=ollama`, default):
-
-```bash
-# 1) Confirm backend selection and Ollama target
-echo "$CPP_LLM_BACKEND"
-echo "$OLLAMA_BASE_URL"
-echo "$OLLAMA_MODEL"
-
-# 2) Check Ollama daemon reachability
-curl -sS "${OLLAMA_BASE_URL%/}/api/version"
-curl -sS "${OLLAMA_BASE_URL%/}/api/tags"
-
-# 3) Check app view of backend health
-curl -sS http://127.0.0.1:5000/api/health | python3 -m json.tool
-```
-
-- If using **local Ollama**, start/restart the daemon and ensure `OLLAMA_BASE_URL=http://127.0.0.1:11434`.
-- If using **Ollama Cloud**, set a valid `OLLAMA_API_KEY` in `.env` and use a cloud-capable `OLLAMA_MODEL`.
-
-For **OpenAI backend** (`CPP_LLM_BACKEND=openai`):
-
-- Ensure `CPP_ALLOW_OPENAI=true` and set `OPENAI_API_KEY`.
-- Verify outbound internet access from the runtime.
-
-Chat errors with **`llm_error`** now include a **Details** line in the UI (server `detail` field). Typical fixes: start Ollama, `ollama pull <tag>`, set **`OLLAMA_MODEL`** to the exact tag (or rely on auto-resolve when only one `gemma3:*` variant is installed).
-
-### Why `404 model 'gemma3' not found`?
-
-Ollama often only has **`gemma3:4b`** (or another variant) installed. The OpenAI-compatible endpoint must receive that full name. **`ollama_model_present`** can still be true when the app treats `gemma3` as matching the same family as `gemma3:4b`, while the API rejects the short name. Chat resolves one matching variant automatically; use **`ollama_model_for_api`** from **`/api/health`** to see what will be called.
-
-### Gemma models and audio vs faster-whisper
-
-Neither is automatically better for every use case. **faster-whisper** is specialized STT; **`CPP_WHISPER_MODEL_SIZE=tiny`** can run in hundreds of MB while your chat model is separate. Some Gemma variants can handle audio in native multimodal stacks, but this app only sends text to Ollama after transcription. Doing ASR inside the chat model usually needs more total memory, not less.
-
-**Rewriting for Gemma-only audio** would mean sending **audio** through an API that your Ollama tag actually supports (check Ollama’s current multimodal docs; plain text `chat.completions` may not be enough). That is separate from fixing out-of-memory on the chat model.
-
-### Ollama out of memory (`model requires more system memory …`)
-
-If you see **`ollama_oom`** or **Details** with **more system memory than is available**, **Flask is not broken**—**Ollama** will not load that GGUF because **free RAM** is too low (e.g. 7.2 GiB needed vs 4.8 GiB available). **Restarting or “reopening” Flask does not add RAM.**
-
-Mitigations: use a **smaller** Ollama tag/quant, **free memory** (close apps, unload other models), add **swap**, use a **beefier machine** or **GPU**, or use one of the **workarounds** below.
-
-### Laptop RAM too small: workarounds (no local GGUF load)
-
-1. **Remote Ollama (your own PC / server)**  
-   Install Ollama on a machine with enough RAM. Bind or tunnel it safely (VPN, Tailscale, SSH `-L 11434:127.0.0.1:11434`, or a private network). On the laptop, in `.env`:
-   - `OLLAMA_BASE_URL=http://<that-host>:11434` (no `/v1`; the app adds it)
-   - `OLLAMA_MODEL=<exact tag on that host>`  
-   Flask and the browser can stay on the laptop; only LLM traffic goes to the remote host. **Do not** expose `11434` to the public internet without auth.
-
-2. **Ollama Cloud (hosted inference)**  
-   Ollama can run **cloud** models on their side so your laptop does not hold the full weight in RAM. See [Ollama Cloud](https://docs.ollama.com/cloud): create an API key at [ollama.com/settings/keys](https://ollama.com/settings/keys), then in `.env`:
-   - `OLLAMA_BASE_URL=https://ollama.com`
-   - `OLLAMA_API_KEY=<your key>` (required; not the dummy `ollama` placeholder)
-   - `OLLAMA_MODEL=<a cloud-capable model name from the [model library](https://ollama.com/search?c=cloud)>`  
-   This app uses the same OpenAI-compatible `/v1` client as for local Ollama. **Tool calling** must be supported by the cloud model you pick—verify with a short chat test.
-
-3. **Hosted OpenAI-style API (competition / backup)**  
-   Enable **`CPP_ALLOW_OPENAI=true`**, **`CPP_LLM_BACKEND=openai`**, and set **`OPENAI_API_KEY`**. Uses OpenAI instead of Ollama.
-
-**Fine-tuning (Unsloth)** does not replace any of the above for “I have 4.8 GiB and E2B wants 7.2 GiB”—it changes behavior after you can already run a model somewhere.
-
-## Campus pulse (optional)
-
-- UI: **`/pulse`** and **`GET /api/student-pulse`** — JSON digest ([`integrations/pulse_schema.json`](integrations/pulse_schema.json)).
-- n8n: [`docs/n8n/README.md`](docs/n8n/README.md) — **`POST /api/student-pulse/ingest`** with `CPP_PULSE_INGEST_SECRET`.
-- LLM: set **`CPP_ENABLE_PULSE_TOOL=true`** for tool **`get_student_pulse`** (unofficial digest only; corpus search remains authoritative for CPP policy).
-
-## Optional fine-tuning (Unsloth → Ollama)
-
-See [`scripts/finetune/README.md`](scripts/finetune/README.md) for a Phase-2 checklist (offline LoRA, export, `ollama create`, then set `OLLAMA_MODEL`).
-
-## Optional browser extension
-
-See `extension/README.txt` (consent-first spike, no portal scraping).
-
-## API endpoints
+## Key Endpoints
 
 | Path | Purpose |
-|------|---------|
-| `GET /api/health` | `index_ready`, `llm_backend`, `ollama_reachable`, `ollama_host_is_cloud`, `ollama_model_present`, `ollama_version`, `whisper_model_cached`, etc. (no secrets) |
-| `GET /api/student-pulse` | Optional campus digest JSON |
-| `POST /api/student-pulse/ingest` | n8n / automation push (requires `CPP_PULSE_INGEST_SECRET`) |
-| `POST /api/transcribe` | Multipart field `audio` → JSON `{ "text": "..." }` |
-| `GET /api/stats` | Anonymous counters: chat/retrieve requests and outcomes |
-| `GET /api/retrieve?q=…` | Direct FAISS search (debugging / tools) |
-| `POST /api/chat` | Chat with tool calling; errors use 4xx/5xx with JSON `error` field |
+|---|---|
+| `GET /api/health` | backend/index/STT/pulse readiness details |
+| `POST /api/chat` | chat with tool-calling over corpus |
+| `GET /api/retrieve?q=...` | direct retrieval debugging |
+| `POST /api/transcribe` | audio to text |
+| `GET /api/student-pulse` | pulse JSON |
+| `POST /api/student-pulse/ingest` | authenticated pulse ingest |
+| `GET /api/stats` | anonymous usage counters |
 
-If `/api/chat` returns **502** with `llm_error` or **`ollama_oom`**, read the **Details** line (JSON `detail`). For **`ollama_oom`**, fix RAM or model size (see “Ollama out of memory” above). Otherwise check Ollama, model tag, and timeouts (`CPP_LLM_READ_TIMEOUT`).
+## Project Data Layout
 
-## Smaller installs (CPU-only PyTorch)
-
-Default `pip install -r requirements.txt` may pull a large CUDA build of `torch`. For CPU-only servers, install PyTorch from the [PyTorch get-started page](https://pytorch.org/get-started/locally/) first, then install the rest of the requirements without re-pulling torch.
+| Path | Contents |
+|---|---|
+| `_data/Corpus/itc2026_ai_corpus/` | source markdown corpus + `index.json` |
+| `_data/index/` | generated FAISS + metadata files |
+| `_data/golden_questions.json` | retrieval eval fixtures |
+| `_data/eval_results.json` | eval output |
