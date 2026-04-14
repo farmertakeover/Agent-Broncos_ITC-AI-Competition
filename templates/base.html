@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Agent Broncos{% endblock %} · CPP Assistant</title>
+  <title>{% block title %}Agent Bronco{% endblock %} · CPP Assistant</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="{{ url_for('main.home') }}">Agent Broncos</a>
+    <a class="brand" href="{{ url_for('main.home') }}">Agent Bronco</a>
     <nav>
       <a href="{{ url_for('main.home') }}">Home</a>
       <a href="{{ url_for('main.chat_page') }}">Chat</a>
@@ -23,5 +23,6 @@
     <p>Grounded on a crawled CPP public website corpus. Not an official Cal Poly Pomona service.</p>
     {% if index_built_at %}<p class="muted">Index present · verify freshness with your operator.</p>{% endif %}
   </footer>
+  {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -10,27 +10,51 @@
       {% endfor %}
     </ul>
     <div class="sidebar-tools">
-      <label class="toggle"><input type="checkbox" id="speakToggle"> Speak assistant replies</label>
-      <p class="muted small">Voice input: click the mic to record, click again to stop — the server transcribes with faster-whisper (needs ffmpeg on the host). HTTPS or localhost for the microphone.</p>
+      <label class="toggle"><input type="checkbox" id="speakToggle"> Enable Agent Bronco Voice Reply</label>
+      <label class="toggle toggle-notify"><input type="checkbox" id="replyNotifyToggle"> Enable Agent Bronco Notifications</label>
+      <p class="muted small">Voice: click mic to record, click again to stop — preview the clip, then ✓ to transcribe and send (chat shows a spinner until the reply) or ✕ to discard. faster-whisper on the server; HTTPS or localhost for the mic.</p>
     </div>
     {% if not index_ready %}
     <p class="badge warn">Index missing — retrieval will fail until <code>build_index.py</code> is run.</p>
     {% endif %}
   </aside>
-  <section class="chat-main">
+  <section class="chat-main" id="chatMain">
+    <div id="chatBusyOverlay" class="chat-busy-overlay hidden" aria-hidden="true">
+      <div class="chat-busy-card">
+        <div class="spinner-chat" role="status" aria-label="Loading"></div>
+        <p id="chatBusyText" class="chat-busy-title">Working…</p>
+        <p class="chat-busy-sub muted small">Please wait.</p>
+      </div>
+    </div>
     <div class="chat-header-row">
-      <div class="mascot-inline">
+      <div class="mascot-inline" id="mascotInline">
         {% set size_class = "is-small" %}
         {% set hide_caption = true %}
         {% include "_bronco_mascot.html" %}
       </div>
-      <h1>Chat</h1>
+      <h1>Chat · <span class="agent-name">Agent Bronco</span> <span id="thinkingDots" class="thinking-dots hidden" aria-live="polite">...</span></h1>
+      <div id="broncoSpeechBubble" class="bronco-speech-bubble hidden" aria-live="polite">
+        <span class="speech-text">Agent Bronco is speaking…</span>
+        <div class="speech-controls">
+          <button type="button" id="speechPauseBtn" class="speech-btn" aria-label="Pause speech">II</button>
+          <button type="button" id="speechStopBtn" class="speech-btn" aria-label="Stop speech">✕</button>
+        </div>
+      </div>
     </div>
     <div id="messages" class="messages" role="log" aria-live="polite"></div>
     <form id="chatForm" class="composer">
       <label for="msg" class="sr-only">Message</label>
-      <div class="composer-input-row">
-        <textarea id="msg" rows="2" placeholder="Ask about admissions, advising, campus services…" required></textarea>
+      <div id="composerInputRow" class="composer-input-row">
+        <div id="recordingPill" class="recording-pill hidden" aria-hidden="true"></div>
+        <textarea id="msg" rows="2" placeholder="Ask about admissions, advising, campus services… (Enter to send, Shift+Enter for newline)" required></textarea>
+        <div id="voiceInline" class="voice-inline hidden" aria-live="polite">
+          <div id="voiceInlineStatus" class="voice-inline-status muted small"></div>
+          <div id="micReviewAudioRow" class="mic-review-audio-row hidden">
+            <audio id="micReviewAudio" controls preload="metadata"></audio>
+            <span id="micReviewMeta" class="muted small"></span>
+          </div>
+          <canvas id="waveCanvas" width="320" height="44" aria-hidden="true" class="hidden"></canvas>
+        </div>
         <div class="composer-side-actions">
           <button
             type="button"
@@ -38,12 +62,19 @@
             id="micBtn"
             aria-pressed="false"
             aria-label="Toggle microphone"
-            title="Microphone: click to record, click again to transcribe"
+            title="Microphone: click to record, click again to review"
           >
             <svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true" width="22" height="22">
               <path fill="currentColor" d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
             </svg>
           </button>
+          <div id="micSpinner" class="mic-spinner hidden" aria-hidden="true">
+            <div class="spinner-mini" role="status" aria-label="Transcribing"></div>
+          </div>
+          <div id="micDecision" class="mic-decision hidden" aria-hidden="true">
+            <button type="button" class="btn mic-review-btn" id="micDiscard" aria-label="Discard recording">✕</button>
+            <button type="button" class="btn primary mic-review-btn" id="micConfirm" aria-label="Transcribe and send to chat">✓</button>
+          </div>
         </div>
       </div>
       <div class="composer-actions">

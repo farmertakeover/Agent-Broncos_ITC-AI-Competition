@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from typing import Any
 
 from openai import OpenAI
@@ -20,16 +21,17 @@ from app.services import pulse as pulse_service
 from retrieval import config
 from retrieval.store import CorpusIndex, get_store
 
-SYSTEM_PROMPT = """You are Agent Broncos, a Cal Poly Pomona campus assistant.
+SYSTEM_PROMPT = """You are Agent Bronco, a Cal Poly Pomona campus assistant.
 Rules:
 - Answer using ONLY information from tool results (the markdown corpus). If tools return no relevant chunks or scores are weak, say clearly that the corpus does not contain enough information—do not guess dates, policies, or contacts.
-- Always cite sources inline like [1], [2] matching the "n" field in search_corpus tool results.
+- Use inline citations like [1], [2] only when search_corpus (or get_source_excerpt) tool results include those numbers in the same turn. If you did not receive tool results with chunks, do not use bracket citations.
 - Be concise. Prefer bullet lists for multi-part answers.
 - For follow-ups, stay consistent with prior user messages in the provided history."""
 
 
 def _openai_api_key() -> str | None:
-    return os.getenv("Agent_Broncos_API_Key") or os.getenv("OPENAI_API_KEY")
+    k = (os.getenv("OPENAI_API_KEY") or "").strip()
+    return k or None
 
 
 def _resolve_client_and_model() -> tuple[OpenAI | None, str | None, str | None]:
@@ -109,12 +111,32 @@ def _tools_schema() -> list[dict[str, Any]]:
     return tools
 
 
+def _strip_orphan_citations(text: str, sources: list[dict[str, Any]]) -> str:
+    """Remove [n] tokens when there are no sources (model hallucination) or trim extra spaces."""
+    if sources:
+        return text
+    return re.sub(r"\s*\[\d+\]\s*", " ", text).strip()
+
+
 def _execute_tool(
     name: str,
     arguments: dict[str, Any],
     store: CorpusIndex,
+    source_state: dict[str, Any],
 ) -> tuple[str, list[dict[str, Any]]]:
-    """Returns (json_string_for_tool_message, source_records_for_UI)."""
+    """Returns (json_string_for_tool_message, source_records_for_UI).
+
+    source_state: {"seen_ids": set[str], "next_n": list[int]} — one global citation counter per turn
+    so model-facing [n] matches the final sources list after dedupe.
+    """
+    seen_ids: set[str] = source_state["seen_ids"]
+    next_n: list[int] = source_state["next_n"]
+
+    def take_n() -> int:
+        n = next_n[0]
+        next_n[0] += 1
+        return n
+
     sources: list[dict[str, Any]] = []
     if name == "search_corpus":
         q = (arguments.get("query") or "").strip()
@@ -128,10 +150,15 @@ def _execute_tool(
                 top_k = None
         hits = store.search(q, top_k=top_k)
         payload = []
-        for rank, h in enumerate(hits, start=1):
+        for h in hits:
+            cid = h.chunk_id
+            if cid in seen_ids:
+                continue
+            seen_ids.add(cid)
+            n = take_n()
             rec = {
-                "n": rank,
-                "chunk_id": h.chunk_id,
+                "n": n,
+                "chunk_id": cid,
                 "score": round(h.score, 4),
                 "source_path": h.source_path,
                 "source_url": h.source_url,
@@ -147,8 +174,12 @@ def _execute_tool(
         ex = store.excerpt_around_chunk(cid)
         if not ex:
             return json.dumps({"error": "chunk not found"}), []
+        if cid in seen_ids:
+            return json.dumps(ex, ensure_ascii=False), []
+        seen_ids.add(cid)
         sources.append(
             {
+                "n": take_n(),
                 "chunk_id": cid,
                 "source_path": ex["source_path"],
                 "source_url": ex.get("source_url"),
@@ -185,8 +216,7 @@ def run_agent_turn(
     if setup_err == "missing_api_key":
         return {
             "content": (
-                "Server misconfiguration: CPP_LLM_BACKEND=openai requires "
-                "Agent_Broncos_API_Key or OPENAI_API_KEY."
+                "Server misconfiguration: CPP_LLM_BACKEND=openai requires OPENAI_API_KEY in `.env`."
             ),
             "sources": [],
             "error": "missing_api_key",
@@ -219,7 +249,7 @@ def run_agent_turn(
     ]
 
     all_sources: list[dict[str, Any]] = []
-    seen_ids: set[str] = set()
+    source_state: dict[str, Any] = {"seen_ids": set(), "next_n": [1]}
     usage_total: dict[str, int] = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
 
     tool_waves = 0
@@ -233,15 +263,10 @@ def run_agent_turn(
             usage_total["total_tokens"] += u.total_tokens or 0
 
     def _finalize(msg, completion) -> dict[str, Any]:
-        text = (msg.content or "").strip()
-        numbered = []
-        for i, s in enumerate(all_sources, start=1):
-            ss = dict(s)
-            ss["n"] = i
-            numbered.append(ss)
+        text = _strip_orphan_citations((msg.content or "").strip(), all_sources)
         return {
             "content": text,
-            "sources": numbered,
+            "sources": list(all_sources),
             "usage": usage_total,
             "finish_reason": completion.choices[0].finish_reason,
         }
@@ -254,8 +279,11 @@ def run_agent_turn(
                 "messages": api_messages,
                 "tools": _tools_schema(),
                 "tool_choice": "none" if force_no_tools else "auto",
-                "temperature": 0.2,
             }
+            if config.LLM_BACKEND == "ollama":
+                create_kw["temperature"] = 0.2
+            elif config.OPENAI_CHAT_TEMPERATURE is not None:
+                create_kw["temperature"] = config.OPENAI_CHAT_TEMPERATURE
             if config.LLM_BACKEND == "ollama" and config.OLLAMA_CHAT_NUM_CTX is not None:
                 # Ollama-specific; lowers KV cache vs server default (helps tight-RAM hosts).
                 create_kw["extra_body"] = {"num_ctx": config.OLLAMA_CHAT_NUM_CTX}
@@ -299,14 +327,8 @@ def run_agent_turn(
                     args = json.loads(tc.function.arguments or "{}")
                 except json.JSONDecodeError:
                     args = {}
-                out_json, srcs = _execute_tool(name, args, store)
-                for s in srcs:
-                    cid = s.get("chunk_id")
-                    if cid and cid in seen_ids:
-                        continue
-                    if cid:
-                        seen_ids.add(cid)
-                    all_sources.append(s)
+                out_json, srcs = _execute_tool(name, args, store, source_state)
+                all_sources.extend(srcs)
                 api_messages.append({"role": "tool", "tool_call_id": tc.id, "content": out_json})
     except Exception as e:
         detail = str(e)
@@ -321,8 +343,7 @@ def run_agent_turn(
                 )
             else:
                 content = (
-                    "Could not reach OpenAI. Check internet egress and verify OPENAI_API_KEY/Agent_Broncos_API_Key "
-                    "for CPP_LLM_BACKEND=openai."
+                    "Could not reach OpenAI. Check internet egress and verify OPENAI_API_KEY for CPP_LLM_BACKEND=openai."
                 )
         if "system memory" in low or "more system memory" in low or "requires more system memory" in low:
             err_kind = "ollama_oom"

@@ -4,6 +4,7 @@ from __future__ import annotations
 import importlib.util
 import os
 import shutil
+import sys
 import tempfile
 import threading
 from functools import lru_cache
@@ -16,7 +17,6 @@ _warmup_lock = threading.Lock()
 _warmup_thread_started = False
 
 
-@lru_cache(maxsize=1)
 def transcribe_runtime_status() -> dict[str, object]:
     """
     Fast dependency preflight for STT runtime.
@@ -25,9 +25,14 @@ def transcribe_runtime_status() -> dict[str, object]:
     faster_whisper_ok = importlib.util.find_spec("faster_whisper") is not None
     ffmpeg_path = shutil.which("ffmpeg")
     ffmpeg_ok = ffmpeg_path is not None
+    python_executable = sys.executable
+    install_hint = f"{python_executable} -m pip install faster-whisper"
     issues: list[str] = []
     if not faster_whisper_ok:
-        issues.append("python package `faster_whisper` not installed in current interpreter")
+        issues.append(
+            "python package `faster_whisper` not installed in current interpreter "
+            f"({python_executable}). Install with: {install_hint}"
+        )
     if not ffmpeg_ok:
         issues.append("`ffmpeg` binary not found on PATH")
     return {
@@ -35,6 +40,8 @@ def transcribe_runtime_status() -> dict[str, object]:
         "faster_whisper_available": faster_whisper_ok,
         "ffmpeg_available": ffmpeg_ok,
         "ffmpeg_path": ffmpeg_path,
+        "python_executable": python_executable,
+        "install_hint": install_hint,
         "issues": issues,
     }
 

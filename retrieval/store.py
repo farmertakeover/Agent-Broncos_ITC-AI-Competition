@@ -63,7 +63,42 @@ class CorpusIndex:
             if os.path.isfile(config.URL_MAP_PATH):
                 with open(config.URL_MAP_PATH, encoding="utf-8") as f:
                     self._url_by_relpath = json.load(f)
+            self._verify_embedding_model_matches_index()
             self._loaded = True
+
+    def _verify_embedding_model_matches_index(self) -> None:
+        """Fail fast if the embedder cannot load or vector dim ≠ FAISS index (bad RAG silently)."""
+        assert self._index is not None
+        d_index = int(self._index.d)
+        try:
+            from sentence_transformers import SentenceTransformer
+
+            model = SentenceTransformer(config.EMBEDDING_MODEL)
+        except Exception as e:
+            raise RuntimeError(
+                f"Embedding model unavailable: could not load {config.EMBEDDING_MODEL!r}. "
+                "Install dependencies (see README), set HF_TOKEN if the hub is private, "
+                f"or fix CPP_EMBEDDING_MODEL. Underlying error: {e}"
+            ) from e
+        try:
+            probe = model.encode(
+                ["__retrieval_probe__"],
+                convert_to_numpy=True,
+                normalize_embeddings=True,
+            ).astype("float32")
+        except Exception as e:
+            raise RuntimeError(
+                f"Embedding model failed to encode a probe vector ({config.EMBEDDING_MODEL!r}). {e}"
+            ) from e
+        d_model = int(probe.shape[1])
+        if d_model != d_index:
+            raise RuntimeError(
+                f"Embedding/index mismatch: FAISS index dimension is {d_index} but "
+                f"{config.EMBEDDING_MODEL!r} produces dimension {d_model}. "
+                "Retrieval would be wrong. Fix: set CPP_EMBEDDING_MODEL to the same model used when "
+                "the index was built, then run `python scripts/build_index.py` (or rebuild after changing the model)."
+            )
+        self._embedder = model
 
     def _get_embedder(self):
         if self._embedder is None:

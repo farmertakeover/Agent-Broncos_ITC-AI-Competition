@@ -110,7 +110,7 @@ def _ollama_reachable() -> bool:
 @bp.route("/api/health", methods=["GET"])
 def api_health():
     ollama_ok = _ollama_reachable()
-    key = os.getenv("Agent_Broncos_API_Key") or os.getenv("OPENAI_API_KEY")
+    key = (os.getenv("OPENAI_API_KEY") or "").strip()
     ollama_names: list[str] | None = None
     ollama_tags_error: str | None = None
     ollama_model_present: bool | None = None
@@ -147,7 +147,9 @@ def api_health():
         schedule_whisper_warmup_background()
         body["whisper_warmup_scheduled"] = True
     if config.LLM_BACKEND == "openai" and config.ALLOW_OPENAI:
-        body["openai_configured"] = bool(key)
+        placeholder = "replace_with_your_openai_api_key"
+        body["openai_configured"] = bool(key) and key != placeholder
+        body["openai_key_is_placeholder"] = bool(key) and key == placeholder
     return jsonify(body)
 
 
@@ -161,7 +163,13 @@ def api_transcribe():
     if err == "empty_file":
         return jsonify({"error": err}), 400
     if err == "transcribe_failed":
-        return jsonify({"error": err, "detail": "faster-whisper or ffmpeg may be missing; see README."}), 502
+        rt = transcribe_runtime_status()
+        issues = list(rt.get("issues") or [])
+        if issues:
+            detail = "Server STT unavailable: " + "; ".join(issues)
+        else:
+            detail = "Transcription failed (audio decode or model error). Check server logs."
+        return jsonify({"error": err, "detail": detail}), 502
     return jsonify({"text": text or ""})
 
 

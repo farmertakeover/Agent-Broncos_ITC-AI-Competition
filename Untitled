@@ -1,0 +1,1 @@
+cd /workspaces/Brono-Agents-ITC-AI-Competition && source .venv/bin/activate && python run.py

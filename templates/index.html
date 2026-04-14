@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block body %}
+<section class="dashboard-strip" id="homeDashboard" aria-label="Campus at a glance">
+  <div class="dashboard-widget">
+    <h2>Weather · Pomona</h2>
+    <div class="widget-value" id="dashWeather">—</div>
+    <p class="widget-sub" id="dashWeatherSub">Open-Meteo (near CPP)</p>
+  </div>
+  <div class="dashboard-widget">
+    <h2>Time · Pomona</h2>
+    <div class="widget-value" id="dashTime">—</div>
+    <p class="widget-sub">Pacific Time (Los Angeles)</p>
+  </div>
+  <div class="dashboard-widget">
+    <h2>Language</h2>
+    <p class="widget-sub">Preferred display / future translate hook (stored in your browser).</p>
+    <label class="sr-only" for="dashLang">Interface language</label>
+    <select id="dashLang" class="lang-select" aria-describedby="dashLangNote"></select>
+    <p class="widget-sub" id="dashLangNote">Chat answers follow the corpus (English). This sets a preference only.</p>
+  </div>
+</section>
 <section class="hero">
   <div class="hero-text">
     <h1>Cal Poly Pomona campus answers, cited.</h1>
@@ -49,4 +68,7 @@
     · corpus structure: <a href="{{ url_for('main.api_corpus_overview') }}">/api/corpus-overview</a>
   </p>
 </section>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/home_dashboard.js') }}" defer></script>
 {% endblock %}

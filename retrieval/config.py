@@ -74,7 +74,14 @@ META_PATH = os.path.join(INDEX_DIR, f"{INDEX_NAME}.meta.jsonl")
 URL_MAP_PATH = os.path.join(INDEX_DIR, "url_map.json")
 
 # OpenAI (only when CPP_LLM_BACKEND=openai and CPP_ALLOW_OPENAI=true)
-OPENAI_MODEL = os.getenv("CPP_OPENAI_MODEL", "gpt-4o-mini")
+OPENAI_MODEL = os.getenv("CPP_OPENAI_MODEL", "gpt-5-mini")
+# Many newer OpenAI models reject non-default temperature; leave unset to omit the param (API default).
+_ot = (os.getenv("CPP_OPENAI_TEMPERATURE") or "").strip()
+OPENAI_CHAT_TEMPERATURE: float | None
+try:
+    OPENAI_CHAT_TEMPERATURE = float(_ot) if _ot else None
+except ValueError:
+    OPENAI_CHAT_TEMPERATURE = None
 MAX_TOOL_ROUNDS = int(os.getenv("CPP_MAX_TOOL_ROUNDS", "2"))
 MAX_CONVERSATION_MESSAGES = int(os.getenv("CPP_MAX_CONVERSATION_MESSAGES", "10"))
 

@@ -1,6 +1,6 @@
 # Agent Broncos — Cal Poly Pomona ITC AI Competition
 
-Flask web app with **Ollama** (local or **[Ollama Cloud](https://docs.ollama.com/cloud)**) via the OpenAI-compatible `/v1` API for tool calling, plus a **local FAISS** index over the CPP markdown corpus. Optional **OpenAI** cloud is off unless you explicitly enable it.
+Flask web app with **OpenAI (ChatGPT API)** or **Ollama** (local or [Ollama Cloud](https://docs.ollama.com/cloud)) for tool-calling chat, plus a **local FAISS** index over the CPP markdown corpus. **[`.env.example`](.env.example)** defaults to **OpenAI**; switch `CPP_LLM_BACKEND` to `ollama` if you prefer Ollama.
 
 Everything lives under **`_data/`** (underscore avoids a bare `data/` folder, which is easy to confuse with CPP site paths like `/data/...` in the crawl):
 
@@ -20,14 +20,14 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-### Current default profile (recommended)
+### Current default profile (`.env.example`)
 
-- Backend: `CPP_LLM_BACKEND=ollama`
-- Base URL: `OLLAMA_BASE_URL=https://ollama.com`
-- Model: `OLLAMA_MODEL=gemma3:4b`
+- Backend: `CPP_LLM_BACKEND=openai` with `CPP_ALLOW_OPENAI=true`
+- Key: `OPENAI_API_KEY`
+- Model: `CPP_OPENAI_MODEL=gpt-5-mini` (must match a model id your key can call)
 - App URL: `http://127.0.0.1:5000/chat`
 
-### Ollama Cloud (recommended if you want to save laptop RAM)
+### Ollama Cloud (optional — swap backend in `.env`)
 
 Use this when local models do not fit in free RAM but you still want an Ollama-compatible stack.
 
@@ -73,9 +73,13 @@ Chat can **record audio in the browser** and send it to **`POST /api/transcribe`
 
 Browser-side transcribe requests **abort after 180 seconds**; extend the limit in `static/js/chat.js` (`TRANSCRIBE_FETCH_MS`) if needed.
 
-### OpenAI cloud (optional)
+### OpenAI (ChatGPT API) — default in `.env.example`
 
-Only if you set **`CPP_ALLOW_OPENAI=true`** and **`CPP_LLM_BACKEND=openai`**, provide **`Agent_Broncos_API_Key`** or **`OPENAI_API_KEY`**.
+Set **`CPP_ALLOW_OPENAI=true`**, **`CPP_LLM_BACKEND=openai`**, and **`OPENAI_API_KEY`** (only this name is read). Optional: **`CPP_OPENAI_MODEL`**.
+
+**`/api/health`:** `openai_configured` is true only when the key is set and not the literal placeholder from `.env.example`. If **`openai_key_is_placeholder`** is true, the saved `.env` on disk still has `replace_with_your_openai_api_key`—paste your real `sk-...` key, **save the file**, and restart Flask.
+
+**Temperature:** Some models (e.g. **gpt-5-mini**) reject custom `temperature`; the app **does not send** `temperature` for the OpenAI backend unless you set **`CPP_OPENAI_TEMPERATURE`**. Ollama still uses `0.2` for steadier tool use.
 
 ### Build the index
 
@@ -92,6 +96,20 @@ The script prints resolved **corpus** and **index** paths first; confirm they po
 If Hugging Face downloads fail, set a token (`HF_TOKEN`) or use an environment where `huggingface_hub` can reach the hub; after the embedding model is cached, rebuilds are mostly offline-friendly.
 
 Override paths with `CPP_CORPUS_DIR` / `CPP_INDEX_DIR` if needed (see `retrieval/config.py`).
+
+**Chat LLM vs RAG vs STT (three separate stacks):**
+
+| Piece | What drives it | OpenAI chat changes it? |
+|-------|----------------|-------------------------|
+| **FAISS + embeddings** | Local `sentence-transformers` (`CPP_EMBEDDING_MODEL`, default `all-MiniLM-L6-v2`) | **No** — same index and retrieval whether you use `gpt-5-mini`, `gpt-4o-mini`, or Ollama. |
+| **faster-whisper** (`/api/transcribe`) | `CPP_WHISPER_*` (device, model size) | **No** — switching to OpenAI does not make Whisper faster; tune **`CPP_WHISPER_MODEL_SIZE`** (e.g. `tiny` / `base`) and **`CPP_WHISPER_DEVICE`** (`cpu` vs `cuda`) instead. |
+| **Chat + tools** | `CPP_LLM_BACKEND` + `CPP_OPENAI_MODEL` (e.g. **`gpt-5-mini`**) | **Yes** — this is what your API key controls. |
+
+**When to re-run `build_index.py`:** Only if you change **`CPP_EMBEDDING_MODEL`**, **`scripts/build_index.py` chunking**, or **add/remove/replace corpus files** you want reflected in search. **You do not need to re-embed** just because you moved from Ollama to OpenAI.
+
+**VRAM / RAM for embedding (build + query):** Default **MiniLM** is small (~90 MB weights). On **CPU**, expect roughly **~1–4 GB system RAM** spikes during `build_index.py` batch encoding (batch size 64 in the script), often less once caches are warm. If **PyTorch sees a GPU**, `SentenceTransformer` may use **~0.5–2 GB VRAM** during encoding (varies by GPU and batch). **FAISS search** is cheap; the reranker (`CPP_USE_RERANKER`, cross-encoder) adds extra RAM/GPU if loaded.
+
+**Whisper VRAM:** With **`CPP_WHISPER_DEVICE=cuda`**, a **base** model often wants on the order of **~1–3 GB VRAM** depending on `CPP_WHISPER_COMPUTE_TYPE`; **`cpu`** uses **system RAM**, not VRAM.
 
 Run the app:
 
@@ -159,7 +177,7 @@ curl -sS http://127.0.0.1:5000/api/health | python3 -m json.tool
 
 For **OpenAI backend** (`CPP_LLM_BACKEND=openai`):
 
-- Ensure `CPP_ALLOW_OPENAI=true` and set `OPENAI_API_KEY` (or `Agent_Broncos_API_Key`).
+- Ensure `CPP_ALLOW_OPENAI=true` and set `OPENAI_API_KEY`.
 - Verify outbound internet access from the runtime.
 
 Chat errors with **`llm_error`** now include a **Details** line in the UI (server `detail` field). Typical fixes: start Ollama, `ollama pull <tag>`, set **`OLLAMA_MODEL`** to the exact tag (or rely on auto-resolve when only one `gemma3:*` variant is installed).
@@ -196,7 +214,7 @@ Mitigations: use a **smaller** Ollama tag/quant, **free memory** (close apps, un
    This app uses the same OpenAI-compatible `/v1` client as for local Ollama. **Tool calling** must be supported by the cloud model you pick—verify with a short chat test.
 
 3. **Hosted OpenAI-style API (competition / backup)**  
-   Enable **`CPP_ALLOW_OPENAI=true`**, **`CPP_LLM_BACKEND=openai`**, and set **`OPENAI_API_KEY`** (or `Agent_Broncos_API_Key`). Uses your cloud provider instead of Ollama.
+   Enable **`CPP_ALLOW_OPENAI=true`**, **`CPP_LLM_BACKEND=openai`**, and set **`OPENAI_API_KEY`**. Uses OpenAI instead of Ollama.
 
 **Fine-tuning (Unsloth)** does not replace any of the above for “I have 4.8 GiB and E2B wants 7.2 GiB”—it changes behavior after you can already run a model somewhere.
 

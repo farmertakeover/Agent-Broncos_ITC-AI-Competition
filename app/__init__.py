@@ -2,21 +2,23 @@ import os
 
 from dotenv import load_dotenv
 
-# Apply `.env` before `retrieval.config` reads OLLAMA_* (otherwise URLs/model stay at import-time defaults).
-load_dotenv()
+_REPO_ROOT_EARLY = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+_DOTENV_PATH = os.path.join(_REPO_ROOT_EARLY, ".env")
+
+# Apply `.env` before `retrieval.config` reads env. `override=True` so repo `.env` wins over stale
+# shell exports (e.g. OPENAI_API_KEY=replace_with_your_openai_api_key from an old `export` / CI default).
+load_dotenv(_DOTENV_PATH, override=True)
 
 from flask import Flask
 
 from app.services.transcribe import transcribe_runtime_status
 from retrieval import config
 
-_REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+_REPO_ROOT = _REPO_ROOT_EARLY
 
 
 def create_app() -> Flask:
-    from dotenv import load_dotenv
-
-    load_dotenv()
+    load_dotenv(_DOTENV_PATH, override=True)
     app = Flask(
         __name__,
         template_folder=os.path.join(_REPO_ROOT, "templates"),
