@@ -148,3 +148,5 @@ Writes `_data/eval_results.json` from `_data/golden_questions.json`.
 | `_data/index/` | generated FAISS + metadata files |
 | `_data/golden_questions.json` | retrieval eval fixtures |
 | `_data/eval_results.json` | eval output |
+
+Database 
