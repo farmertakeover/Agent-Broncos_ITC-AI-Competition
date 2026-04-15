@@ -156,3 +156,8 @@ The system uses a hybrid data approach instead of a traditional relational datab
 User queries are converted into embeddings and matched against the FAISS index to retrieve the most relevant document chunks, which are then passed to the LLM for response generation. The original content is stored as markdown files with accompanying JSON metadata.
 
 For lightweight structured data (e.g., the pulse feed), the system uses JSON-based storage instead of a full database.
+
+## Features
+
+- Implemented a language translation module using the Langbly API to support multilingual user queries
+- Integrated the OpenWeather API to display real-time weather data within the application dashboard
