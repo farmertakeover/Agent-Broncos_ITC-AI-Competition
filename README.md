@@ -149,4 +149,10 @@ Writes `_data/eval_results.json` from `_data/golden_questions.json`.
 | `_data/golden_questions.json` | retrieval eval fixtures |
 | `_data/eval_results.json` | eval output |
 
-Database 
+## Database 
+|---|---|
+The system uses a hybrid data approach instead of a traditional relational database like PostgreSQL. Core data retrieval is powered by FAISS, which stores embeddings of the corpus and enables fast semantic search.
+
+User queries are converted into embeddings and matched against the FAISS index to retrieve the most relevant document chunks, which are then passed to the LLM for response generation. The original content is stored as markdown files with accompanying JSON metadata.
+
+For lightweight structured data (e.g., the pulse feed), the system uses JSON-based storage instead of a full database.
