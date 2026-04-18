@@ -1,5 +1,7 @@
 from __future__ import annotations
-
+from flask import Blueprint, jsonify, render_template, request
+from app.database import save_message, get_history
+import uuid
 import os
 import secrets
 import urllib.error
@@ -293,8 +295,14 @@ def api_chat():
         openai_msgs.append({"role": role, "content": content})
     openai_msgs.append({"role": "user", "content": user_msg})
 
+    session_id = data.get("session_id") or str(uuid.uuid4())
+    save_message(session_id, "user", user_msg)
+
     analytics.record_chat_start()
     out = run_agent_turn(openai_msgs)
+
+    if not out.get("error"):
+        save_message(session_id, "assistant", out.get("content", ""))
     err = out.get("error")
     if err:
         # Always use an error-class status when `error` is set; body may still include `content`.
@@ -308,4 +316,5 @@ def api_chat():
     else:
         status = 200
         analytics.record_chat_outcome(ok=True)
+    out["session_id"] = session_id
     return jsonify(out), status

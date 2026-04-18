@@ -1,3 +1,5 @@
+from app.database import init_db
+init_db()
 """Run the Flask development server."""
 from app import create_app
 
