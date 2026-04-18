@@ -1,0 +1,11 @@
+flask
+gunicorn
+openai
+python-dotenv
+psycopg2-binary
+faiss-cpu
+sentence-transformers
+numpy
+scikit-learn
+requests
+pyyaml
