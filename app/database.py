@@ -6,6 +6,9 @@ def get_connection():
     return psycopg2.connect(os.environ["DATABASE_URL"])
 
 def init_db():
+    if not os.environ.get("DATABASE_URL"):
+        print("[database] DATABASE_URL not set; skipping init_db().")
+        return
     conn = get_connection()
     cur = conn.cursor()
     cur.execute("""

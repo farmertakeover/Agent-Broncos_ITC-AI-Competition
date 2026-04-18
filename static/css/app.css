@@ -117,14 +117,25 @@ body {
   display: block;
 }
 
-.billy-svg {
+.billy-img {
+  display: block;
   width: 140px;
   height: auto;
-  overflow: visible;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
 }
-.billy-mascot.is-small .billy-svg {
-  width: 64px;
+.billy-img-full-wrap {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.billy-img-full {
+  position: relative;
+  z-index: 1;
+}
+.billy-mascot.is-small .billy-img {
+  width: 72px;
+  image-rendering: auto;
+  transform: translateZ(0);
 }
 .billy-body-group {
   transform-origin: 60px 64px;
@@ -277,8 +288,15 @@ body {
   font-size: 0.8rem;
 }
 .chat-header-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
-.chat-header-row h1 { margin: 0; font-size: 1.25rem; }
+.chat-header-row h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+}
 .chat-header-row .agent-name { color: var(--cpp-gold); }
+.chat-header-row .agent-name {
+  letter-spacing: 0.03em;
+}
 .thinking-dots {
   display: inline-flex;
   align-items: center;

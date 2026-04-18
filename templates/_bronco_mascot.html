@@ -1,51 +1,19 @@
-{# Low-poly stylized bronco + ninja cowl — "Agent Bronco" (original artwork, not an official mark). #}
 <div class="billy-mascot agent-bronco {{ size_class|default('') }}" aria-hidden="true">
-  <svg class="billy-svg" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="broncoPolyBody" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#5c3d24"/>
-        <stop offset="100%" stop-color="#3d2818"/>
-      </linearGradient>
-      <linearGradient id="broncoPolyAccent" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#d9a441"/>
-        <stop offset="100%" stop-color="#8a6228"/>
-      </linearGradient>
-    </defs>
-    <g class="billy-body-group">
-      <!-- Torso (faceted) -->
-      <polygon points="38,72 82,68 92,88 48,96 28,88" fill="url(#broncoPolyBody)" stroke="#d9a441" stroke-width="0.8" stroke-linejoin="miter"/>
-      <polygon points="48,56 78,52 86,70 44,76" fill="#6b4423" stroke="#c9a06c" stroke-width="0.6" stroke-linejoin="miter" opacity="0.9"/>
-      <!-- Neck -->
-      <polygon points="52,56 44,38 58,34 64,50" fill="#5c3d24" stroke="#d9a441" stroke-width="0.7" stroke-linejoin="miter"/>
-      <!-- Head -->
-      <polygon points="24,34 44,22 58,28 52,44 30,46" fill="url(#broncoPolyBody)" stroke="#d9a441" stroke-width="0.8" stroke-linejoin="miter"/>
-      <!-- Snout block -->
-      <polygon points="18,36 28,30 32,40 20,44" fill="#4a3018" stroke="#8a6228" stroke-width="0.5" stroke-linejoin="miter"/>
-      <!-- Ear -->
-      <polygon points="46,20 52,10 58,22" fill="#c9a06c" stroke="#5c3d24" stroke-width="0.5" stroke-linejoin="miter"/>
-      <!-- Eye (angular) -->
-      <polygon points="34,32 42,30 40,38 32,38" fill="#f5ebe0" stroke="#2a1810" stroke-width="0.4"/>
-      <polygon points="36,33 39,32 38,35" fill="#2a1810"/>
-      <!-- Ninja cowl / mask -->
-      <polygon points="22,26 58,18 72,32 56,42 24,40" fill="#1a1410" stroke="#3d5c3a" stroke-width="0.9" stroke-linejoin="miter" opacity="0.92"/>
-      <polygon points="26,30 54,24 62,34 30,38" fill="none" stroke="#d9a441" stroke-width="0.5" opacity="0.7"/>
-      <!-- Mane shards -->
-      <polygon points="58,22 68,14 72,26" fill="#2a1810" stroke="#4a3018" stroke-width="0.4"/>
-      <polygon points="62,26 78,20 80,34" fill="#3d2818" stroke="#4a3018" stroke-width="0.4"/>
-      <!-- Legs (blocky) -->
-      <polygon points="44,88 50,76 56,88 50,98" fill="#4a3018" stroke="#2a1810" stroke-width="0.5"/>
-      <polygon points="58,86 66,74 72,86 64,98" fill="#4a3018" stroke="#2a1810" stroke-width="0.5"/>
-      <polygon points="72,88 80,76 88,88 82,98" fill="#4a3018" stroke="#2a1810" stroke-width="0.5"/>
-      <polygon points="84,86 92,74 98,86 94,98" fill="#4a3018" stroke="#2a1810" stroke-width="0.5"/>
-      <!-- Hooves -->
-      <polygon points="46,96 54,96 54,100 46,100" fill="#1a1410"/>
-      <polygon points="60,96 68,96 68,100 60,100" fill="#1a1410"/>
-      <polygon points="76,96 84,96 84,100 76,100" fill="#1a1410"/>
-      <polygon points="88,96 96,96 96,100 88,100" fill="#1a1410"/>
-      <!-- Tail (low-poly) -->
-      <polygon points="92,72 108,60 112,74 96,82" fill="#3d2818" stroke="#4a3018" stroke-width="0.6" stroke-linejoin="miter"/>
-    </g>
-  </svg>
+  {% if size_class|default('') == 'is-small' %}
+  <img
+    class="billy-img billy-img-head"
+    src="{{ url_for('static', filename='img/horse-detective-head.png') }}"
+    alt="Agent Bronco head mascot"
+  />
+  {% else %}
+  <span class="billy-img-full-wrap">
+    <img
+      class="billy-img billy-img-full"
+      src="{{ url_for('static', filename='img/horse-detective-full.png') }}"
+      alt="Agent Bronco mascot"
+    />
+  </span>
+  {% endif %}
   {% if not hide_caption|default(false) %}
   <span class="mascot-caption">Agent Bronco</span>
   {% endif %}
