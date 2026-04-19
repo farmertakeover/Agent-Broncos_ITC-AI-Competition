@@ -497,6 +497,8 @@ def _campus_link_icon_url(href: str) -> str:
         host = urlparse(href).netloc.lower()
         if not host:
             return ""
+        if host.endswith("reddit.com") or host == "reddit.com":
+            return "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
     except ValueError:
         return ""
     return f"https://icons.duckduckgo.com/ip3/{host}.ico"
@@ -516,6 +518,13 @@ def _campus_url_dedupe_key(href: str) -> str:
 
 
 def _campus_url_reachable(url: str, timeout: float = 2.5) -> bool:
+    """HEAD/GET probe; Reddit often returns 403 to datacenter IPs — treat as present for tiles."""
+    try:
+        host = urlparse(url).netloc.lower()
+        if host.endswith("reddit.com") or host == "reddit.com":
+            return True
+    except Exception:
+        pass
     try:
         with httpx.Client(timeout=timeout, follow_redirects=True) as client:
             r = client.head(url)
