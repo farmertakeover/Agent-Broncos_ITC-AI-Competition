@@ -25,6 +25,12 @@
     }
   }
 
+  /** BCP-47-ish: collapse legacy underscores so es_MX matches option es-MX. */
+  function canonUiLang(raw) {
+    if (!raw) return null;
+    return String(raw).trim().replace(/_/g, "-");
+  }
+
   function clearLegacyI18nCaches() {
     try {
       for (var i = sessionStorage.length - 1; i >= 0; i--) {
@@ -82,7 +88,16 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     var saved = readSaved();
-    var value = locales.some(function (x) { return x.code === saved; }) ? saved : "en-US";
+    var canon = canonUiLang(saved);
+    var inList = canon && locales.some(function (x) { return x.code === canon; });
+    if (inList && canon && saved && canon !== saved) {
+      try {
+        localStorage.setItem(LANG_KEY, canon);
+      } catch {
+        /* ignore */
+      }
+    }
+    var value = inList ? canon : "en-US";
     document.querySelectorAll("select[data-cpp-ui-lang]").forEach(function (sel) {
       populateSelect(sel);
     });

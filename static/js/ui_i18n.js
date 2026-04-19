@@ -17,17 +17,22 @@
 
   function readLocale() {
     try {
-      return localStorage.getItem(LANG_KEY) || "en-US";
+      var v = localStorage.getItem(LANG_KEY) || "en-US";
+      return String(v).trim().replace(/_/g, "-");
     } catch {
       return "en-US";
     }
   }
 
   function localeToTarget(locale) {
-    if (!locale || String(locale).toLowerCase().indexOf("en") === 0) return "en";
-    var lower = String(locale).toLowerCase();
-    if (lower === "zh-cn") return "zh-CN";
-    return String(locale).split("-")[0] || "en";
+    var loc = String(locale || "")
+      .trim()
+      .replace(/_/g, "-");
+    if (!loc) return "en";
+    var lower = loc.toLowerCase();
+    if (lower === "en" || lower.indexOf("en-") === 0) return "en";
+    if (lower === "zh-cn" || lower === "zh") return "zh-CN";
+    return loc.split("-")[0] || "en";
   }
 
   function getApiTarget() {
@@ -277,20 +282,64 @@
     setLangStatus("", false);
   }
 
-  async function translateViaApi(target, entries) {
-    var res = await fetch("/api/translate/batch", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ target: target, entries: entries }),
-    });
-    var data = await res.json().catch(function () {
-      return null;
-    });
-    if (!res.ok || !data || !data.entries) {
-      var detail = (data && (data.detail || data.error)) || res.statusText || String(res.status);
-      throw new Error(detail);
+  var TRANSLATE_TIMEOUT_MS = 20000;
+  var TRANSLATE_BATCH_MAX = 60;
+
+  function chunkEntries(entries, size) {
+    var keys = Object.keys(entries || {});
+    var chunks = [];
+    for (var i = 0; i < keys.length; i += size) {
+      var slice = {};
+      for (var j = i; j < i + size && j < keys.length; j++) {
+        slice[keys[j]] = entries[keys[j]];
+      }
+      chunks.push(slice);
     }
-    return data.entries;
+    return chunks;
+  }
+
+  async function translateBatchOnce(target, entries) {
+    var ctrl = ("AbortController" in window) ? new AbortController() : null;
+    var timer = ctrl
+      ? setTimeout(function () {
+          try { ctrl.abort(); } catch { /* ignore */ }
+        }, TRANSLATE_TIMEOUT_MS)
+      : null;
+    try {
+      var res = await fetch("/api/translate/batch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ target: target, entries: entries }),
+        signal: ctrl ? ctrl.signal : undefined,
+      });
+      var data = await res.json().catch(function () {
+        return null;
+      });
+      if (!res.ok || !data || !data.entries) {
+        var detail = (data && (data.detail || data.error)) || res.statusText || String(res.status);
+        throw new Error(detail);
+      }
+      return data.entries;
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
+  }
+
+  async function translateViaApi(target, entries) {
+    var pieces = chunkEntries(entries, TRANSLATE_BATCH_MAX);
+    if (!pieces.length) return {};
+    var merged = {};
+    var firstError = null;
+    for (var i = 0; i < pieces.length; i++) {
+      try {
+        var part = await translateBatchOnce(target, pieces[i]);
+        merged = Object.assign({}, merged, part);
+      } catch (e) {
+        if (!firstError) firstError = e;
+      }
+    }
+    if (!Object.keys(merged).length && firstError) throw firstError;
+    return merged;
   }
 
   /** @param {string} locale BCP-47 */
@@ -331,6 +380,7 @@
 
     setLangStatus("Translating interface…", false);
     var t0 = performance.now();
+    var translateOk = false;
     try {
       var merged = {};
       var bundleEntries = await fetchLocaleBundle(target);
@@ -339,32 +389,41 @@
         merged = Object.assign({}, merged, picked.out);
         var missingKeys = Object.keys(picked.missing);
         if (missingKeys.length) {
-          var fromApiMissing = await translateViaApi(target, picked.missing);
-          merged = Object.assign({}, merged, fromApiMissing);
+          try {
+            var fromApiMissing = await translateViaApi(target, picked.missing);
+            merged = Object.assign({}, merged, fromApiMissing);
+          } catch (apiErr) {
+            console.warn("[ui_i18n] partial translate fallback", apiErr);
+          }
         }
       } else {
         merged = await translateViaApi(target, entries);
       }
-      applyTranslations(merged);
-      setLangStatus("", false);
-      var translateMs = Math.round(performance.now() - t0);
-      try {
-        sessionStorage.setItem(cacheKey, JSON.stringify({ entries: merged }));
-      } catch {
-        /* ignore */
+      if (Object.keys(merged).length) {
+        applyTranslations(merged);
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify({ entries: merged }));
+        } catch {
+          /* ignore */
+        }
+        translateOk = true;
       }
+      var translateMs = Math.round(performance.now() - t0);
       window.dispatchEvent(
-        new CustomEvent("cpp-ui-translated", {
-          detail: { locale: locale, target: target, metrics: { translate_batch_ms: translateMs } },
+        new CustomEvent(translateOk ? "cpp-ui-translated" : "cpp-ui-translate-failed", {
+          detail: translateOk
+            ? { locale: locale, target: target, metrics: { translate_batch_ms: translateMs } }
+            : { error: "translation_unavailable" },
         })
       );
-      prefetchSiteI18n(locale);
+      if (translateOk) prefetchSiteI18n(locale);
     } catch (e) {
-      setLangStatus("", false);
       console.warn("[ui_i18n] translate batch error", e);
       window.dispatchEvent(
         new CustomEvent("cpp-ui-translate-failed", { detail: { error: "translation_unavailable" } })
       );
+    } finally {
+      setLangStatus("", false);
     }
   }
 

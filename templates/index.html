@@ -42,15 +42,43 @@
 
   <p id="dashBanner" class="dash-banner hidden" role="status"></p>
 
-  <section class="dash-campus-links" id="dashCampusLinksSection" hidden aria-label="Campus links">
-    <div class="dash-campus-links-head">
-      <h2 class="dash-campus-links-title" data-i18n="home.dashCampusLinksTitle">Campus and official links</h2>
-      <p class="muted small dash-campus-links-hint" data-i18n="home.dashCampusLinksHint">
-        Verify dates and policies on the destination site.
-      </p>
-    </div>
-    <ul class="dash-campus-links-list" id="dashCampusLinksList"></ul>
-  </section>
+  <div class="dash-links-grid">
+    <section class="dash-campus-links" id="dashCampusLinksSection" hidden aria-label="Official campus links">
+      <div class="dash-campus-links-head">
+        <h2 class="dash-campus-links-title" data-i18n="home.dashCampusLinksTitle">Official Campus Links</h2>
+        <p class="muted small dash-campus-links-hint" data-i18n="home.dashCampusLinksHint">
+          Verify dates and policies on the destination site.
+        </p>
+      </div>
+      <ul class="dash-campus-links-list" id="dashCampusLinksList"></ul>
+    </section>
+    <section class="dash-campus-links" id="dashCommunityLinksSection" aria-label="Unofficial community links">
+      <div class="dash-campus-links-head">
+        <h2 class="dash-campus-links-title" data-i18n="home.dashCommunityLinksTitle">Unofficial / Community Links</h2>
+        <p class="muted small dash-campus-links-hint" data-i18n="home.dashCommunityLinksHint">
+          Student-run sites — not affiliated with Cal Poly Pomona.
+        </p>
+      </div>
+      <ul class="dash-campus-links-list" id="dashCommunityLinksList">
+        <li class="dash-campus-link-tile">
+          <a class="dash-campus-link-a" href="https://www.reddit.com/r/CalPolyPomona/" rel="noopener noreferrer" target="_blank">
+            <span class="dash-campus-link-thumb">
+              <img class="dash-campus-link-icon" src="https://www.google.com/s2/favicons?domain=reddit.com&sz=64" width="28" height="28" alt="" loading="lazy" decoding="async" />
+            </span>
+            <span class="dash-campus-link-label">r/CalPolyPomona (Reddit)</span>
+          </a>
+        </li>
+        <li class="dash-campus-link-tile">
+          <a class="dash-campus-link-a" href="https://www.ratemyprofessors.com/school/13914" rel="noopener noreferrer" target="_blank">
+            <span class="dash-campus-link-thumb">
+              <img class="dash-campus-link-icon" src="https://www.google.com/s2/favicons?domain=ratemyprofessors.com&sz=64" width="28" height="28" alt="" loading="lazy" decoding="async" />
+            </span>
+            <span class="dash-campus-link-label">Rate My Professors — CPP</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
 
   <div id="dashJsI18nPool" class="hidden" aria-hidden="true">
     <span data-i18n="home.dashEmptyGeneric">No items right now.</span>
@@ -72,27 +100,23 @@
           <p class="dash-panel-status muted small" data-state="loading" data-i18n="home.dashLoading">Loading…</p>
           <ul class="dash-card-list" id="dashListNews" hidden></ul>
         </div>
-        <div class="dash-panel" data-section="events">
-          <h2 class="dash-panel-title" data-i18n="home.dashEvents">Upcoming events</h2>
-          <p class="dash-panel-status muted small" data-state="loading" data-i18n="home.dashLoading">Loading…</p>
-          <ul class="dash-card-list" id="dashListEvents" hidden></ul>
-        </div>
         <div class="dash-panel" data-section="announcements">
           <h2 class="dash-panel-title" data-i18n="home.dashAnnouncements">Announcements</h2>
           <p class="dash-panel-status muted small" data-state="loading" data-i18n="home.dashLoading">Loading…</p>
           <ul class="dash-card-list" id="dashListAnnouncements" hidden></ul>
         </div>
+        <div class="dash-panel" data-section="events">
+          <h2 class="dash-panel-title" data-i18n="home.dashEvents">Upcoming events</h2>
+          <p class="dash-panel-status muted small" data-state="loading" data-i18n="home.dashLoading">Loading…</p>
+          <ul class="dash-card-list" id="dashListEvents" hidden></ul>
+        </div>
       </div>
       <div class="dashboard-col-side">
-        <div class="dash-panel dash-panel--sidebar-card" data-section="reminders-intro">
+        <div class="dash-panel dash-panel--sidebar-card" data-section="reminders">
           <h2 class="dash-panel-title" data-i18n="home.dashReminders">Quick reminders</h2>
           <p class="dash-panel-hint muted small" data-i18n="home.dashRemindersHint">
             Campus events appear under Upcoming events. Use this list for your own notes (stored in this browser).
           </p>
-        </div>
-        <div class="dash-panel dash-panel--sidebar-card" data-section="todos">
-          <h2 class="dash-panel-title" data-i18n="home.dashTodos">To-dos</h2>
-          <p class="muted small" data-i18n="home.dashTodosHint">Quick list stored in your browser.</p>
           <ul class="dash-todo-list" id="dashTodoList"></ul>
           <form class="dash-todo-form" id="dashTodoForm">
             <input type="text" id="dashTodoInput" name="todo" maxlength="200" placeholder="Add a reminder…" autocomplete="off" data-i18n="home.dashTodoPlaceholder" />

@@ -467,8 +467,11 @@
   window.addEventListener("cpp-ui-translated", function () {
     refreshAfterUiLang();
   });
+  window.addEventListener("cpp-ui-translate-failed", function () {
+    refreshAfterUiLang();
+  });
   window.addEventListener("cpp-ui-lang-changed", function () {
-    /* Translation runs async; cpp-ui-translated will follow for non-English. */
+    /* Translation runs async; cpp-ui-translated (or -failed) will follow for non-English. */
   });
 
   var prefs = loadPrefs();

@@ -147,11 +147,14 @@
       /* ignore */
     }
     try {
-      var loc = localStorage.getItem("CPP_UI_LANG") || "en-US";
-      if (!loc || String(loc).toLowerCase().indexOf("en") === 0) return "en";
-      var lower = String(loc).toLowerCase();
-      if (lower === "zh-cn") return "zh-CN";
-      return String(loc).split("-")[0] || "en";
+      var loc = String(localStorage.getItem("CPP_UI_LANG") || "en-US")
+        .trim()
+        .replace(/_/g, "-");
+      if (!loc) return "en";
+      var lower = loc.toLowerCase();
+      if (lower === "en" || lower.indexOf("en-") === 0) return "en";
+      if (lower === "zh-cn" || lower === "zh") return "zh-CN";
+      return loc.split("-")[0] || "en";
     } catch {
       return "en";
     }
@@ -335,11 +338,10 @@
       return;
     }
 
-    const apiTarget = getUiApiTarget();
     let rawReply = data.content;
     let reply = rawReply;
-    if (apiTarget !== "en" && reply) {
-      reply = await translateLine(reply, apiTarget);
+    if (getUiApiTarget() !== "en" && reply) {
+      reply = await translateLine(reply, getUiApiTarget());
     }
     const entry = {
       role: "assistant",
@@ -908,11 +910,10 @@
    * @param {{ keepSendDisabled?: boolean }} [opts]
    */
   async function submitChatMessage(text, opts) {
-    const apiTarget = getUiApiTarget();
     let messageForApi = text;
     const perf = { user_translate_ms: 0, chat_ms: 0, reply_translate_ms: 0, total_ms: 0 };
     const submitT0 = performance.now();
-    if (apiTarget !== "en") {
+    if (getUiApiTarget() !== "en") {
       const tUser = performance.now();
       messageForApi = await translateLine(text, "en");
       perf.user_translate_ms = Math.round(performance.now() - tUser);
@@ -972,9 +973,9 @@
         ) {
           reply += "\n\nDetails: " + String(data.detail);
         }
-        if (apiTarget !== "en" && reply) {
+        if (getUiApiTarget() !== "en" && reply) {
           const tReplyErr = performance.now();
-          reply = await translateLine(reply, apiTarget);
+          reply = await translateLine(reply, getUiApiTarget());
           perf.reply_translate_ms = Math.round(performance.now() - tReplyErr);
         }
         appendBubble("assistant", reply, { sources: data.sources, usage: data.usage });
@@ -994,9 +995,9 @@
       }
       rawReply = rawReply || "(no response)";
       reply = rawReply;
-      if (apiTarget !== "en") {
+      if (getUiApiTarget() !== "en") {
         const tReply = performance.now();
-        reply = await translateLine(rawReply, apiTarget);
+        reply = await translateLine(rawReply, getUiApiTarget());
         perf.reply_translate_ms = Math.round(performance.now() - tReply);
       }
       appendBubble("assistant", reply, { sources: data.sources, usage: data.usage });
