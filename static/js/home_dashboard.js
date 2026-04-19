@@ -1,7 +1,7 @@
 (function () {
   var PREF_KEY = "cpp_dashboard_prefs";
   var TODO_KEY = "cpp_dashboard_todos";
-  var FEED_SECTIONS = ["announcements", "events", "news"];
+  var FEED_SECTIONS = ["news", "events", "announcements"];
   var PREF_SHOW_KEYS = {
     announcements: "home.dashPrefShowAnnouncements",
     events: "home.dashPrefShowEvents",
@@ -35,7 +35,7 @@
   }
 
   function defaultPrefs() {
-    return { order: ["announcements", "events", "news"], hidden: [], tags: [] };
+    return { order: ["news", "events", "announcements"], hidden: [], tags: [] };
   }
 
   function loadPrefs() {
