@@ -1,0 +1,18 @@
+import os
+import urllib.request
+
+files = {
+    "_data/index/cpp_corpus.faiss": "https://media.githubusercontent.com/media/farmertakeover/Agent-Broncos_ITC-AI-Competition/main/_data/index/cpp_corpus.faiss",
+    "_data/index/cpp_corpus.meta.jsonl": "https://media.githubusercontent.com/media/farmertakeover/Agent-Broncos_ITC-AI-Competition/main/_data/index/cpp_corpus.meta.jsonl",
+    "_data/index/url_map.json": "https://raw.githubusercontent.com/farmertakeover/Agent-Broncos_ITC-AI-Competition/main/_data/index/url_map.json",
+}
+
+os.makedirs("_data/index", exist_ok=True)
+
+for path, url in files.items():
+    if not os.path.exists(path):
+        print(f"Downloading {path}...")
+        urllib.request.urlretrieve(url, path)
+        print(f"Done!")
+    else:
+        print(f"{path} already exists, skipping.")
