@@ -32,6 +32,7 @@
   const defaultInputPlaceholder = input ? input.getAttribute("placeholder") || "" : "";
 
   const STORAGE_KEY = "cpp_chat_session_v1";
+let sessionId = localStorage.getItem("cpp_session_id") || null;
   /** @type {string | null} */
   let reviewObjectUrl = null;
 
@@ -475,6 +476,20 @@
   }
 
   rehydrateFromStorage();
+if (sessionId) {
+    fetch("/api/history?session_id=" + sessionId)
+      .then(r => r.json())
+      .then(msgs => {
+        if (!msgs.length) return;
+        messagesEl.innerHTML = "";
+        history = [];
+        msgs.forEach(m => {
+          appendBubble(m.role, m.content);
+          history.push({ role: m.role, content: m.content });
+        });
+      })
+      .catch(() => {});
+  }
 
   function formatBytes(n) {
     if (n < 1024) return n + " B";
@@ -583,6 +598,7 @@
         body: JSON.stringify({
           message: text,
           history: history.slice(0, -1).map((h) => ({ role: h.role, content: h.content })),
+          session_id: sessionId,
         }),
       });
       let data;
@@ -594,6 +610,7 @@
         persistHistory();
         return;
       }
+if (data && data.session_id) { sessionId = data.session_id; localStorage.setItem("cpp_session_id", sessionId); }
       let reply = (data && data.content) || "";
       if (!res.ok) {
         if (!reply && data && data.detail) reply = String(data.detail);

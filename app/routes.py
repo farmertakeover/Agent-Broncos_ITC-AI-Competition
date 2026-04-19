@@ -318,3 +318,13 @@ def api_chat():
         analytics.record_chat_outcome(ok=True)
     out["session_id"] = session_id
     return jsonify(out), status
+@bp.route("/api/history", methods=["GET"])
+def api_history():
+    session_id = request.args.get("session_id")
+    if not session_id:
+        return jsonify([])
+    messages = get_history(session_id)
+    return jsonify([{
+        "role": m["role"],
+        "content": m["content"]
+    } for m in messages])
