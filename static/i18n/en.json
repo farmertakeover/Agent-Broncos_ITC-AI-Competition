@@ -1,0 +1,14 @@
+{
+  "locale": "en-US",
+  "target": "en",
+  "entries": {
+    "chat.sourcesSummaryPrefix": "Sources & links (",
+    "chat.sourcesSummarySuffix": ")",
+    "chat.sectionLabel": "Section:",
+    "chat.speakAction": "Speak",
+    "chat.tokensLabel": "tokens in·out·total:",
+    "chat.speechPause": "Pause speech",
+    "chat.speechResume": "Resume speech",
+    "chat.speechNoVoiceHint": "No matching voice pack for this language on this device."
+  }
+}

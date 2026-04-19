@@ -1,19 +1,19 @@
 from __future__ import annotations
-from flask import Blueprint, jsonify, render_template, request
-from app.database import save_message, get_history
+from flask import Blueprint, jsonify, render_template, request, session
+from app.database import get_history, save_message
 import uuid
 import os
 import secrets
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
-
-from flask import Blueprint, jsonify, render_template, request
+from time import perf_counter
 
 from app import analytics
 from app.corpus_overview import corpus_prefix_counts
 from app.services.chat import run_agent_turn
 from app.services import pulse as pulse_service
+from app.services import dashboard as dashboard_service
 from app.services.ollama_client import (
     fetch_ollama_version,
     get_cached_ollama_model_names,
@@ -27,6 +27,13 @@ from app.services.transcribe import (
     transcribe_runtime_status,
     whisper_model_cached,
 )
+from app.translator import (
+    LangblyError,
+    TranslatorConfigError,
+    translate_entries,
+    translate_text,
+)
+from app.weather import WeatherAPIError, WeatherConfigError, get_weather
 from retrieval import config
 from retrieval.store import get_store
 
@@ -144,6 +151,10 @@ def api_health():
         "whisper_model_cached": whisper_model_cached(),
         "transcribe_runtime": transcribe_runtime_status(),
         "pulse_tool_enabled": config.PULSE_ENABLED,
+        "langbly_configured": bool((os.getenv("Agent_Broncos_Language_Translation") or "").strip()),
+        "openweather_configured": bool((os.getenv("Agent_Broncos_Weather_API") or "").strip()),
+        "dashboard_default_rss_configured": bool((config.DEFAULT_DASHBOARD_RSS_NEWS or "").strip()),
+        "dashboard_skip_remote": os.getenv("CPP_DASHBOARD_SKIP_REMOTE", "").lower() in ("1", "true", "yes"),
     }
     if config.WHISPER_WARMUP:
         schedule_whisper_warmup_background()
@@ -153,6 +164,94 @@ def api_health():
         body["openai_configured"] = bool(key) and key != placeholder
         body["openai_key_is_placeholder"] = bool(key) and key == placeholder
     return jsonify(body)
+
+
+@bp.route("/weather", methods=["GET"])
+@bp.route("/api/weather", methods=["GET"])
+def weather_route():
+    city = (request.args.get("city") or "Pomona").strip() or "Pomona"
+    try:
+        data = get_weather(city)
+        return jsonify(data)
+    except WeatherConfigError as e:
+        return jsonify({"error": "weather_not_configured", "detail": str(e)}), 503
+    except WeatherAPIError as e:
+        return jsonify({"error": "weather_failed", "detail": str(e)}), 502
+
+
+@bp.route("/translate", methods=["POST"])
+@bp.route("/api/translate", methods=["POST"])
+def translate_route():
+    t0 = perf_counter()
+    data = request.get_json(silent=True) or {}
+    text = data.get("text")
+    target = data.get("target", "en")
+    if not isinstance(text, str) or not text.strip():
+        return jsonify({"error": "missing_text", "detail": "JSON body must include non-empty string field 'text'."}), 400
+    if not isinstance(target, str) or not target.strip():
+        return jsonify({"error": "invalid_target", "detail": "Field 'target' must be a non-empty language code string."}), 400
+    try:
+        translated = translate_text(text, target.strip())
+        elapsed_ms = int((perf_counter() - t0) * 1000)
+        resp = jsonify(
+            {
+                "original": text,
+                "translated": translated,
+                "target": target.strip(),
+                "metrics": {"translate_ms": elapsed_ms},
+            }
+        )
+        resp.headers["Server-Timing"] = f"translate;dur={elapsed_ms}"
+        return resp
+    except TranslatorConfigError as e:
+        return jsonify({"error": "translate_not_configured", "detail": str(e)}), 503
+    except ValueError as e:
+        return jsonify({"error": "invalid_input", "detail": str(e)}), 400
+    except LangblyError as e:
+        return jsonify(
+            {
+                "error": "langbly_error",
+                "detail": str(e),
+                "code": getattr(e, "code", "") or "",
+                "status_code": getattr(e, "status_code", 0) or 0,
+            }
+        ), 502
+
+
+@bp.route("/translate/batch", methods=["POST"])
+@bp.route("/api/translate/batch", methods=["POST"])
+def translate_batch_route():
+    """Batch UI translation: JSON ``{ \"target\": \"es\", \"entries\": { \"key\": \"English…\" } }``."""
+    t0 = perf_counter()
+    data = request.get_json(silent=True) or {}
+    target = (data.get("target") or "en").strip() or "en"
+    entries = data.get("entries")
+    if not isinstance(entries, dict) or not entries:
+        return jsonify({"error": "missing_entries", "detail": "Body must include object field 'entries'."}), 400
+    if len(entries) > 80:
+        return jsonify({"error": "too_many_entries", "detail": "Maximum 80 keys per request."}), 400
+    for k, v in entries.items():
+        if not isinstance(k, str) or not isinstance(v, str):
+            return jsonify({"error": "invalid_entries", "detail": "All keys and values must be strings."}), 400
+    try:
+        out = translate_entries(entries, target)
+        elapsed_ms = int((perf_counter() - t0) * 1000)
+        resp = jsonify({"target": target, "entries": out, "metrics": {"translate_batch_ms": elapsed_ms}})
+        resp.headers["Server-Timing"] = f"translate_batch;dur={elapsed_ms}"
+        return resp
+    except TranslatorConfigError as e:
+        return jsonify({"error": "translate_not_configured", "detail": str(e)}), 503
+    except ValueError as e:
+        return jsonify({"error": "invalid_input", "detail": str(e)}), 400
+    except LangblyError as e:
+        return jsonify(
+            {
+                "error": "langbly_error",
+                "detail": str(e),
+                "code": getattr(e, "code", "") or "",
+                "status_code": getattr(e, "status_code", 0) or 0,
+            }
+        ), 502
 
 
 @bp.route("/api/transcribe", methods=["POST"])
@@ -219,6 +318,34 @@ def api_student_pulse_ingest():
     return jsonify({"ok": True})
 
 
+@bp.route("/api/dashboard", methods=["GET"])
+def api_dashboard():
+    """Unified homepage dashboard: official RSS/ICS and Student Pulse."""
+    prefs = session.get("dashboard_prefs")
+    if not isinstance(prefs, dict):
+        prefs = None
+    return jsonify(dashboard_service.build_dashboard(prefs=prefs))
+
+
+@bp.route("/api/dashboard/preferences", methods=["POST"])
+def api_dashboard_preferences():
+    """Server-side dashboard widget prefs (session); optional complement to localStorage."""
+    data = request.get_json(silent=True) or {}
+    if not isinstance(data, dict):
+        return jsonify({"error": "invalid_json"}), 400
+    cur = session.get("dashboard_prefs")
+    base = dict(cur) if isinstance(cur, dict) else {}
+    if isinstance(data.get("order"), list):
+        base["order"] = [str(x) for x in data["order"][:50] if isinstance(x, str)]
+    if isinstance(data.get("hidden"), list):
+        base["hidden"] = [str(x) for x in data["hidden"][:50] if isinstance(x, str)]
+    if isinstance(data.get("tags"), list):
+        base["tags"] = [str(x) for x in data["tags"][:20] if isinstance(x, str)]
+    session["dashboard_prefs"] = base
+    session.modified = True
+    return jsonify({"ok": True, "preferences": base})
+
+
 @bp.route("/api/stats", methods=["GET"])
 def api_stats():
     """Anonymous usage counters (bonus analytics)."""
@@ -278,6 +405,7 @@ def api_graph_context():
 
 @bp.route("/api/chat", methods=["POST"])
 def api_chat():
+    t0 = perf_counter()
     data = request.get_json(silent=True) or {}
     user_msg = (data.get("message") or "").strip()
     history = data.get("history") or []
@@ -300,6 +428,7 @@ def api_chat():
 
     analytics.record_chat_start()
     out = run_agent_turn(openai_msgs)
+    llm_elapsed_ms = int((perf_counter() - t0) * 1000)
 
     if not out.get("error"):
         save_message(session_id, "assistant", out.get("content", ""))
@@ -317,14 +446,17 @@ def api_chat():
         status = 200
         analytics.record_chat_outcome(ok=True)
     out["session_id"] = session_id
-    return jsonify(out), status
+    out["metrics"] = {"chat_ms": llm_elapsed_ms}
+    resp = jsonify(out)
+    resp.status_code = status
+    resp.headers["Server-Timing"] = f"chat;dur={llm_elapsed_ms}"
+    return resp
+
+
 @bp.route("/api/history", methods=["GET"])
 def api_history():
-    session_id = request.args.get("session_id")
-    if not session_id:
+    sid = request.args.get("session_id")
+    if not sid:
         return jsonify([])
-    messages = get_history(session_id)
-    return jsonify([{
-        "role": m["role"],
-        "content": m["content"]
-    } for m in messages])
+    messages = get_history(sid)
+    return jsonify([{"role": m["role"], "content": m["content"]} for m in messages])

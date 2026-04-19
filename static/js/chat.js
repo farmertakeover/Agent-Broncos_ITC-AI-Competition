@@ -10,6 +10,7 @@
   const replyNotifyToggle = document.getElementById("replyNotifyToggle");
   const graphPanel = document.getElementById("graphPanel");
   const graphCanvas = document.getElementById("graphCanvas");
+  const chatPerfNote = document.getElementById("chatPerfNote");
   const voiceInline = document.getElementById("voiceInline");
   const voiceInlineStatus = document.getElementById("voiceInlineStatus");
   const waveCanvas = document.getElementById("waveCanvas");
@@ -29,10 +30,170 @@
   const micReviewAudioRow = document.getElementById("micReviewAudioRow");
   const micReviewAudio = document.getElementById("micReviewAudio");
   const micReviewMeta = document.getElementById("micReviewMeta");
+  const i18nRoot = document.getElementById("chatI18nStrings");
   const defaultInputPlaceholder = input ? input.getAttribute("placeholder") || "" : "";
 
   const STORAGE_KEY = "cpp_chat_session_v1";
-let sessionId = localStorage.getItem("cpp_session_id") || null;
+  let sessionId = null;
+  try {
+    sessionId = localStorage.getItem("cpp_session_id") || null;
+  } catch {
+    sessionId = null;
+  }
+  const chatUiDefaults = {
+    sourcesPrefix: "Sources & links (",
+    sourcesSuffix: ")",
+    sectionLabel: "Section:",
+    speakAction: "Speak",
+    tokensLabel: "tokens in·out·total:",
+    speechPause: "Pause speech",
+    speechResume: "Resume speech",
+    noVoiceHint: "No matching voice pack for this language on this device.",
+  };
+
+  let speechVoices = [];
+  let speechVoicesLoaded = false;
+  let speechVoicesPromise = null;
+
+  function readI18nSpan(id, fallback) {
+    const el = i18nRoot ? i18nRoot.querySelector("#" + id) : null;
+    const txt = el ? String(el.textContent || "").trim() : "";
+    return txt || fallback;
+  }
+
+  function chatUiText() {
+    return {
+      sourcesPrefix: readI18nSpan("chatStrSourcesPrefix", chatUiDefaults.sourcesPrefix),
+      sourcesSuffix: readI18nSpan("chatStrSourcesSuffix", chatUiDefaults.sourcesSuffix),
+      sectionLabel: readI18nSpan("chatStrSectionLabel", chatUiDefaults.sectionLabel),
+      speakAction: readI18nSpan("chatStrSpeakAction", chatUiDefaults.speakAction),
+      tokensLabel: readI18nSpan("chatStrTokensLabel", chatUiDefaults.tokensLabel),
+      speechPause: readI18nSpan("chatStrSpeechPause", chatUiDefaults.speechPause),
+      speechResume: readI18nSpan("chatStrSpeechResume", chatUiDefaults.speechResume),
+      noVoiceHint: readI18nSpan("chatStrNoVoiceHint", chatUiDefaults.noVoiceHint),
+    };
+  }
+
+  function normalizeLocaleTag(tag) {
+    return String(tag || "").replace("_", "-").toLowerCase();
+  }
+
+  function sameLanguage(a, b) {
+    const aa = normalizeLocaleTag(a).split("-")[0];
+    const bb = normalizeLocaleTag(b).split("-")[0];
+    return !!aa && aa === bb;
+  }
+
+  function refreshSpeechVoices() {
+    if (!window.speechSynthesis) return;
+    try {
+      speechVoices = window.speechSynthesis.getVoices() || [];
+      speechVoicesLoaded = speechVoices.length > 0;
+    } catch {
+      speechVoices = [];
+      speechVoicesLoaded = false;
+    }
+  }
+
+  function ensureSpeechVoicesReady() {
+    if (!window.speechSynthesis) return Promise.resolve([]);
+    refreshSpeechVoices();
+    if (speechVoicesLoaded) return Promise.resolve(speechVoices);
+    if (speechVoicesPromise) return speechVoicesPromise;
+    speechVoicesPromise = new Promise(function (resolve) {
+      const synth = window.speechSynthesis;
+      const done = function () {
+        synth.removeEventListener("voiceschanged", done);
+        refreshSpeechVoices();
+        resolve(speechVoices);
+      };
+      synth.addEventListener("voiceschanged", done, { once: true });
+      window.setTimeout(done, 350);
+    }).finally(function () {
+      speechVoicesPromise = null;
+    });
+    return speechVoicesPromise;
+  }
+
+  function pickVoiceForLocale(localeTag) {
+    const target = normalizeLocaleTag(localeTag);
+    if (!speechVoices.length) return null;
+    let found = speechVoices.find((v) => normalizeLocaleTag(v.lang) === target);
+    if (found) return found;
+    found = speechVoices.find((v) => sameLanguage(v.lang, target));
+    if (found) return found;
+    if (target.indexOf("zh") === 0) {
+      found = speechVoices.find((v) => normalizeLocaleTag(v.lang).indexOf("zh") === 0);
+      if (found) return found;
+    }
+    return null;
+  }
+
+  function getUiApiTarget() {
+    try {
+      if (window.CPPUiI18n && typeof window.CPPUiI18n.getApiTarget === "function") {
+        return window.CPPUiI18n.getApiTarget();
+      }
+    } catch {
+      /* ignore */
+    }
+    try {
+      var loc = localStorage.getItem("CPP_UI_LANG") || "en-US";
+      if (!loc || String(loc).toLowerCase().indexOf("en") === 0) return "en";
+      var lower = String(loc).toLowerCase();
+      if (lower === "zh-cn") return "zh-CN";
+      return String(loc).split("-")[0] || "en";
+    } catch {
+      return "en";
+    }
+  }
+
+  function speechLocaleTag() {
+    try {
+      return localStorage.getItem("CPP_UI_LANG") || "en-US";
+    } catch {
+      return "en-US";
+    }
+  }
+
+  /**
+   * @param {string} text
+   * @param {string} target Langbly target code (e.g. es, en)
+   */
+  async function translateLine(text, target) {
+    if (!text || !target || target === "en") return text;
+    var ctrl = new AbortController();
+    var timer = window.setTimeout(function () {
+      ctrl.abort();
+    }, 90000);
+    try {
+      var res = await fetch("/api/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: text, target: target }),
+        signal: ctrl.signal,
+      });
+      var data = await res.json().catch(function () {
+        return null;
+      });
+      if (!res.ok || !data || typeof data.translated !== "string") {
+        return text;
+      }
+      try {
+        window.__cppLastTranslateMs =
+          (data && data.metrics && Number(data.metrics.translate_ms)) ||
+          Number((res.headers.get("Server-Timing") || "").match(/dur=([0-9.]+)/)?.[1]) ||
+          null;
+      } catch {
+        /* ignore */
+      }
+      return data.translated;
+    } catch {
+      return text;
+    } finally {
+      window.clearTimeout(timer);
+    }
+  }
   /** @type {string | null} */
   let reviewObjectUrl = null;
 
@@ -82,7 +243,8 @@ let sessionId = localStorage.getItem("cpp_session_id") || null;
   function updateSpeechPauseUi() {
     if (!speechPauseBtn) return;
     speechPauseBtn.textContent = speechPaused ? "▶" : "II";
-    speechPauseBtn.setAttribute("aria-label", speechPaused ? "Resume speech" : "Pause speech");
+    const ui = chatUiText();
+    speechPauseBtn.setAttribute("aria-label", speechPaused ? ui.speechResume : ui.speechPause);
   }
 
   function stopSpeaking(withPop) {
@@ -107,12 +269,20 @@ let sessionId = localStorage.getItem("cpp_session_id") || null;
     showSpeechBubble(false);
   }
 
-  function speakText(text) {
+  async function speakText(text) {
     if (!window.speechSynthesis || !text) return;
     try {
       stopSpeaking(false);
+      await ensureSpeechVoicesReady();
+      const locale = speechLocaleTag();
+      const selectedVoice = pickVoiceForLocale(locale);
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = "en-US";
+      if (selectedVoice) {
+        u.voice = selectedVoice;
+        u.lang = selectedVoice.lang || locale;
+      } else {
+        u.lang = locale;
+      }
       u.onstart = function () {
         currentUtterance = u;
         speechPaused = false;
@@ -244,6 +414,7 @@ let sessionId = localStorage.getItem("cpp_session_id") || null;
   }
 
   function appendBubble(role, text, extras) {
+    const ui = chatUiText();
     const wrap = document.createElement("div");
     wrap.className = "bubble " + role;
     const body = document.createElement("div");
@@ -258,7 +429,7 @@ let sessionId = localStorage.getItem("cpp_session_id") || null;
       const meta = document.createElement("div");
       meta.className = "meta";
       meta.textContent =
-        "tokens in·out·total: " +
+        ui.tokensLabel + " " +
         extras.usage.prompt_tokens +
         " · " +
         extras.usage.completion_tokens +
@@ -271,7 +442,7 @@ let sessionId = localStorage.getItem("cpp_session_id") || null;
       det.className = "sources";
       det.open = false;
       const sum = document.createElement("summary");
-      sum.textContent = "Sources & links (" + extras.sources.length + ")";
+      sum.textContent = ui.sourcesPrefix + extras.sources.length + ui.sourcesSuffix;
       det.appendChild(sum);
       extras.sources.forEach((s) => {
         const p = document.createElement("div");
@@ -290,7 +461,7 @@ let sessionId = localStorage.getItem("cpp_session_id") || null;
         if (s.heading) {
           p.appendChild(document.createElement("br"));
           const h = document.createElement("span");
-          h.textContent = "Section: " + s.heading;
+          h.textContent = ui.sectionLabel + " " + s.heading;
           p.appendChild(h);
         }
         det.appendChild(p);
@@ -303,7 +474,7 @@ let sessionId = localStorage.getItem("cpp_session_id") || null;
       const sp = document.createElement("button");
       sp.type = "button";
       sp.className = "btn mini";
-      sp.textContent = "Speak";
+      sp.textContent = ui.speakAction;
       sp.addEventListener("click", () => speakText(text));
       bar.appendChild(sp);
       wrap.appendChild(bar);
@@ -476,20 +647,37 @@ let sessionId = localStorage.getItem("cpp_session_id") || null;
   }
 
   rehydrateFromStorage();
-if (sessionId) {
-    fetch("/api/history?session_id=" + sessionId)
-      .then(r => r.json())
-      .then(msgs => {
-        if (!msgs.length) return;
+  if (sessionId) {
+    fetch("/api/history?session_id=" + encodeURIComponent(sessionId))
+      .then((r) => r.json())
+      .then((msgs) => {
+        if (!msgs || !msgs.length) return;
         messagesEl.innerHTML = "";
         history = [];
-        msgs.forEach(m => {
+        msgs.forEach((m) => {
           appendBubble(m.role, m.content);
           history.push({ role: m.role, content: m.content });
         });
+        try {
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+        } catch {
+          /* ignore */
+        }
       })
       .catch(() => {});
   }
+  updateSpeechPauseUi();
+  ensureSpeechVoicesReady();
+
+  window.addEventListener("cpp-ui-translated", function () {
+    updateSpeechPauseUi();
+    if (!history.length || !messagesEl) return;
+    messagesEl.innerHTML = "";
+    history.forEach((item) => {
+      if (item.role === "user") appendBubble("user", item.content);
+      else appendBubble("assistant", item.content, { sources: item.sources, usage: item.usage });
+    });
+  });
 
   function formatBytes(n) {
     if (n < 1024) return n + " B";
@@ -586,8 +774,17 @@ if (sessionId) {
    * @param {{ keepSendDisabled?: boolean }} [opts]
    */
   async function submitChatMessage(text, opts) {
+    const apiTarget = getUiApiTarget();
+    let messageForApi = text;
+    const perf = { user_translate_ms: 0, chat_ms: 0, reply_translate_ms: 0, total_ms: 0 };
+    const submitT0 = performance.now();
+    if (apiTarget !== "en") {
+      const tUser = performance.now();
+      messageForApi = await translateLine(text, "en");
+      perf.user_translate_ms = Math.round(performance.now() - tUser);
+    }
     appendBubble("user", text);
-    history.push({ role: "user", content: text });
+    history.push({ role: "user", content: text, content_en: messageForApi });
     persistHistory();
     sendBtn.disabled = true;
     setThinking(true);
@@ -596,22 +793,45 @@ if (sessionId) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          message: text,
-          history: history.slice(0, -1).map((h) => ({ role: h.role, content: h.content })),
-          session_id: sessionId,
+          message: messageForApi,
+          history: history.slice(0, -1).map((h) => ({
+            role: h.role,
+            content: h.content_en != null && h.content_en !== "" ? h.content_en : h.content,
+          })),
+          session_id: sessionId || undefined,
         }),
       });
+      const raw = await res.text();
       let data;
       try {
-        data = await res.json();
+        data = raw ? JSON.parse(raw) : {};
       } catch {
-        appendBubble("assistant", "The server returned a non-JSON response (" + res.status + ").");
+        const snippet = (raw || "").replace(/\s+/g, " ").trim().slice(0, 400);
+        appendBubble(
+          "assistant",
+          "The server returned a non-JSON response (" +
+            res.status +
+            "). " +
+            (snippet ? "Body: " + snippet : "")
+        );
         history.push({ role: "assistant", content: "bad json" });
         persistHistory();
         return;
       }
-if (data && data.session_id) { sessionId = data.session_id; localStorage.setItem("cpp_session_id", sessionId); }
-      let reply = (data && data.content) || "";
+      if (data && data.session_id) {
+        sessionId = data.session_id;
+        try {
+          localStorage.setItem("cpp_session_id", sessionId);
+        } catch {
+          /* ignore */
+        }
+      }
+      let rawReply = (data && data.content) || "";
+      let reply = rawReply;
+      perf.chat_ms =
+        (data && data.metrics && Number(data.metrics.chat_ms)) ||
+        Number((res.headers.get("Server-Timing") || "").match(/dur=([0-9.]+)/)?.[1]) ||
+        0;
       if (!res.ok) {
         if (!reply && data && data.detail) reply = String(data.detail);
         if (!reply) reply = "Request failed (HTTP " + res.status + ").";
@@ -625,12 +845,18 @@ if (data && data.session_id) { sessionId = data.session_id; localStorage.setItem
         ) {
           reply += "\n\nDetails: " + String(data.detail);
         }
+        if (apiTarget !== "en" && reply) {
+          const tReplyErr = performance.now();
+          reply = await translateLine(reply, apiTarget);
+          perf.reply_translate_ms = Math.round(performance.now() - tReplyErr);
+        }
         appendBubble("assistant", reply, { sources: data.sources, usage: data.usage });
         triggerMascotCelebrate();
         maybeNotifyReply(reply);
         history.push({
           role: "assistant",
           content: reply,
+          content_en: rawReply || reply,
           sources: data.sources,
           usage: data.usage,
         });
@@ -639,7 +865,13 @@ if (data && data.session_id) { sessionId = data.session_id; localStorage.setItem
         fetchGraph(ids);
         return;
       }
-      reply = reply || "(no response)";
+      rawReply = rawReply || "(no response)";
+      reply = rawReply;
+      if (apiTarget !== "en") {
+        const tReply = performance.now();
+        reply = await translateLine(rawReply, apiTarget);
+        perf.reply_translate_ms = Math.round(performance.now() - tReply);
+      }
       appendBubble("assistant", reply, { sources: data.sources, usage: data.usage });
       triggerMascotCelebrate();
       maybeNotifyReply(reply);
@@ -647,12 +879,26 @@ if (data && data.session_id) { sessionId = data.session_id; localStorage.setItem
       history.push({
         role: "assistant",
         content: reply,
+        content_en: rawReply,
         sources: data.sources,
         usage: data.usage,
       });
       persistHistory();
       const ids = (data.sources || []).map((s) => s.chunk_id).filter(Boolean);
       fetchGraph(ids);
+      perf.total_ms = Math.round(performance.now() - submitT0);
+      if (chatPerfNote) {
+        chatPerfNote.textContent =
+          "Latency — chat: " +
+          perf.chat_ms +
+          " ms · user translate: " +
+          perf.user_translate_ms +
+          " ms · reply translate: " +
+          perf.reply_translate_ms +
+          " ms · total: " +
+          perf.total_ms +
+          " ms";
+      }
     } catch (err) {
       appendBubble("assistant", "Network error: " + err);
       triggerMascotCelebrate();
@@ -674,7 +920,7 @@ if (data && data.session_id) { sessionId = data.session_id; localStorage.setItem
 
   document.querySelectorAll(".starter-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const q = btn.getAttribute("data-q");
+      const q = (btn.textContent || "").trim() || btn.getAttribute("data-q");
       if (q) {
         input.value = q;
         input.focus();

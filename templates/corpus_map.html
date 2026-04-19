@@ -2,18 +2,17 @@
 {% block title %}Corpus map{% endblock %}
 {% block body %}
 <section class="card corpus-map-intro">
-  <h1>Knowledge corpus map</h1>
+  <h1 data-i18n="corpus.title">Knowledge corpus map</h1>
   <p class="lead muted">
-    This diagram groups crawled pages by the <strong>leading part of each filename</strong> (before <code>__</code>).
-    Bubble size reflects how many markdown files sit in each topic bucket.
+    <span data-i18n="corpus.leadA">This diagram groups crawled pages by the </span><strong data-i18n="corpus.leadStrong">leading part of each filename</strong><span data-i18n="corpus.leadB"> (before </span><code>__</code><span data-i18n="corpus.leadC">). Bubble size reflects how many markdown files sit in each topic bucket.</span>
   </p>
-  <p class="muted small" id="ragNote">Loading…</p>
+  <p class="muted small"><span id="ragNote" data-i18n="corpus.loading">Loading…</span><span id="ragNoteCount"></span></p>
 </section>
 <section class="card">
   <canvas id="corpusCanvas" width="900" height="560" aria-label="Corpus topic map"></canvas>
+  <p class="muted small" style="margin-top:0.5rem" data-i18n="corpus.controls">Drag nodes or the background to move around, and use the mouse wheel to zoom.</p>
   <p class="muted small" style="margin-top:0.75rem">
-    <strong>Not graph RAG:</strong> the assistant retrieves with <strong>FAISS vector search</strong> over chunk embeddings.
-    This map is only a structural overview of the crawl.
+    <strong data-i18n="corpus.ragStrong">Not graph RAG:</strong><span data-i18n="corpus.ragA"> the assistant retrieves with </span><strong data-i18n="corpus.ragStrong2">FAISS vector search</strong><span data-i18n="corpus.ragB"> over chunk embeddings. This map is only a structural overview of the crawl.</span>
   </p>
 </section>
 <script src="{{ url_for('static', filename='js/corpus_map.js') }}" defer></script>

@@ -10,3 +10,7 @@ chunks.jsonl
 .DS_Store
 .pytest_cache/
 _data/eval_results.json
+
+# Presentation artifacts (kept local only)
+*.pptx
+scripts/make_presentation.py

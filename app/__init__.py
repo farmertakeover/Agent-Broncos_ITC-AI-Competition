@@ -25,6 +25,9 @@ def create_app() -> Flask:
         static_folder=os.path.join(_REPO_ROOT, "static"),
         static_url_path="/static",
     )
+    app.secret_key = os.getenv("FLASK_SECRET_KEY") or os.getenv("SECRET_KEY") or "dev-insecure-change-me"
+    app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+    app.config["SESSION_COOKIE_HTTPONLY"] = True
     # Room for short voice memos to /api/transcribe (webm/opus).
     app.config["MAX_CONTENT_LENGTH"] = 25 * 1024 * 1024
     app.config["CPP_INDEX_BUILT_AT"] = None

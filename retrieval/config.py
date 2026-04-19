@@ -93,3 +93,7 @@ if _ctx.isdigit() and int(_ctx) > 0:
     OLLAMA_CHAT_NUM_CTX = int(_ctx)
 else:
     OLLAMA_CHAT_NUM_CTX = None
+
+# --- Homepage dashboard (/api/dashboard): RSS/ICS + pulse ---
+# If CPP_DASHBOARD_RSS_NEWS is unset, app/services/dashboard.py falls back to this public CPP news feed.
+DEFAULT_DASHBOARD_RSS_NEWS = "https://polycentric.cpp.edu/feed/"

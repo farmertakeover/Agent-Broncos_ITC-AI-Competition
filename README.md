@@ -13,6 +13,8 @@ Default backend in `.env.example` is OpenAI. Ollama is also supported.
 
 [Watch on YouTube](https://youtu.be/dwWcijElnjc)
 
+Live deployment: [agent-broncos-itc-ai-competition.onrender.com/chat](https://agent-broncos-itc-ai-competition.onrender.com/chat)
+
 ## What Is In Use
 
 | Area | Implementation |
@@ -138,6 +140,9 @@ Writes `_data/eval_results.json` from `_data/golden_questions.json`.
 | `POST /api/transcribe` | audio to text |
 | `GET /api/student-pulse` | pulse JSON |
 | `POST /api/student-pulse/ingest` | authenticated pulse ingest |
+| `GET /api/dashboard` | aggregated RSS/ICS + pulse cards |
+| `GET /weather` (or `/api/weather`) | OpenWeatherMap current weather |
+| `POST /translate` (or `/api/translate`) | Langbly text translation |
 | `GET /api/stats` | anonymous usage counters |
 
 ## Project Data Layout
@@ -159,5 +164,5 @@ For lightweight structured data (e.g., the pulse feed), the system uses JSON-bas
 
 ## Features
 
-- Implemented a language translation module using the Langbly API to support multilingual user queries
-- Integrated the OpenWeather API to display real-time weather data within the application dashboard
+- Implemented a language translation module using the Langbly API to support multilingual user queries (set `Agent_Broncos_Language_Translation`)
+- Integrated the OpenWeather API to display real-time weather data within the application dashboard (set `Agent_Broncos_Weather_API`)

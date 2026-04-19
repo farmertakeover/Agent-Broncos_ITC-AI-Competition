@@ -1,73 +1,132 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block body %}
-<section class="dashboard-strip" id="homeDashboard" aria-label="Campus at a glance">
-  <div class="dashboard-widget">
-    <h2>Weather · Pomona</h2>
-    <div class="widget-value" id="dashWeather">—</div>
-    <p class="widget-sub" id="dashWeatherSub">Open-Meteo (near CPP)</p>
-  </div>
-  <div class="dashboard-widget">
-    <h2>Time · Pomona</h2>
-    <div class="widget-value" id="dashTime">—</div>
-    <p class="widget-sub">Pacific Time (Los Angeles)</p>
-  </div>
-  <div class="dashboard-widget">
-    <h2>Language</h2>
-    <p class="widget-sub">Preferred display / future translate hook (stored in your browser).</p>
-    <label class="sr-only" for="dashLang">Interface language</label>
-    <select id="dashLang" class="lang-select" aria-describedby="dashLangNote"></select>
-    <p class="widget-sub" id="dashLangNote">Chat answers follow the corpus (English). This sets a preference only.</p>
-  </div>
-</section>
-<section class="hero">
-  <div class="hero-text">
-    <h1>Cal Poly Pomona campus answers, cited.</h1>
-    <p class="lead">
-      Ask natural-language questions about CPP public web content. Responses use retrieval from a local
-      markdown corpus with source paths and links when available.
-    </p>
-    <div class="cta-row">
-      <a class="btn primary" href="{{ url_for('main.chat_page') }}">Open chat</a>
-      <a class="btn ghost" href="{{ url_for('main.corpus_map_page') }}">Corpus map</a>
-      {% if not index_ready %}
-      <span class="badge warn">Search index not built — run <code>python scripts/build_index.py</code></span>
-      {% else %}
-      <span class="badge ok">Search index ready</span>
-      {% endif %}
+<div class="home-dashboard-root" id="homeDashboardRoot">
+  <section class="dashboard-hero-cta" aria-label="Primary actions">
+    <div class="dashboard-hero-text">
+      <h1 class="dashboard-hero-title" data-i18n="home.heroTitle">Cal Poly Pomona campus answers, cited.</h1>
+      <p class="lead dashboard-hero-lead" data-i18n="home.heroLead">
+        Ask natural-language questions about CPP public web content. Responses use retrieval from a local
+        markdown corpus with source paths and links when available.
+      </p>
+      <div class="cta-row dashboard-cta-row">
+        <a class="btn primary btn-ask-bronco" href="{{ url_for('main.chat_page') }}" data-i18n="home.ctaAskBronco">Ask Agent Bronco</a>
+        <a class="btn ghost" href="{{ url_for('main.corpus_map_page') }}" data-i18n="home.ctaCorpus">Corpus map</a>
+        {% if not index_ready %}
+        <span class="badge warn" data-i18n="home.badgeWarn">Search index not built — run python scripts/build_index.py</span>
+        {% else %}
+        <span class="badge ok" data-i18n="home.badgeOk">Search index ready</span>
+        {% endif %}
+      </div>
     </div>
-  </div>
-  <div class="mascot-wrap">
-    {% include "_bronco_mascot.html" %}
-  </div>
-</section>
-<section class="grid-2">
-  <div class="card">
-    <h2>What it does</h2>
-    <ul>
-      <li>Multi-turn chat with tool-based corpus search (FAISS + embeddings)</li>
-      <li>Grounded answers with source attribution</li>
-      <li>Optional voice input and read-aloud on the chat page</li>
-      <li><a href="{{ url_for('main.corpus_map_page') }}">Topic map</a> of crawled filenames (not graph RAG)</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h2>How retrieval works</h2>
+    <div class="mascot-wrap dashboard-mascot">
+      {% include "_bronco_mascot.html" %}
+    </div>
+  </section>
+
+  <p id="dashBanner" class="dash-banner hidden" role="status"></p>
+
+  <section class="dashboard-main" aria-label="Campus dashboard">
+    <div class="dashboard-main-grid">
+      <div class="dashboard-col-feeds" id="dashColFeeds">
+        <div class="dash-panel" data-section="announcements">
+          <h2 class="dash-panel-title" data-i18n="home.dashAnnouncements">Announcements</h2>
+          <p class="dash-panel-status muted small" data-state="loading" data-i18n="home.dashLoading">Loading…</p>
+          <ul class="dash-card-list" id="dashListAnnouncements" hidden></ul>
+        </div>
+        <div class="dash-panel" data-section="events">
+          <h2 class="dash-panel-title" data-i18n="home.dashEvents">Upcoming events</h2>
+          <p class="dash-panel-status muted small" data-state="loading" data-i18n="home.dashLoading">Loading…</p>
+          <ul class="dash-card-list" id="dashListEvents" hidden></ul>
+        </div>
+        <div class="dash-panel" data-section="news">
+          <h2 class="dash-panel-title" data-i18n="home.dashNews">News &amp; updates</h2>
+          <p class="dash-panel-status muted small" data-state="loading" data-i18n="home.dashLoading">Loading…</p>
+          <ul class="dash-card-list" id="dashListNews" hidden></ul>
+        </div>
+      </div>
+      <div class="dashboard-col-side">
+        <div class="dash-panel dash-panel--reminders" data-section="reminders">
+          <h2 class="dash-panel-title" data-i18n="home.dashReminders">Quick reminders</h2>
+          <p class="dash-panel-hint muted small" data-i18n="home.dashRemindersHint">
+            Campus events appear under Upcoming events. Use this list for your own notes (stored in this browser).
+          </p>
+          <div class="dash-todos" id="dashTodos">
+            <h3 class="dash-subheading" data-i18n="home.dashTodos">To-dos</h3>
+            <p class="muted small" data-i18n="home.dashTodosHint">Quick list stored in your browser.</p>
+            <ul class="dash-todo-list" id="dashTodoList"></ul>
+            <form class="dash-todo-form" id="dashTodoForm">
+              <input type="text" id="dashTodoInput" name="todo" maxlength="200" placeholder="Add a reminder…" autocomplete="off" data-i18n="home.dashTodoPlaceholder" />
+              <button type="submit" class="btn ghost" data-i18n="home.dashTodoAdd">Add</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="dashboard-strip dashboard-strip--cluster" aria-label="Weather and preferences">
+      <div class="dashboard-widget">
+        <h2 data-i18n="home.dashWeatherTitle">Weather · Pomona</h2>
+        <div class="widget-value" id="dashWeather">—</div>
+        <p class="widget-sub" id="dashWeatherSub">
+          <span id="dashWeatherStatus" class="dash-weather-status" aria-live="polite"></span>
+          <span data-i18n="home.dashWeatherSub" class="dash-weather-source">Open-Meteo (near CPP)</span>
+        </p>
+      </div>
+      <div class="dashboard-widget">
+        <h2 data-i18n="home.dashTimeTitle">Time · Pomona</h2>
+        <div class="widget-value" id="dashTime">—</div>
+        <p class="widget-sub" data-i18n="home.dashTimeSub">Pacific Time (Los Angeles)</p>
+      </div>
+      <div class="dashboard-widget">
+        <h2 data-i18n="home.dashLangTitle">Language</h2>
+        <p class="widget-sub" data-i18n="home.dashLangHint">Preferred display language for the site (stored in your browser).</p>
+        <label class="sr-only" for="dashLang" data-i18n="home.dashLangLabel">Interface language</label>
+        <select id="dashLang" class="lang-select" data-cpp-ui-lang aria-describedby="dashLangNote dashLangTranslateNote langTranslateNote"></select>
+        <p class="widget-sub" id="dashLangNote" data-i18n="home.dashLangNote">Chat answers follow the corpus (English). This translates the interface only.</p>
+        <p class="widget-sub muted small" id="dashLangTranslateNote" aria-live="polite" hidden></p>
+      </div>
+      <div class="dashboard-widget dash-prefs-widget">
+        <h2 data-i18n="home.dashPrefsTitle">Dashboard layout</h2>
+        <p class="widget-sub" data-i18n="home.dashPrefsHint">Show or hide panels (saved in this browser).</p>
+        <fieldset class="dash-prefs-fieldset" id="dashPrefsFieldset"></fieldset>
+      </div>
+    </aside>
+  </section>
+
+  <section class="grid-2 dashboard-info-grid">
+    <div class="card">
+      <h2 data-i18n="home.cardDoesTitle">What it does</h2>
+      <ul>
+        <li data-i18n="home.cardDoes1">Multi-turn chat with tool-based corpus search (FAISS + embeddings)</li>
+        <li data-i18n="home.cardDoes2">Grounded answers with source attribution</li>
+        <li data-i18n="home.cardDoes3">Optional voice input and read-aloud on the chat page</li>
+        <li><a href="{{ url_for('main.corpus_map_page') }}" data-i18n="home.topicMapLink">Topic map</a> <span data-i18n="home.topicMapRest">of crawled filenames (not graph RAG)</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2 data-i18n="home.cardRetrievalTitle">How retrieval works</h2>
+      <p class="muted small">
+        <span data-i18n="home.retrievalA">This project uses </span><strong>vector RAG</strong><span data-i18n="home.retrievalB"> (semantic search over chunk embeddings stored in FAISS), not graph RAG. The </span><a href="{{ url_for('main.corpus_map_page') }}">corpus map</a><span data-i18n="home.retrievalC"> is a visual overview of page topics from filenames only.</span>
+      </p>
+    </div>
+  </section>
+  <section class="card">
+    <h2 data-i18n="home.cardOpsTitle">Operators</h2>
     <p class="muted small">
-      This project uses <strong>vector RAG</strong> (semantic search over chunk embeddings stored in FAISS), not graph RAG.
-      The <a href="{{ url_for('main.corpus_map_page') }}">corpus map</a> is a visual overview of page topics from filenames only.
+      <span data-i18n="home.opsJson">JSON status:</span>
+      <a href="{{ url_for('main.api_health') }}">/api/health</a>
+      <span data-i18n="home.opsCounters"> · anonymous counters:</span>
+      <a href="{{ url_for('main.api_stats') }}">/api/stats</a>
+      <span> · dashboard:</span>
+      <a href="{{ url_for('main.api_dashboard') }}">/api/dashboard</a>
+      <span data-i18n="home.opsRetrieve"> · raw retrieval:</span>
+      <a href="{{ url_for('main.api_retrieve', q='academic calendar') }}">/api/retrieve?q=…</a>
+      <span data-i18n="home.opsCorpus"> · corpus structure:</span>
+      <a href="{{ url_for('main.api_corpus_overview') }}">/api/corpus-overview</a>
     </p>
-  </div>
-</section>
-<section class="card">
-  <h2>Operators</h2>
-  <p class="muted small">
-    JSON status: <a href="{{ url_for('main.api_health') }}">/api/health</a>
-    · anonymous counters: <a href="{{ url_for('main.api_stats') }}">/api/stats</a>
-    · raw retrieval: <a href="{{ url_for('main.api_retrieve', q='academic calendar') }}">/api/retrieve?q=…</a>
-    · corpus structure: <a href="{{ url_for('main.api_corpus_overview') }}">/api/corpus-overview</a>
-  </p>
-</section>
+  </section>
+</div>
 {% endblock %}
 {% block extra_js %}
 <script src="{{ url_for('static', filename='js/home_dashboard.js') }}" defer></script>

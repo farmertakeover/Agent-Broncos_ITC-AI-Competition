@@ -1,0 +1,14 @@
+{
+  "locale": "zh-CN",
+  "target": "zh-CN",
+  "entries": {
+    "chat.sourcesSummaryPrefix": "来源与链接（",
+    "chat.sourcesSummarySuffix": "）",
+    "chat.sectionLabel": "章节：",
+    "chat.speakAction": "朗读",
+    "chat.tokensLabel": "tokens 输入·输出·总计：",
+    "chat.speechPause": "暂停朗读",
+    "chat.speechResume": "继续朗读",
+    "chat.speechNoVoiceHint": "此设备上没有与所选语言匹配的语音包。"
+  }
+}

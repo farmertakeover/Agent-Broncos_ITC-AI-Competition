@@ -8,5 +8,6 @@ sentence-transformers>=2.7.0
 torch>=2.0.0
 tqdm>=4.66.0
 faster-whisper>=1.0.0
+langbly>=0.2.0
 gunicorn
 psycopg2-binary

@@ -1,0 +1,14 @@
+{
+  "locale": "es-MX",
+  "target": "es",
+  "entries": {
+    "chat.sourcesSummaryPrefix": "Fuentes y enlaces (",
+    "chat.sourcesSummarySuffix": ")",
+    "chat.sectionLabel": "Sección:",
+    "chat.speakAction": "Hablar",
+    "chat.tokensLabel": "tokens ent·sal·total:",
+    "chat.speechPause": "Pausar voz",
+    "chat.speechResume": "Reanudar voz",
+    "chat.speechNoVoiceHint": "No hay un paquete de voz coincidente para este idioma en este dispositivo."
+  }
+}

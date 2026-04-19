@@ -3,16 +3,16 @@
 {% block body %}
 <div class="chat-layout">
   <aside class="chat-sidebar">
-    <h2>Starter questions</h2>
+    <h2 data-i18n="chat.startersTitle">Starter questions</h2>
     <ul class="starters" id="starters">
       {% for q in starter_questions %}
-      <li><button type="button" class="starter-btn" data-q="{{ q|e }}">{{ q }}</button></li>
+      <li><button type="button" class="starter-btn" data-q="{{ q|e }}" data-i18n="starter_{{ loop.index0 }}">{{ q }}</button></li>
       {% endfor %}
     </ul>
     <div class="sidebar-tools">
-      <label class="toggle"><input type="checkbox" id="speakToggle"> Enable Agent Bronco Voice Reply</label>
-      <label class="toggle toggle-notify"><input type="checkbox" id="replyNotifyToggle"> Enable Agent Bronco Notifications</label>
-      <p class="muted small">Voice: click mic to record, click again to stop — preview the clip, then ✓ to transcribe and send (chat shows a spinner until the reply) or ✕ to discard. faster-whisper on the server; HTTPS or localhost for the mic.</p>
+      <label class="toggle"><input type="checkbox" id="speakToggle"> <span data-i18n="chat.voiceToggle">Enable Agent Bronco Voice Reply</span></label>
+      <label class="toggle toggle-notify"><input type="checkbox" id="replyNotifyToggle"> <span data-i18n="chat.notifyToggle">Enable Agent Bronco Notifications</span></label>
+      <p class="muted small" data-i18n="chat.voiceHelp">Voice: click mic to record, click again to stop — preview the clip, then ✓ to transcribe and send (chat shows a spinner until the reply) or ✕ to discard. faster-whisper on the server; HTTPS or localhost for the mic.</p>
     </div>
     {% if not index_ready %}
     <p class="badge warn">Index missing — retrieval will fail until <code>build_index.py</code> is run.</p>
@@ -22,8 +22,8 @@
     <div id="chatBusyOverlay" class="chat-busy-overlay hidden" aria-hidden="true">
       <div class="chat-busy-card">
         <div class="spinner-chat" role="status" aria-label="Loading"></div>
-        <p id="chatBusyText" class="chat-busy-title">Working…</p>
-        <p class="chat-busy-sub muted small">Please wait.</p>
+        <p id="chatBusyText" class="chat-busy-title" data-i18n="chat.busyTitle">Working…</p>
+        <p class="chat-busy-sub muted small" data-i18n="chat.busySub">Please wait.</p>
       </div>
     </div>
     <div class="chat-header-row">
@@ -32,21 +32,22 @@
         {% set hide_caption = true %}
         {% include "_bronco_mascot.html" %}
       </div>
-      <h1>Chat · <span class="agent-name">Agent Bronco</span> <span id="thinkingDots" class="thinking-dots hidden" aria-live="polite">...</span></h1>
+      <h1><span data-i18n="chat.pageTitle">Chat · Agent Bronco</span> <span id="thinkingDots" class="thinking-dots hidden" aria-live="polite">...</span></h1>
       <div id="broncoSpeechBubble" class="bronco-speech-bubble hidden" aria-live="polite">
-        <span class="speech-text">Agent Bronco is speaking…</span>
+        <span class="speech-text" data-i18n="chat.speechBubble">Agent Bronco is speaking…</span>
         <div class="speech-controls">
           <button type="button" id="speechPauseBtn" class="speech-btn" aria-label="Pause speech">II</button>
           <button type="button" id="speechStopBtn" class="speech-btn" aria-label="Stop speech">✕</button>
         </div>
       </div>
     </div>
+    <p id="chatPerfNote" class="muted small" aria-live="polite"></p>
     <div id="messages" class="messages" role="log" aria-live="polite"></div>
     <form id="chatForm" class="composer">
       <label for="msg" class="sr-only">Message</label>
       <div id="composerInputRow" class="composer-input-row">
         <div id="recordingPill" class="recording-pill hidden" aria-hidden="true"></div>
-        <textarea id="msg" rows="2" placeholder="Ask about admissions, advising, campus services… (Enter to send, Shift+Enter for newline)" required></textarea>
+        <textarea id="msg" rows="2" data-i18n-placeholder="chat.msgPlaceholder" placeholder="Ask about admissions, advising, campus services… (Enter to send, Shift+Enter for newline)" required></textarea>
         <div id="voiceInline" class="voice-inline hidden" aria-live="polite">
           <div id="voiceInlineStatus" class="voice-inline-status muted small"></div>
           <div id="micReviewAudioRow" class="mic-review-audio-row hidden">
@@ -61,6 +62,8 @@
             class="btn-mic"
             id="micBtn"
             aria-pressed="false"
+            data-i18n-aria="chat.micAria"
+            data-i18n-title="chat.micTitle"
             aria-label="Toggle microphone"
             title="Microphone: click to record, click again to review"
           >
@@ -69,24 +72,34 @@
             </svg>
           </button>
           <div id="micSpinner" class="mic-spinner hidden" aria-hidden="true">
-            <div class="spinner-mini" role="status" aria-label="Transcribing"></div>
+            <div class="spinner-mini" role="status" data-i18n-aria="chat.transcribingAria" aria-label="Transcribing"></div>
           </div>
           <div id="micDecision" class="mic-decision hidden" aria-hidden="true">
-            <button type="button" class="btn mic-review-btn" id="micDiscard" aria-label="Discard recording">✕</button>
-            <button type="button" class="btn primary mic-review-btn" id="micConfirm" aria-label="Transcribe and send to chat">✓</button>
+            <button type="button" class="btn mic-review-btn" id="micDiscard" data-i18n-aria="chat.micDiscardAria" aria-label="Discard recording">✕</button>
+            <button type="button" class="btn primary mic-review-btn" id="micConfirm" data-i18n-aria="chat.micConfirmAria" aria-label="Transcribe and send to chat">✓</button>
           </div>
         </div>
       </div>
       <div class="composer-actions">
         <span class="mic-hint muted small" id="micHint" hidden></span>
-        <button type="submit" class="btn primary" id="sendBtn">Send</button>
+        <button type="submit" class="btn primary" id="sendBtn" data-i18n="chat.send">Send</button>
       </div>
     </form>
     <section id="graphPanel" class="graph-panel hidden">
-      <h3>Related pages (this answer)</h3>
-      <canvas id="graphCanvas" width="480" height="220" aria-label="Related documents graph"></canvas>
+      <h3 data-i18n="chat.graphTitle">Related pages (this answer)</h3>
+      <canvas id="graphCanvas" width="480" height="220" data-i18n-aria="chat.graphAria" aria-label="Related documents graph"></canvas>
     </section>
   </section>
+</div>
+<div id="chatI18nStrings" class="hidden" aria-hidden="true">
+  <span id="chatStrSourcesPrefix" data-i18n="chat.sourcesSummaryPrefix">Sources & links (</span>
+  <span id="chatStrSourcesSuffix" data-i18n="chat.sourcesSummarySuffix">)</span>
+  <span id="chatStrSectionLabel" data-i18n="chat.sectionLabel">Section:</span>
+  <span id="chatStrSpeakAction" data-i18n="chat.speakAction">Speak</span>
+  <span id="chatStrTokensLabel" data-i18n="chat.tokensLabel">tokens in·out·total:</span>
+  <span id="chatStrSpeechPause" data-i18n="chat.speechPause">Pause speech</span>
+  <span id="chatStrSpeechResume" data-i18n="chat.speechResume">Resume speech</span>
+  <span id="chatStrNoVoiceHint" data-i18n="chat.speechNoVoiceHint">No matching voice pack for this language on this device.</span>
 </div>
 <script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
 {% endblock %}

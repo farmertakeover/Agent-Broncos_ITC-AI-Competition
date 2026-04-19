@@ -1,0 +1,36 @@
+{
+  "$comment": "Response shape for GET /api/dashboard (unified campus dashboard).",
+  "schema_version": 1,
+  "source_priority_order": [
+    "official_rss",
+    "pulse"
+  ],
+  "card": {
+    "id": "string — stable id for dedupe and client keys",
+    "type": "announcement | event | news | todo",
+    "title": "string",
+    "summary": "string or null",
+    "start_at": "ISO8601 UTC string or null",
+    "end_at": "ISO8601 UTC string or null",
+    "source": "official_rss | pulse",
+    "url": "string or null",
+    "priority": "number — lower = higher priority within a section",
+    "audience": "all | students | staff",
+    "freshness": "live | stale | unknown",
+    "feed_role": "optional: news | events | announcements when from RSS"
+  },
+  "response": {
+    "schema_version": 1,
+    "generated_at": "ISO8601",
+    "ok": true,
+    "partial": "true if any source failed but payload is still useful",
+    "sources": "object of source name -> { ok, ms, error }",
+    "sections": {
+      "announcements": ["card"],
+      "events": ["card"],
+      "news": ["card"]
+    },
+    "pulse_weather": "optional snapshot from student pulse",
+    "preferences": "optional echo of server-stored prefs when present"
+  }
+}

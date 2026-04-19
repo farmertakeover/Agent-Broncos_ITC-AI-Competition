@@ -2,14 +2,21 @@ import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
+
+def _database_url() -> str | None:
+    url = (os.environ.get("DATABASE_URL") or "").strip()
+    return url or None
+
+
 def get_connection():
-    url = os.environ.get("DATABASE_URL") or os.getenv("DATABASE_URL")
+    url = _database_url()
     if not url:
-        raise RuntimeError("DATABASE_URL environment variable not set")
+        raise RuntimeError("DATABASE_URL is not set")
     return psycopg2.connect(url)
 
+
 def init_db():
-    if not os.environ.get("DATABASE_URL"):
+    if not _database_url():
         print("[database] DATABASE_URL not set; skipping init_db().")
         return
     conn = get_connection()
@@ -28,6 +35,8 @@ def init_db():
     conn.close()
 
 def save_message(session_id, role, content):
+    if not _database_url():
+        return
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
@@ -39,6 +48,8 @@ def save_message(session_id, role, content):
     conn.close()
 
 def get_history(session_id):
+    if not _database_url():
+        return []
     conn = get_connection()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute(

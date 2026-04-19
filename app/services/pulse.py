@@ -14,6 +14,10 @@ _SCHEMA_PATH = os.path.join(config.REPO_ROOT, "integrations", "pulse_schema.json
 _TOOL_JSON_MAX = int(os.getenv("CPP_PULSE_TOOL_MAX_CHARS", "8000"))
 
 
+def _reddit_enabled() -> bool:
+    return os.getenv("CPP_PULSE_REDDIT_ENABLED", "true").lower() in ("1", "true", "yes")
+
+
 def _default_skeleton() -> dict[str, Any]:
     if os.path.isfile(_SCHEMA_PATH):
         try:
@@ -58,6 +62,77 @@ def _fetch_url_payload() -> dict[str, Any] | None:
         return None
 
 
+def _fetch_reddit_via_json() -> tuple[list[dict[str, Any]], str | None]:
+    url = (os.getenv("CPP_REDDIT_JSON_URL") or "https://www.reddit.com/r/CalPolyPomona/new.json?limit=10").strip()
+    timeout = float(os.getenv("CPP_REDDIT_FETCH_TIMEOUT", "8"))
+    try:
+        req = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": os.getenv("CPP_REDDIT_USER_AGENT", "AgentBroncos-Pulse/1.0"),
+            },
+        )
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            raw = resp.read().decode("utf-8", errors="replace")
+        data = json.loads(raw)
+        children = (((data or {}).get("data") or {}).get("children")) if isinstance(data, dict) else None
+        if not isinstance(children, list):
+            return [], "invalid_json_shape"
+        out: list[dict[str, Any]] = []
+        for child in children:
+            inner = (child or {}).get("data") if isinstance(child, dict) else None
+            if not isinstance(inner, dict):
+                continue
+            title = str(inner.get("title") or "").strip()
+            permalink = str(inner.get("permalink") or "").strip()
+            if not title:
+                continue
+            url_final = (
+                ("https://www.reddit.com" + permalink)
+                if permalink.startswith("/")
+                else str(inner.get("url") or "").strip()
+            )
+            out.append(
+                {
+                    "title": title,
+                    "url": url_final or None,
+                    "subreddit": str(inner.get("subreddit") or "CalPolyPomona"),
+                    "created_utc": inner.get("created_utc"),
+                }
+            )
+        return out, None
+    except (urllib.error.URLError, OSError, TimeoutError, ValueError, json.JSONDecodeError) as e:
+        return [], str(e)
+
+
+def _merge_reddit_items(base: dict[str, Any]) -> None:
+    if not _reddit_enabled():
+        return
+    fetched, err = _fetch_reddit_via_json()
+    existing = ((base.get("reddit_cpp") or {}).get("items")) if isinstance(base.get("reddit_cpp"), dict) else None
+    items: list[dict[str, Any]] = []
+    if isinstance(existing, list):
+        for it in existing:
+            if isinstance(it, dict):
+                items.append(it)
+    seen: set[str] = set()
+    merged: list[dict[str, Any]] = []
+    for it in fetched + items:
+        if not isinstance(it, dict):
+            continue
+        k = f"{it.get('url') or ''}|{it.get('title') or ''}"
+        if k in seen:
+            continue
+        seen.add(k)
+        merged.append(it)
+    base.setdefault("reddit_cpp", {})
+    if isinstance(base["reddit_cpp"], dict):
+        base["reddit_cpp"]["items"] = merged[:20]
+        base["reddit_cpp"]["source"] = "json"
+        if err:
+            base["reddit_cpp"]["warning"] = err
+
+
 def get_pulse_for_api() -> dict[str, Any]:
     """Merged digest for GET /api/student-pulse."""
     base = deepcopy(_default_skeleton())
@@ -65,14 +140,17 @@ def get_pulse_for_api() -> dict[str, Any]:
     if disk:
         base.update(disk)
         base["pulse_source"] = "file"
+        _merge_reddit_items(base)
         return base
     if config.PULSE_URL:
         remote = _fetch_url_payload()
         if remote:
             base.update(remote)
             base["pulse_source"] = "url"
+            _merge_reddit_items(base)
             return base
     base["pulse_source"] = "default"
+    _merge_reddit_items(base)
     return base
 
 
