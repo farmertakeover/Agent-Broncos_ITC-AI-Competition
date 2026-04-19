@@ -1007,10 +1007,43 @@ body {
   font-family: inherit;
 }
 
-.dashboard-strip--cluster {
-  margin-bottom: 2rem;
-}
 .dashboard-info-grid { margin-top: 2rem; }
+
+.dash-sidebar-settings {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #4a3d32;
+}
+.dash-sidebar-settings .dash-subheading:first-of-type {
+  margin-top: 0;
+}
+.dash-settings-block + .dash-settings-block {
+  margin-top: 1.1rem;
+}
+.dash-settings-lead {
+  margin: 0.25rem 0 0.65rem;
+  line-height: 1.45;
+}
+.dash-settings-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin: 0.35rem 0 0.25rem;
+  color: var(--text);
+}
+.dash-sidebar-settings .lang-select {
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid #355045;
+  background: #121a15;
+  color: var(--text);
+  font-family: inherit;
+}
+.dash-settings-note {
+  margin: 0.5rem 0 0;
+  line-height: 1.45;
+}
 
 .dash-prefs-fieldset { border: none; margin: 0.35rem 0 0; padding: 0; }
 .dash-prefs-fieldset label {

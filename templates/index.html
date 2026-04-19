@@ -97,25 +97,31 @@
               <button type="submit" class="btn ghost" data-i18n="home.dashTodoAdd">Add</button>
             </form>
           </div>
+
+          <div class="dash-sidebar-settings" aria-label="Language and dashboard layout">
+            <div class="dash-settings-block">
+              <h3 class="dash-subheading" data-i18n="home.dashLangTitle">Language</h3>
+              <p class="muted small dash-settings-lead" data-i18n="home.dashLangHint">
+                Preferred display language for the site (stored in your browser).
+              </p>
+              <label class="dash-settings-label" for="dashLang" data-i18n="home.dashLangLabel">Interface language</label>
+              <select id="dashLang" class="lang-select" data-cpp-ui-lang aria-describedby="dashLangNote dashLangTranslateNote langTranslateNote"></select>
+              <p class="muted small dash-settings-note" id="dashLangNote" data-i18n="home.dashLangNote">
+                Chat answers follow the corpus (English). This translates the interface only.
+              </p>
+              <p class="muted small" id="dashLangTranslateNote" aria-live="polite" hidden></p>
+            </div>
+            <div class="dash-settings-block">
+              <h3 class="dash-subheading" data-i18n="home.dashPrefsTitle">Dashboard layout</h3>
+              <p class="muted small dash-settings-lead" data-i18n="home.dashPrefsHint">
+                Show or hide panels (saved in this browser).
+              </p>
+              <fieldset class="dash-prefs-fieldset" id="dashPrefsFieldset"></fieldset>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <aside class="dashboard-strip dashboard-strip--cluster" aria-label="Language and preferences">
-      <div class="dashboard-widget">
-        <h2 data-i18n="home.dashLangTitle">Language</h2>
-        <p class="widget-sub" data-i18n="home.dashLangHint">Preferred display language for the site (stored in your browser).</p>
-        <label class="sr-only" for="dashLang" data-i18n="home.dashLangLabel">Interface language</label>
-        <select id="dashLang" class="lang-select" data-cpp-ui-lang aria-describedby="dashLangNote dashLangTranslateNote langTranslateNote"></select>
-        <p class="widget-sub" id="dashLangNote" data-i18n="home.dashLangNote">Chat answers follow the corpus (English). This translates the interface only.</p>
-        <p class="widget-sub muted small" id="dashLangTranslateNote" aria-live="polite" hidden></p>
-      </div>
-      <div class="dashboard-widget dash-prefs-widget">
-        <h2 data-i18n="home.dashPrefsTitle">Dashboard layout</h2>
-        <p class="widget-sub" data-i18n="home.dashPrefsHint">Show or hide panels (saved in this browser).</p>
-        <fieldset class="dash-prefs-fieldset" id="dashPrefsFieldset"></fieldset>
-      </div>
-    </aside>
   </section>
 
   <section class="grid-2 dashboard-info-grid">
