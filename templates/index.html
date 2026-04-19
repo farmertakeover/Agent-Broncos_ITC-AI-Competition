@@ -43,17 +43,18 @@
   <p id="dashBanner" class="dash-banner hidden" role="status"></p>
 
   <section class="dash-campus-links" id="dashCampusLinksSection" hidden aria-label="Campus links">
-    <h2 class="dash-campus-links-title" data-i18n="home.dashCampusLinksTitle">Campus and official links</h2>
-    <p class="muted small dash-campus-links-hint" data-i18n="home.dashCampusLinksHint">
-      Verify dates and policies on the destination site.
-    </p>
+    <div class="dash-campus-links-head">
+      <h2 class="dash-campus-links-title" data-i18n="home.dashCampusLinksTitle">Campus and official links</h2>
+      <p class="muted small dash-campus-links-hint" data-i18n="home.dashCampusLinksHint">
+        Verify dates and policies on the destination site.
+      </p>
+    </div>
     <ul class="dash-campus-links-list" id="dashCampusLinksList"></ul>
   </section>
 
   <div id="dashJsI18nPool" class="hidden" aria-hidden="true">
     <span data-i18n="home.dashEmptyGeneric">No items right now.</span>
     <span data-i18n="home.dashLoadError">Could not load dashboard. Try again later.</span>
-    <span data-i18n="home.dashPartialBanner">Some dashboard sources were slow or unavailable; showing mixed campus data when possible.</span>
     <span data-i18n="home.dashPrefShowAnnouncements">Show announcements</span>
     <span data-i18n="home.dashPrefShowEvents">Show events</span>
     <span data-i18n="home.dashPrefShowNews">Show news</span>
@@ -83,42 +84,27 @@
         </div>
       </div>
       <div class="dashboard-col-side">
-        <div class="dash-panel dash-panel--reminders" data-section="reminders">
+        <div class="dash-panel dash-panel--sidebar-card" data-section="reminders-intro">
           <h2 class="dash-panel-title" data-i18n="home.dashReminders">Quick reminders</h2>
           <p class="dash-panel-hint muted small" data-i18n="home.dashRemindersHint">
             Campus events appear under Upcoming events. Use this list for your own notes (stored in this browser).
           </p>
-          <div class="dash-todos" id="dashTodos">
-            <h3 class="dash-subheading" data-i18n="home.dashTodos">To-dos</h3>
-            <p class="muted small" data-i18n="home.dashTodosHint">Quick list stored in your browser.</p>
-            <ul class="dash-todo-list" id="dashTodoList"></ul>
-            <form class="dash-todo-form" id="dashTodoForm">
-              <input type="text" id="dashTodoInput" name="todo" maxlength="200" placeholder="Add a reminder…" autocomplete="off" data-i18n="home.dashTodoPlaceholder" />
-              <button type="submit" class="btn ghost" data-i18n="home.dashTodoAdd">Add</button>
-            </form>
-          </div>
-
-          <div class="dash-sidebar-settings" aria-label="Language and dashboard layout">
-            <div class="dash-settings-block">
-              <h3 class="dash-subheading" data-i18n="home.dashLangTitle">Language</h3>
-              <p class="muted small dash-settings-lead" data-i18n="home.dashLangHint">
-                Preferred display language for the site (stored in your browser).
-              </p>
-              <label class="dash-settings-label" for="dashLang" data-i18n="home.dashLangLabel">Interface language</label>
-              <select id="dashLang" class="lang-select" data-cpp-ui-lang aria-describedby="dashLangNote dashLangTranslateNote langTranslateNote"></select>
-              <p class="muted small dash-settings-note" id="dashLangNote" data-i18n="home.dashLangNote">
-                Chat answers follow the corpus (English). This translates the interface only.
-              </p>
-              <p class="muted small" id="dashLangTranslateNote" aria-live="polite" hidden></p>
-            </div>
-            <div class="dash-settings-block">
-              <h3 class="dash-subheading" data-i18n="home.dashPrefsTitle">Dashboard layout</h3>
-              <p class="muted small dash-settings-lead" data-i18n="home.dashPrefsHint">
-                Show or hide panels (saved in this browser).
-              </p>
-              <fieldset class="dash-prefs-fieldset" id="dashPrefsFieldset"></fieldset>
-            </div>
-          </div>
+        </div>
+        <div class="dash-panel dash-panel--sidebar-card" data-section="todos">
+          <h2 class="dash-panel-title" data-i18n="home.dashTodos">To-dos</h2>
+          <p class="muted small" data-i18n="home.dashTodosHint">Quick list stored in your browser.</p>
+          <ul class="dash-todo-list" id="dashTodoList"></ul>
+          <form class="dash-todo-form" id="dashTodoForm">
+            <input type="text" id="dashTodoInput" name="todo" maxlength="200" placeholder="Add a reminder…" autocomplete="off" data-i18n="home.dashTodoPlaceholder" />
+            <button type="submit" class="btn ghost" data-i18n="home.dashTodoAdd">Add</button>
+          </form>
+        </div>
+        <div class="dash-panel dash-panel--sidebar-card" data-section="dash-layout-prefs">
+          <h2 class="dash-panel-title" data-i18n="home.dashPrefsTitle">Dashboard layout</h2>
+          <p class="muted small dash-panel-hint" data-i18n="home.dashPrefsHint">
+            Show or hide panels (saved in this browser).
+          </p>
+          <fieldset class="dash-prefs-fieldset" id="dashPrefsFieldset"></fieldset>
         </div>
       </div>
     </div>

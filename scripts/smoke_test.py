@@ -72,6 +72,8 @@ class TestSmoke(unittest.TestCase):
         self.assertIn("campus_links", j)
         self.assertIsInstance(j["campus_links"], list)
         self.assertGreater(len(j["campus_links"]), 0)
+        self.assertGreater(len(j["sections"]["news"]), 0)
+        self.assertGreater(len(j["sections"]["announcements"]), 0)
 
     @patch.dict(os.environ, {"CPP_DASHBOARD_SKIP_REMOTE": "true"}, clear=False)
     def test_api_dashboard_preferences(self):
@@ -194,7 +196,7 @@ class TestSmoke(unittest.TestCase):
         r = self.client.get("/")
         self.assertEqual(r.status_code, 200)
         self.assertIn(b"ui_i18n.js", r.data)
-        self.assertIn(b"dashLang", r.data)
+        self.assertIn(b"headerLang", r.data)
         self.assertIn(b"homeDashboardRoot", r.data)
         self.assertIn(b"btn-ask-bronco", r.data)
 

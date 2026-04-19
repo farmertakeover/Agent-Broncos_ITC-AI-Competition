@@ -92,6 +92,7 @@ def make_card(
     freshness: str = "unknown",
     feed_role: str | None = None,
     dedupe_key: str | None = None,
+    repeat_label: str | None = None,
 ) -> dict[str, Any]:
     dk = dedupe_key or f"{source}|{url or ''}|{title}"
     card: dict[str, Any] = {
@@ -109,6 +110,8 @@ def make_card(
     }
     if feed_role:
         card["feed_role"] = feed_role
+    if repeat_label:
+        card["repeat_label"] = repeat_label[:400]
     return card
 
 
@@ -182,6 +185,54 @@ def _parse_ics_dt(raw: str) -> datetime | None:
         return None
 
 
+def _parse_ics_duration_to_timedelta(raw: str) -> timedelta | None:
+    """Parse common RFC 5545 DURATION forms (PT2H, P1D, P1DT3H, PT90M) for inferred end times."""
+    u = (raw or "").strip().upper()
+    if not u.startswith("P"):
+        return None
+    if "T" in u:
+        pre, post = u.split("T", 1)
+        days = 0
+        dm = re.match(r"^P(\d+)D$", pre)
+        if dm:
+            days = int(dm.group(1))
+        h = mn = sec = 0
+        hm = re.search(r"(\d+)H", post)
+        if hm:
+            h = int(hm.group(1))
+        mm = re.search(r"(\d+)M", post)
+        if mm:
+            mn = int(mm.group(1))
+        sm = re.search(r"(\d+)S", post)
+        if sm:
+            sec = int(sm.group(1))
+        td = timedelta(days=days, hours=h, minutes=mn, seconds=sec)
+        return td if td.total_seconds() else None
+    m2 = re.fullmatch(r"P(\d+)D", u)
+    if m2:
+        return timedelta(days=int(m2.group(1)))
+    return None
+
+
+def _rrule_display(raw: str) -> str | None:
+    if not (raw or "").strip():
+        return None
+    u = raw.strip().upper()
+    bits: list[str] = []
+    if "FREQ=WEEKLY" in u:
+        bits.append("Weekly")
+    elif "FREQ=DAILY" in u:
+        bits.append("Daily")
+    elif "FREQ=MONTHLY" in u:
+        bits.append("Monthly")
+    elif "FREQ=YEARLY" in u:
+        bits.append("Yearly")
+    by = re.search(r"BYDAY=([^;]+)", u)
+    if by and bits:
+        bits.append(f"on {by.group(1)[:40]}")
+    return " · ".join(bits) if bits else None
+
+
 def _parse_ics_datetime_property(prop_header: str, value: str) -> datetime | None:
     """
     Parse DTSTART/DTEND honoring VALUE=DATE and TZID= (common on MyBar/Campus Labs feeds).
@@ -244,8 +295,15 @@ def parse_ics_events(text: str) -> list[dict[str, Any]]:
                 eh = current.get("__hdr_DTEND", "DTEND")
                 start = _parse_ics_datetime_property(sh, current.get("DTSTART", ""))
                 end = _parse_ics_datetime_property(eh, current.get("DTEND", ""))
+                if end is None and start is not None:
+                    dur_raw = _parse_ics_value(current.get("DURATION", ""))
+                    delta = _parse_ics_duration_to_timedelta(dur_raw)
+                    if delta is not None:
+                        end = start + delta
                 desc = _parse_ics_value(current.get("DESCRIPTION", "")) or None
                 url = _parse_ics_value(current.get("URL", "")) or None
+                rrule_raw = _parse_ics_value(current.get("RRULE", ""))
+                rlab = _rrule_display(rrule_raw)
                 events.append(
                     make_card(
                         type_="event",
@@ -259,6 +317,7 @@ def parse_ics_events(text: str) -> list[dict[str, Any]]:
                         freshness="live",
                         feed_role="mybar",
                         dedupe_key=f"mybar|{title}|{current.get('DTSTART', '')}",
+                        repeat_label=rlab,
                     )
                 )
             current = None
@@ -562,6 +621,73 @@ def _filter_campus_rows_by_reachability(rows: list[dict[str, str]]) -> list[dict
     return filtered if filtered else rows
 
 
+def _polycentric_site_url() -> str:
+    u = (config.DEFAULT_DASHBOARD_RSS_NEWS or "").strip()
+    if "/feed/" in u:
+        return u.split("/feed/", 1)[0].rstrip("/") + "/"
+    return "https://polycentric.cpp.edu/"
+
+
+def _link_fallback_news_cards() -> list[dict[str, Any]]:
+    """Official CPP destinations when RSS/live items are empty (no invented dates)."""
+    return [
+        make_card(
+            type_="news",
+            title="Polycentric — CPP news",
+            summary="Official campus news. Open the site for current stories and publication dates.",
+            start_at=None,
+            end_at=None,
+            source="link_fallback",
+            url=_polycentric_site_url(),
+            priority=PRIORITY_OFFICIAL_RSS + 40,
+            freshness="stale",
+            dedupe_key="fallback|polycentric_site",
+        ),
+        make_card(
+            type_="news",
+            title="Getting news at CPP",
+            summary="How the university shares news, alerts, and channels (official Student Affairs / StratComm hub).",
+            start_at=None,
+            end_at=None,
+            source="link_fallback",
+            url="https://www.cpp.edu/stratcomm/getting-news.shtml",
+            priority=PRIORITY_OFFICIAL_RSS + 41,
+            freshness="stale",
+            dedupe_key="fallback|getting_news",
+        ),
+    ]
+
+
+def _link_fallback_announcement_cards() -> list[dict[str, Any]]:
+    """Registrar / student-success hubs when no announcement feed items (no invented dates)."""
+    return [
+        make_card(
+            type_="announcement",
+            title="Registrar — academic calendars",
+            summary="Official term calendars, registration periods, and academic deadlines.",
+            start_at=None,
+            end_at=None,
+            source="link_fallback",
+            url="https://www.cpp.edu/registrar/calendars/index.shtml",
+            priority=PRIORITY_OFFICIAL_RSS + 42,
+            freshness="stale",
+            dedupe_key="fallback|registrar_calendars",
+        ),
+        make_card(
+            type_="announcement",
+            title="Student success — calendars & dates",
+            summary="Official student-success calendar hub. Confirm any date on the linked page.",
+            start_at=None,
+            end_at=None,
+            source="link_fallback",
+            url="https://www.cpp.edu/studentsuccess/calendar/index.shtml",
+            priority=PRIORITY_OFFICIAL_RSS + 43,
+            freshness="stale",
+            dedupe_key="fallback|student_success_cal",
+        ),
+    ]
+
+
 def _campus_links_from_pulse(pulse: dict[str, Any]) -> list[dict[str, str]]:
     """Turn pulse ``links`` into rows for the dashboard with optional ``icon`` URLs."""
     raw = pulse.get("links")
@@ -683,6 +809,10 @@ def build_dashboard(
         "events": events,
         "news": _sort_section(news)[:24],
     }
+    if not sections["news"]:
+        sections["news"] = _sort_section(_link_fallback_news_cards())
+    if not sections["announcements"]:
+        sections["announcements"] = _sort_section(_link_fallback_announcement_cards())
 
     ignorable = {"not_configured", "not_connected", "skip_remote"}
     partial = any(

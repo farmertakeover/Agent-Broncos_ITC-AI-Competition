@@ -163,6 +163,15 @@
     }
   }
 
+  function formatEventRange(c) {
+    var s = c.start_at ? formatWhen(c.start_at) : "";
+    var e = c.end_at ? formatWhen(c.end_at) : "";
+    if (s && e && s !== e) return s + " – " + e;
+    if (s) return s;
+    if (e) return "Until " + e;
+    return "";
+  }
+
   function renderCardList(ul, cards) {
     if (!ul) return;
     var itemFb = tStr("home.dashCardFallback", "Item");
@@ -191,7 +200,9 @@
       var meta = document.createElement("p");
       meta.className = "dash-meta";
       var bits = [];
-      if (c.start_at) bits.push(formatWhen(c.start_at));
+      var range = formatEventRange(c);
+      if (range) bits.push(range);
+      if (c.repeat_label) bits.push(String(c.repeat_label));
       if (c.source) bits.push(String(c.source).replace(/_/g, " "));
       meta.textContent = bits.join(" · ");
       li.appendChild(meta);
@@ -226,28 +237,6 @@
     }
   }
 
-  function dashboardDebugEnabled() {
-    try {
-      return new URLSearchParams(window.location.search || "").get("debug") === "1";
-    } catch {
-      return false;
-    }
-  }
-
-  function partialFailureSummary(sources) {
-    var ignorable = { not_configured: true, not_connected: true, skip_remote: true };
-    var parts = [];
-    if (!sources || typeof sources !== "object") return "";
-    Object.keys(sources).forEach(function (k) {
-      var s = sources[k] || {};
-      if (s.ok) return;
-      var err = String(s.error || "");
-      if (!err || ignorable[err]) return;
-      parts.push(k + ": " + err);
-    });
-    return parts.join(" | ");
-  }
-
   function renderCampusLinks(rows) {
     var sec = document.getElementById("dashCampusLinksSection");
     var ul = document.getElementById("dashCampusLinksList");
@@ -273,8 +262,8 @@
         var img = document.createElement("img");
         img.className = "dash-campus-link-icon";
         img.src = row.icon;
-        img.width = 40;
-        img.height = 40;
+        img.width = 28;
+        img.height = 28;
         img.alt = "";
         img.loading = "lazy";
         img.decoding = "async";
@@ -347,18 +336,6 @@
       }
     });
     renderCampusLinks(data.campus_links || []);
-    if (data.partial && data.sources) {
-      var b = document.getElementById("dashBanner");
-      if (b && b.classList.contains("hidden")) {
-        var baseMsg = tStr(
-          "home.dashPartialBanner",
-          "Some dashboard sources were slow or unavailable; showing mixed campus data when possible."
-        );
-        var detail = partialFailureSummary(data.sources);
-        b.textContent = dashboardDebugEnabled() && detail ? baseMsg + " (" + detail + ")" : baseMsg;
-        b.classList.remove("hidden");
-      }
-    }
   }
 
   function loadTodos() {
@@ -408,7 +385,6 @@
   /* --- Clock & weather (client) --- */
   var weatherEl = document.getElementById("dashWeather");
   var timeEl = document.getElementById("dashTime");
-  var langEl = document.getElementById("dashLang");
 
   function tickClock() {
     if (!timeEl) return;
@@ -503,7 +479,6 @@
   bindTodoForm();
   loadTodos();
 
-  if (langEl && !langEl.value) langEl.value = "en-US";
   tickClock();
   setInterval(tickClock, 1000);
   loadWeather();
