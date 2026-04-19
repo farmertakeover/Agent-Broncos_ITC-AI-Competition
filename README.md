@@ -120,6 +120,21 @@ Supported and wired:
 
 Primary schema: `integrations/pulse_schema.json`.
 
+- **`links`** in the schema (and optional ingest payload) drive the **Campus links** strip on the home dashboard (`GET /api/dashboard` includes `campus_links`).
+- **Reddit titles** merge from Reddit’s public JSON when `CPP_PULSE_REDDIT_LIVE_FETCH` is true (default). Many cloud IPs get **HTTP 403** from Reddit; set **`CPP_PULSE_REDDIT_LIVE_FETCH=false`** and push `reddit_cpp.items` via **`POST /api/student-pulse/ingest`** from n8n/cron on a network Reddit allows (see `.env.example` for a minimal JSON example). Use **`CPP_PULSE_INGEST_SECRET`** and HTTPS only.
+
+### Home dashboard defaults
+
+- **News:** `CPP_DASHBOARD_RSS_NEWS` defaults to Polycentric (`retrieval/config.py` → `DEFAULT_DASHBOARD_RSS_NEWS`).
+- **Events:** `CPP_DASHBOARD_MYBAR_ICS` defaults to **`https://mybar.cpp.edu/events.ics`** when unset. Set `CPP_DASHBOARD_MYBAR_ICS=` (empty) to disable MyBar pulls.
+
+### UI translation (home + other pages)
+
+- Set **`Agent_Broncos_Language_Translation`** so **`POST /api/translate/batch`** can translate `data-i18n` labels.
+- After changing template copy, regenerate static bundles (optional, speeds up non-English loads):  
+  `python3 scripts/build_ui_i18n_bundles.py`  
+  (requires the Langbly key in the environment when you run it.)
+
 ## Retrieval Evaluation
 
 After index build:

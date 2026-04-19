@@ -736,6 +736,16 @@ body {
   gap: 1rem;
   margin-bottom: 2rem;
 }
+.home-dashboard-root > .dashboard-strip--weather-time {
+  margin-bottom: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 42rem;
+}
+@media (max-width: 520px) {
+  .home-dashboard-root > .dashboard-strip--weather-time {
+    grid-template-columns: 1fr;
+  }
+}
 .dashboard-widget {
   background: var(--panel);
   border: 1px solid #4a3d32;
@@ -801,6 +811,88 @@ body {
   font-size: 0.9rem;
 }
 .dash-banner.hidden { display: none !important; }
+
+.dash-campus-links {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--panel);
+  border: 1px solid #4a3d32;
+  border-radius: 12px;
+}
+.dash-campus-links[hidden] {
+  display: none !important;
+}
+.dash-campus-links-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+}
+.dash-campus-links-hint {
+  margin: 0 0 0.5rem;
+}
+.dash-campus-links-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+  gap: 0.65rem;
+}
+.dash-campus-link-tile {
+  margin: 0;
+}
+.dash-campus-link-a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.45rem;
+  padding: 0.65rem 0.5rem;
+  min-height: 6.5rem;
+  border-radius: 10px;
+  border: 1px solid #4a3d32;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.dash-campus-link-a:hover {
+  border-color: var(--cpp-gold);
+  background: rgba(217, 164, 65, 0.08);
+}
+.dash-campus-link-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+.dash-campus-link-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #1a221c;
+}
+.dash-campus-link-icon-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #355045;
+  color: var(--cpp-gold);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.dash-campus-link-label {
+  display: block;
+  max-width: 100%;
+  word-break: break-word;
+}
 
 .dashboard-main {
   display: flex;

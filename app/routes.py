@@ -154,7 +154,9 @@ def api_health():
         "langbly_configured": bool((os.getenv("Agent_Broncos_Language_Translation") or "").strip()),
         "openweather_configured": bool((os.getenv("Agent_Broncos_Weather_API") or "").strip()),
         "dashboard_default_rss_configured": bool((config.DEFAULT_DASHBOARD_RSS_NEWS or "").strip()),
+        "dashboard_default_mybar_ics_configured": bool((getattr(config, "DEFAULT_DASHBOARD_MYBAR_ICS", "") or "").strip()),
         "dashboard_skip_remote": os.getenv("CPP_DASHBOARD_SKIP_REMOTE", "").lower() in ("1", "true", "yes"),
+        "pulse_reddit_live_fetch": os.getenv("CPP_PULSE_REDDIT_LIVE_FETCH", "true").lower() in ("1", "true", "yes"),
     }
     if config.WHISPER_WARMUP:
         schedule_whisper_warmup_background()

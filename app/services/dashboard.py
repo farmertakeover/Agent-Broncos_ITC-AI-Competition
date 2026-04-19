@@ -10,10 +10,12 @@ import hashlib
 import os
 import re
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from typing import Any
+from urllib.parse import urlparse
 from xml.etree import ElementTree
+from zoneinfo import ZoneInfo
 
 import httpx
 
@@ -145,6 +147,18 @@ def _parse_ics_value(raw: str) -> str:
     return raw.strip().replace("\\,", ",").replace("\\n", " ").replace("\\N", " ").strip()
 
 
+def _unfold_ics_text(text: str) -> str:
+    """RFC 5545 line folding: continuation lines begin with space or tab."""
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    acc: list[str] = []
+    for raw_line in text.split("\n"):
+        if raw_line.startswith((" ", "\t")) and acc:
+            acc[-1] += raw_line[1:] if raw_line.startswith(" ") else raw_line.lstrip()
+        else:
+            acc.append(raw_line)
+    return "\n".join(acc)
+
+
 def _parse_ics_dt(raw: str) -> datetime | None:
     s = (raw or "").strip()
     if not s:
@@ -167,10 +181,55 @@ def _parse_ics_dt(raw: str) -> datetime | None:
         return None
 
 
+def _parse_ics_datetime_property(prop_header: str, value: str) -> datetime | None:
+    """
+    Parse DTSTART/DTEND honoring VALUE=DATE and TZID= (common on MyBar/Campus Labs feeds).
+    ``prop_header`` is the full left-hand side, e.g. ``DTSTART;TZID=America/Los_Angeles``.
+    """
+    v = (value or "").strip()
+    if not v:
+        return None
+    hdr = (prop_header or "").strip()
+    hdr_l = hdr.lower()
+    if "value=date" in hdr_l or (len(v) == 8 and "t" not in v.lower()):
+        try:
+            dt = datetime.strptime(v[:8], "%Y%m%d")
+            return dt.replace(tzinfo=timezone.utc)
+        except ValueError:
+            return None
+    tzid: str | None = None
+    for piece in hdr.split(";")[1:]:
+        pl = piece.strip()
+        if pl.upper().startswith("TZID="):
+            tzid = pl.split("=", 1)[1].strip().strip('"')
+            break
+    if v.endswith("Z") and len(v) >= 15:
+        return _parse_ics_dt(v)
+    if "T" in v:
+        try:
+            core = v.replace("Z", "")[:15]
+            dt_naive = datetime.strptime(core, "%Y%m%dT%H%M%S")
+        except ValueError:
+            return None
+        if tzid:
+            try:
+                zi = ZoneInfo(tzid)
+                return dt_naive.replace(tzinfo=zi).astimezone(timezone.utc)
+            except Exception:
+                return dt_naive.replace(tzinfo=timezone.utc)
+        return dt_naive.replace(tzinfo=timezone.utc)
+    try:
+        dt = datetime.strptime(v[:8], "%Y%m%d")
+        return dt.replace(tzinfo=timezone.utc)
+    except ValueError:
+        return None
+
+
 def parse_ics_events(text: str) -> list[dict[str, Any]]:
     events: list[dict[str, Any]] = []
     if not text:
         return events
+    text = _unfold_ics_text(text)
     current: dict[str, str] | None = None
     for line in text.splitlines():
         ln = line.strip()
@@ -180,8 +239,10 @@ def parse_ics_events(text: str) -> list[dict[str, Any]]:
         if ln == "END:VEVENT":
             if current:
                 title = _parse_ics_value(current.get("SUMMARY", "")) or "Event"
-                start = _parse_ics_dt(current.get("DTSTART", ""))
-                end = _parse_ics_dt(current.get("DTEND", ""))
+                sh = current.get("__hdr_DTSTART", "DTSTART")
+                eh = current.get("__hdr_DTEND", "DTEND")
+                start = _parse_ics_datetime_property(sh, current.get("DTSTART", ""))
+                end = _parse_ics_datetime_property(eh, current.get("DTEND", ""))
                 desc = _parse_ics_value(current.get("DESCRIPTION", "")) or None
                 url = _parse_ics_value(current.get("URL", "")) or None
                 events.append(
@@ -203,9 +264,12 @@ def parse_ics_events(text: str) -> list[dict[str, Any]]:
             continue
         if current is None or ":" not in ln:
             continue
-        key, val = ln.split(":", 1)
-        key = key.split(";", 1)[0].strip().upper()
-        current[key] = val.strip()
+        pre, val = ln.split(":", 1)
+        name = pre.split(";", 1)[0].strip().upper()
+        val_s = val.strip()
+        current[name] = val_s
+        if name in ("DTSTART", "DTEND", "RECURRENCE-ID"):
+            current[f"__hdr_{name}"] = pre.strip()
     return events
 
 
@@ -398,6 +462,65 @@ def _sort_section(cards: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(cards, key=key)
 
 
+def _event_still_relevant(card: dict[str, Any], now_utc: datetime) -> bool:
+    """Hide ended events so old ICS rows (e.g. January) do not crowd out upcoming ones."""
+    if card.get("type") != "event":
+        return True
+    st = _parse_isoish(str(card["start_at"])) if card.get("start_at") else None
+    en = _parse_isoish(str(card["end_at"])) if card.get("end_at") else None
+    if en is not None:
+        return en >= now_utc
+    if st is not None:
+        return st >= now_utc - timedelta(hours=2)
+    return True
+
+
+def _sort_events_chronologically(cards: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Soonest upcoming first; events without ``start_at`` sort last."""
+
+    def sort_key(c: dict[str, Any]) -> tuple:
+        pr = c.get("priority")
+        try:
+            p = int(pr) if pr is not None else 99
+        except (TypeError, ValueError):
+            p = 99
+        st = str(c.get("start_at") or "").strip()
+        return (p, st or "9999-12-31T23:59:59+00:00")
+
+    return sorted(cards, key=sort_key)
+
+
+def _campus_link_icon_url(href: str) -> str:
+    """Site icon for link tiles (DuckDuckGo static host; no API key)."""
+    try:
+        host = urlparse(href).netloc.lower()
+        if not host:
+            return ""
+    except ValueError:
+        return ""
+    return f"https://icons.duckduckgo.com/ip3/{host}.ico"
+
+
+def _campus_links_from_pulse(pulse: dict[str, Any]) -> list[dict[str, str]]:
+    """Turn pulse ``links`` into rows for the dashboard with optional ``icon`` URLs."""
+    raw = pulse.get("links")
+    if not isinstance(raw, dict):
+        return []
+    out: list[dict[str, str]] = []
+    for title, href in sorted(raw.items(), key=lambda kv: str(kv[0]).lower()):
+        if not isinstance(title, str) or not isinstance(href, str):
+            continue
+        u = href.strip()
+        if not u.startswith(("http://", "https://")):
+            continue
+        icon = _campus_link_icon_url(u)
+        row: dict[str, str] = {"title": title.strip(), "url": u}
+        if icon:
+            row["icon"] = icon
+        out.append(row)
+    return out
+
+
 def build_dashboard(
     *,
     prefs: dict[str, Any] | None = None,
@@ -408,7 +531,11 @@ def build_dashboard(
     news_url = (os.getenv("CPP_DASHBOARD_RSS_NEWS") or config.DEFAULT_DASHBOARD_RSS_NEWS).strip()
     events_url = (os.getenv("CPP_DASHBOARD_RSS_EVENTS") or "").strip()
     announce_url = (os.getenv("CPP_DASHBOARD_RSS_ANNOUNCE") or "").strip()
-    mybar_ics_url = (os.getenv("CPP_DASHBOARD_MYBAR_ICS") or "").strip()
+    _mybar_env = os.getenv("CPP_DASHBOARD_MYBAR_ICS")
+    if _mybar_env is not None:
+        mybar_ics_url = str(_mybar_env).strip()
+    else:
+        mybar_ics_url = (getattr(config, "DEFAULT_DASHBOARD_MYBAR_ICS", "") or "").strip()
 
     sources: dict[str, dict[str, Any]] = {}
 
@@ -480,11 +607,14 @@ def build_dashboard(
             )
 
     events = _dedupe_cards(list(rss_events) + mybar_events + p_events)
+    now_utc = datetime.now(timezone.utc)
+    events = [c for c in events if _event_still_relevant(c, now_utc)]
+    events = _sort_events_chronologically(events)[:24]
     news = _dedupe_cards(list(rss_news) + p_news)
 
     sections = {
         "announcements": _sort_section(_dedupe_cards(announcements)),
-        "events": _sort_section(events)[:24],
+        "events": events,
         "news": _sort_section(news)[:24],
     }
 
@@ -495,6 +625,7 @@ def build_dashboard(
     )
 
     weather_snap = pulse.get("weather") if isinstance(pulse.get("weather"), dict) else {}
+    campus_links = _campus_links_from_pulse(pulse)
 
     out: dict[str, Any] = {
         "schema_version": DASHBOARD_SCHEMA_VERSION,
@@ -505,6 +636,7 @@ def build_dashboard(
         "sources": sources,
         "sections": sections,
         "pulse_weather": weather_snap,
+        "campus_links": campus_links,
         "metrics": {"total_ms": int((time.perf_counter() - t0) * 1000)},
     }
     if prefs:

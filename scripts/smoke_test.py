@@ -44,7 +44,9 @@ class TestSmoke(unittest.TestCase):
             "langbly_configured",
             "openweather_configured",
             "dashboard_default_rss_configured",
+            "dashboard_default_mybar_ics_configured",
             "dashboard_skip_remote",
+            "pulse_reddit_live_fetch",
         ):
             self.assertIn(key, j, f"missing {key}")
 
@@ -54,6 +56,8 @@ class TestSmoke(unittest.TestCase):
         j = r.get_json()
         self.assertEqual(j.get("schema_version"), 1)
         self.assertIn("pulse_source", j)
+        self.assertIsInstance(j.get("links"), dict)
+        self.assertGreaterEqual(len(j.get("links") or {}), 1)
 
     @patch.dict(os.environ, {"CPP_DASHBOARD_SKIP_REMOTE": "true"}, clear=False)
     def test_api_dashboard_shape(self):
@@ -65,6 +69,9 @@ class TestSmoke(unittest.TestCase):
         self.assertIn("announcements", j["sections"])
         self.assertIn("sources", j)
         self.assertNotIn("google", j)
+        self.assertIn("campus_links", j)
+        self.assertIsInstance(j["campus_links"], list)
+        self.assertGreater(len(j["campus_links"]), 0)
 
     @patch.dict(os.environ, {"CPP_DASHBOARD_SKIP_REMOTE": "true"}, clear=False)
     def test_api_dashboard_preferences(self):

@@ -31,6 +31,7 @@
       "news": ["card"]
     },
     "pulse_weather": "optional snapshot from student pulse",
+    "campus_links": "array of { title, url, icon? } from pulse.links; icon is a favicon URL for UI tiles",
     "preferences": "optional echo of server-stored prefs when present"
   }
 }

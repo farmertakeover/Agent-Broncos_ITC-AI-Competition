@@ -97,3 +97,5 @@ else:
 # --- Homepage dashboard (/api/dashboard): RSS/ICS + pulse ---
 # If CPP_DASHBOARD_RSS_NEWS is unset, app/services/dashboard.py falls back to this public CPP news feed.
 DEFAULT_DASHBOARD_RSS_NEWS = "https://polycentric.cpp.edu/feed/"
+# Public MyBar ICS (student org / campus events). Override with CPP_DASHBOARD_MYBAR_ICS="" to disable.
+DEFAULT_DASHBOARD_MYBAR_ICS = "https://mybar.cpp.edu/events.ics"

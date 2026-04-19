@@ -18,6 +18,11 @@ def _reddit_enabled() -> bool:
     return os.getenv("CPP_PULSE_REDDIT_ENABLED", "true").lower() in ("1", "true", "yes")
 
 
+def _reddit_live_fetch_enabled() -> bool:
+    """When false, skip outbound Reddit JSON; use only file/URL/ingest ``reddit_cpp.items`` (e.g. n8n on a non-blocked IP)."""
+    return os.getenv("CPP_PULSE_REDDIT_LIVE_FETCH", "true").lower() in ("1", "true", "yes")
+
+
 def _default_skeleton() -> dict[str, Any]:
     if os.path.isfile(_SCHEMA_PATH):
         try:
@@ -108,7 +113,10 @@ def _fetch_reddit_via_json() -> tuple[list[dict[str, Any]], str | None]:
 def _merge_reddit_items(base: dict[str, Any]) -> None:
     if not _reddit_enabled():
         return
-    fetched, err = _fetch_reddit_via_json()
+    if _reddit_live_fetch_enabled():
+        fetched, err = _fetch_reddit_via_json()
+    else:
+        fetched, err = [], None
     existing = ((base.get("reddit_cpp") or {}).get("items")) if isinstance(base.get("reddit_cpp"), dict) else None
     items: list[dict[str, Any]] = []
     if isinstance(existing, list):
@@ -128,9 +136,11 @@ def _merge_reddit_items(base: dict[str, Any]) -> None:
     base.setdefault("reddit_cpp", {})
     if isinstance(base["reddit_cpp"], dict):
         base["reddit_cpp"]["items"] = merged[:20]
-        base["reddit_cpp"]["source"] = "json"
+        base["reddit_cpp"]["source"] = "ingest_only" if not _reddit_live_fetch_enabled() else "json"
         if err:
             base["reddit_cpp"]["warning"] = err
+        else:
+            base["reddit_cpp"].pop("warning", None)
 
 
 def get_pulse_for_api() -> dict[str, Any]:

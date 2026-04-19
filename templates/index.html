@@ -2,6 +2,22 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 <div class="home-dashboard-root" id="homeDashboardRoot">
+  <aside class="dashboard-strip dashboard-strip--weather-time" aria-label="Weather and time">
+    <div class="dashboard-widget">
+      <h2 data-i18n="home.dashWeatherTitle">Weather · Pomona</h2>
+      <div class="widget-value" id="dashWeather">—</div>
+      <p class="widget-sub" id="dashWeatherSub">
+        <span id="dashWeatherStatus" class="dash-weather-status" aria-live="polite"></span>
+        <span data-i18n="home.dashWeatherSub" class="dash-weather-source">Open-Meteo (near CPP)</span>
+      </p>
+    </div>
+    <div class="dashboard-widget">
+      <h2 data-i18n="home.dashTimeTitle">Time · Pomona</h2>
+      <div class="widget-value" id="dashTime">—</div>
+      <p class="widget-sub" data-i18n="home.dashTimeSub">Pacific Time (Los Angeles)</p>
+    </div>
+  </aside>
+
   <section class="dashboard-hero-cta" aria-label="Primary actions">
     <div class="dashboard-hero-text">
       <h1 class="dashboard-hero-title" data-i18n="home.heroTitle">Cal Poly Pomona campus answers, cited.</h1>
@@ -25,6 +41,27 @@
   </section>
 
   <p id="dashBanner" class="dash-banner hidden" role="status"></p>
+
+  <section class="dash-campus-links" id="dashCampusLinksSection" hidden aria-label="Campus links">
+    <h2 class="dash-campus-links-title" data-i18n="home.dashCampusLinksTitle">Campus and official links</h2>
+    <p class="muted small dash-campus-links-hint" data-i18n="home.dashCampusLinksHint">
+      Verify dates and policies on the destination site.
+    </p>
+    <ul class="dash-campus-links-list" id="dashCampusLinksList"></ul>
+  </section>
+
+  <div id="dashJsI18nPool" class="hidden" aria-hidden="true">
+    <span data-i18n="home.dashEmptyGeneric">No items right now.</span>
+    <span data-i18n="home.dashLoadError">Could not load dashboard. Try again later.</span>
+    <span data-i18n="home.dashPartialBanner">Some dashboard sources were slow or unavailable; showing mixed campus data when possible.</span>
+    <span data-i18n="home.dashPrefShowAnnouncements">Show announcements</span>
+    <span data-i18n="home.dashPrefShowEvents">Show events</span>
+    <span data-i18n="home.dashPrefShowNews">Show news</span>
+    <span data-i18n="home.dashCardFallback">Item</span>
+    <span data-i18n="home.dashTodoRemoveAria">Remove to-do</span>
+    <span data-i18n="home.dashWeatherUnavailable">Unavailable</span>
+    <span data-i18n="home.dashWeatherRetry">Check network or try again later</span>
+  </div>
 
   <section class="dashboard-main" aria-label="Campus dashboard">
     <div class="dashboard-main-grid">
@@ -64,20 +101,7 @@
       </div>
     </div>
 
-    <aside class="dashboard-strip dashboard-strip--cluster" aria-label="Weather and preferences">
-      <div class="dashboard-widget">
-        <h2 data-i18n="home.dashWeatherTitle">Weather · Pomona</h2>
-        <div class="widget-value" id="dashWeather">—</div>
-        <p class="widget-sub" id="dashWeatherSub">
-          <span id="dashWeatherStatus" class="dash-weather-status" aria-live="polite"></span>
-          <span data-i18n="home.dashWeatherSub" class="dash-weather-source">Open-Meteo (near CPP)</span>
-        </p>
-      </div>
-      <div class="dashboard-widget">
-        <h2 data-i18n="home.dashTimeTitle">Time · Pomona</h2>
-        <div class="widget-value" id="dashTime">—</div>
-        <p class="widget-sub" data-i18n="home.dashTimeSub">Pacific Time (Los Angeles)</p>
-      </div>
+    <aside class="dashboard-strip dashboard-strip--cluster" aria-label="Language and preferences">
       <div class="dashboard-widget">
         <h2 data-i18n="home.dashLangTitle">Language</h2>
         <p class="widget-sub" data-i18n="home.dashLangHint">Preferred display language for the site (stored in your browser).</p>
