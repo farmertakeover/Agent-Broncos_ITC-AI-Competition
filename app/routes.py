@@ -1,6 +1,12 @@
 from __future__ import annotations
 from flask import Blueprint, jsonify, render_template, request, session
-from app.database import get_history, save_message
+from app.database import (
+    ack_chat_recovery,
+    get_chat_recovery,
+    get_history,
+    save_message,
+    store_chat_recovery,
+)
 import uuid
 import os
 import secrets
@@ -44,6 +50,26 @@ def _trim_history(history: list, max_msgs: int) -> list:
     if len(history) <= max_msgs:
         return history
     return history[-max_msgs:]
+
+
+def _slim_chat_sources(raw: object, max_items: int = 16) -> list[dict]:
+    if not isinstance(raw, list):
+        return []
+    keys = ("chunk_id", "source_path", "title", "url", "score")
+    out: list[dict] = []
+    for s in raw[:max_items]:
+        if not isinstance(s, dict):
+            continue
+        row: dict = {}
+        for k in keys:
+            if k not in s:
+                continue
+            v = s.get(k)
+            if isinstance(v, (str, int, float, bool)) or v is None:
+                row[k] = v
+        if row:
+            out.append(row)
+    return out
 
 
 @bp.route("/")
@@ -405,6 +431,35 @@ def api_graph_context():
     return jsonify(g)
 
 
+@bp.route("/api/chat/recovery", methods=["GET"])
+def api_chat_recovery():
+    """Return the last completed assistant turn for this chat session (peek; ack to clear)."""
+    sid = (request.args.get("session_id") or "").strip()
+    row = get_chat_recovery(sid) if sid else None
+    if not row or not (row.get("content") or "").strip():
+        return jsonify({"has_recovery": False})
+    return jsonify(
+        {
+            "has_recovery": True,
+            "recovery_id": row.get("recovery_id"),
+            "user_message_en": row.get("user_message_en"),
+            "content": row.get("content"),
+            "sources": row.get("sources") or [],
+            "usage": row.get("usage") or {},
+            "error": row.get("error"),
+        }
+    )
+
+
+@bp.route("/api/chat/recovery/ack", methods=["POST"])
+def api_chat_recovery_ack():
+    data = request.get_json(silent=True) or {}
+    sid = (data.get("session_id") or "").strip()
+    rid = (data.get("recovery_id") or "").strip()
+    ack_chat_recovery(sid, rid)
+    return jsonify({"ok": True})
+
+
 @bp.route("/api/chat", methods=["POST"])
 def api_chat():
     t0 = perf_counter()
@@ -434,6 +489,15 @@ def api_chat():
 
     if not out.get("error"):
         save_message(session_id, "assistant", out.get("content", ""))
+    if (out.get("content") or "").strip() or not out.get("error"):
+        store_chat_recovery(
+            session_id,
+            user_message_en=user_msg,
+            content=str(out.get("content") or ""),
+            sources=_slim_chat_sources(out.get("sources")),
+            usage=out.get("usage") if isinstance(out.get("usage"), dict) else None,
+            error=out.get("error") if isinstance(out.get("error"), str) else None,
+        )
     err = out.get("error")
     if err:
         # Always use an error-class status when `error` is set; body may still include `content`.

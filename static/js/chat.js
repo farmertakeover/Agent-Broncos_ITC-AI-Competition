@@ -34,11 +34,20 @@
   const defaultInputPlaceholder = input ? input.getAttribute("placeholder") || "" : "";
 
   const STORAGE_KEY = "cpp_chat_session_v1";
+  /** Mirrors ``cpp_session_id`` (localStorage) for /api/chat/recovery. */
+  const CHAT_API_SESSION_KEY = "cpp_chat_api_session_id";
   let sessionId = null;
   try {
     sessionId = localStorage.getItem("cpp_session_id") || null;
   } catch {
     sessionId = null;
+  }
+  try {
+    if (sessionId && !sessionStorage.getItem(CHAT_API_SESSION_KEY)) {
+      sessionStorage.setItem(CHAT_API_SESSION_KEY, sessionId);
+    }
+  } catch {
+    /* ignore */
   }
   const chatUiDefaults = {
     sourcesPrefix: "Sources & links (",
@@ -233,6 +242,126 @@
     } catch {
       /* ignore */
     }
+  }
+
+  function getChatApiSessionId() {
+    if (sessionId) return sessionId;
+    try {
+      return sessionStorage.getItem(CHAT_API_SESSION_KEY);
+    } catch {
+      return null;
+    }
+  }
+
+  function setChatApiSessionId(id) {
+    if (!id) return;
+    sessionId = id;
+    try {
+      localStorage.setItem("cpp_session_id", sessionId);
+    } catch {
+      /* ignore */
+    }
+    try {
+      sessionStorage.setItem(CHAT_API_SESSION_KEY, sessionId);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  async function ackChatRecovery(sessionId, recoveryId) {
+    if (!sessionId || !recoveryId) return;
+    try {
+      await fetch("/api/chat/recovery/ack", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ session_id: sessionId, recovery_id: recoveryId }),
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function isPlaceholderErrorAssistant(item) {
+    if (!item || item.role !== "assistant") return false;
+    const c = item.content;
+    if (c === "Network error" || c === "bad json") return true;
+    return typeof c === "string" && c.indexOf("Network error:") === 0;
+  }
+
+  /**
+   * If the user left the page while /api/chat was still running, merge the
+   * completed server reply from chat_recovery (same session_id).
+   */
+  async function recoverPendingServerReply() {
+    const sid = getChatApiSessionId();
+    if (!sid || !messagesEl) return;
+    let data;
+    try {
+      const res = await fetch("/api/chat/recovery?session_id=" + encodeURIComponent(sid));
+      if (!res.ok) return;
+      data = await res.json().catch(function () {
+        return null;
+      });
+    } catch {
+      return;
+    }
+    if (!data || !data.has_recovery || !data.content) {
+      return;
+    }
+    const rid = data.recovery_id;
+    const serverUm = String(data.user_message_en || "").trim();
+    const last = history[history.length - 1];
+    const prev = history[history.length - 2];
+    let replaceIdx = -1;
+    if (last && last.role === "user") {
+      const um =
+        last.content_en != null && last.content_en !== "" ? String(last.content_en).trim() : String(last.content || "").trim();
+      if (serverUm && um !== serverUm) {
+        void ackChatRecovery(sid, rid);
+        return;
+      }
+    } else if (last && isPlaceholderErrorAssistant(last) && prev && prev.role === "user") {
+      const um =
+        prev.content_en != null && prev.content_en !== ""
+          ? String(prev.content_en).trim()
+          : String(prev.content || "").trim();
+      if (serverUm && um !== serverUm) {
+        void ackChatRecovery(sid, rid);
+        return;
+      }
+      replaceIdx = history.length - 1;
+    } else {
+      void ackChatRecovery(sid, rid);
+      return;
+    }
+
+    const apiTarget = getUiApiTarget();
+    let rawReply = data.content;
+    let reply = rawReply;
+    if (apiTarget !== "en" && reply) {
+      reply = await translateLine(reply, apiTarget);
+    }
+    const entry = {
+      role: "assistant",
+      content: reply,
+      content_en: rawReply,
+      sources: data.sources,
+      usage: data.usage,
+    };
+    if (replaceIdx >= 0) {
+      history[replaceIdx] = entry;
+      if (messagesEl.lastElementChild) messagesEl.removeChild(messagesEl.lastElementChild);
+      appendBubble("assistant", reply, { sources: data.sources, usage: data.usage });
+    } else {
+      appendBubble("assistant", reply, { sources: data.sources, usage: data.usage });
+      history.push(entry);
+    }
+    persistHistory();
+    void ackChatRecovery(sid, rid);
+    const ids = (data.sources || []).map((s) => s.chunk_id).filter(Boolean);
+    if (ids.length) fetchGraph(ids);
+    triggerMascotCelebrate();
+    maybeNotifyReply(reply);
   }
 
   function showSpeechBubble(show) {
@@ -664,7 +793,12 @@
           /* ignore */
         }
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => {
+        void recoverPendingServerReply();
+      });
+  } else {
+    void recoverPendingServerReply();
   }
   updateSpeechPauseUi();
   ensureSpeechVoicesReady();
@@ -798,7 +932,7 @@
             role: h.role,
             content: h.content_en != null && h.content_en !== "" ? h.content_en : h.content,
           })),
-          session_id: sessionId || undefined,
+          session_id: getChatApiSessionId() || undefined,
         }),
       });
       const raw = await res.text();
@@ -818,14 +952,7 @@
         persistHistory();
         return;
       }
-      if (data && data.session_id) {
-        sessionId = data.session_id;
-        try {
-          localStorage.setItem("cpp_session_id", sessionId);
-        } catch {
-          /* ignore */
-        }
-      }
+      if (data && data.session_id) setChatApiSessionId(data.session_id);
       let rawReply = (data && data.content) || "";
       let reply = rawReply;
       perf.chat_ms =

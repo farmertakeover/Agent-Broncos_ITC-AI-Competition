@@ -10,6 +10,7 @@ import hashlib
 import os
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from typing import Any
@@ -501,11 +502,63 @@ def _campus_link_icon_url(href: str) -> str:
     return f"https://icons.duckduckgo.com/ip3/{host}.ico"
 
 
+def _campus_url_dedupe_key(href: str) -> str:
+    """Normalize URL so http/https, trailing slashes, and case do not create duplicates."""
+    try:
+        p = urlparse(href.strip())
+        if not p.netloc:
+            return href.strip().lower()
+        netloc = p.netloc.lower()
+        path = (p.path or "").rstrip("/")
+        return f"{netloc}{path}"
+    except Exception:
+        return href.strip().lower()
+
+
+def _campus_url_reachable(url: str, timeout: float = 2.5) -> bool:
+    try:
+        with httpx.Client(timeout=timeout, follow_redirects=True) as client:
+            r = client.head(url)
+            if r.status_code == 405:
+                r = client.get(url, headers={"Range": "bytes=0-0"})
+            code = r.status_code
+            return 200 <= code < 400
+    except Exception:
+        return False
+
+
+def _filter_campus_rows_by_reachability(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    """Drop links that return 4xx/5xx or fail to connect; keep all rows if every check fails."""
+    if not rows:
+        return rows
+    if os.getenv("CPP_DASHBOARD_SKIP_REMOTE", "").lower() in ("1", "true", "yes"):
+        return rows
+    if os.getenv("CPP_DASHBOARD_LINK_CHECK", "true").lower() in ("0", "false", "no", "off", "skip"):
+        return rows
+    urls = [r["url"] for r in rows if r.get("url")]
+    if not urls:
+        return rows
+    ok: set[str] = set()
+    workers = min(8, len(urls))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futs = {pool.submit(_campus_url_reachable, u): u for u in urls}
+        for fut in as_completed(futs):
+            u = futs[fut]
+            try:
+                if fut.result():
+                    ok.add(u)
+            except Exception:
+                pass
+    filtered = [r for r in rows if r.get("url") in ok]
+    return filtered if filtered else rows
+
+
 def _campus_links_from_pulse(pulse: dict[str, Any]) -> list[dict[str, str]]:
     """Turn pulse ``links`` into rows for the dashboard with optional ``icon`` URLs."""
     raw = pulse.get("links")
     if not isinstance(raw, dict):
         return []
+    seen_keys: set[str] = set()
     out: list[dict[str, str]] = []
     for title, href in sorted(raw.items(), key=lambda kv: str(kv[0]).lower()):
         if not isinstance(title, str) or not isinstance(href, str):
@@ -513,12 +566,16 @@ def _campus_links_from_pulse(pulse: dict[str, Any]) -> list[dict[str, str]]:
         u = href.strip()
         if not u.startswith(("http://", "https://")):
             continue
+        key = _campus_url_dedupe_key(u)
+        if key in seen_keys:
+            continue
+        seen_keys.add(key)
         icon = _campus_link_icon_url(u)
         row: dict[str, str] = {"title": title.strip(), "url": u}
         if icon:
             row["icon"] = icon
         out.append(row)
-    return out
+    return _filter_campus_rows_by_reachability(out)
 
 
 def build_dashboard(

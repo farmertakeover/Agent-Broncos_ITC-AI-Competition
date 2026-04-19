@@ -104,6 +104,28 @@ class TestSmoke(unittest.TestCase):
         r = self.client.post("/api/chat", json={"message": "   ", "history": []})
         self.assertEqual(r.status_code, 400)
 
+    def test_chat_recovery_peek_and_ack(self):
+        from app import database as dbm
+
+        dbm._MEMORY_CHAT_RECOVERY.clear()
+        with patch("app.routes.run_agent_turn", return_value={"content": "Recovered body", "sources": [], "error": None}):
+            r = self.client.post("/api/chat", json={"message": "hello", "history": []})
+            self.assertEqual(r.status_code, 200, r.get_data(as_text=True))
+            sid = r.get_json().get("session_id")
+            self.assertTrue(sid)
+        r2 = self.client.get("/api/chat/recovery", query_string={"session_id": sid})
+        self.assertEqual(r2.status_code, 200)
+        j2 = r2.get_json()
+        self.assertTrue(j2.get("has_recovery"))
+        self.assertEqual(j2.get("content"), "Recovered body")
+        rid = j2.get("recovery_id")
+        self.assertTrue(rid)
+        r3 = self.client.get("/api/chat/recovery", query_string={"session_id": sid})
+        self.assertTrue(r3.get_json().get("has_recovery"))
+        self.client.post("/api/chat/recovery/ack", json={"session_id": sid, "recovery_id": rid})
+        r4 = self.client.get("/api/chat/recovery", query_string={"session_id": sid})
+        self.assertFalse(r4.get_json().get("has_recovery"))
+
     @patch("app.routes.run_agent_turn", return_value={"content": "ok", "sources": [], "error": None})
     def test_chat_response_is_json(self, _mock_turn):
         """Regression: /api/chat must return JSON (never HTML tracebacks)."""
