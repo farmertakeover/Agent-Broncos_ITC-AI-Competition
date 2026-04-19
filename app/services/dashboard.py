@@ -577,10 +577,13 @@ def _campus_url_dedupe_key(href: str) -> str:
 
 
 def _campus_url_reachable(url: str, timeout: float = 2.5) -> bool:
-    """HEAD/GET probe; Reddit often returns 403 to datacenter IPs — treat as present for tiles."""
+    """HEAD/GET probe; skip checks for hosts that often block datacenter probes (403/timeouts)."""
     try:
         host = urlparse(url).netloc.lower()
         if host.endswith("reddit.com") or host == "reddit.com":
+            return True
+        # ASI, MyBar, Bronco Direct, etc. frequently fail HEAD from cloud IPs but are official tiles.
+        if host == "cpp.edu" or host.endswith(".cpp.edu"):
             return True
     except Exception:
         pass
