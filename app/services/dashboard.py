@@ -659,7 +659,7 @@ def _link_fallback_news_cards() -> list[dict[str, Any]]:
 
 
 def _link_fallback_announcement_cards() -> list[dict[str, Any]]:
-    """Registrar / student-success hubs when no announcement feed items (no invented dates)."""
+    """Registrar hub plus CLASS student clubs when no announcement feed items (no invented dates)."""
     return [
         make_card(
             type_="announcement",
@@ -675,15 +675,15 @@ def _link_fallback_announcement_cards() -> list[dict[str, Any]]:
         ),
         make_card(
             type_="announcement",
-            title="Student success — calendars & dates",
-            summary="Official student-success calendar hub. Confirm any date on the linked page.",
+            title="Clubs and organizations (CLASS)",
+            summary="College of Letters, Arts, and Social Sciences — student clubs, myBar, and how to get involved.",
             start_at=None,
             end_at=None,
             source="link_fallback",
-            url="https://www.cpp.edu/studentsuccess/calendar/index.shtml",
+            url="https://www.cpp.edu/class/student/clubs.shtml",
             priority=PRIORITY_OFFICIAL_RSS + 43,
             freshness="stale",
-            dedupe_key="fallback|student_success_cal",
+            dedupe_key="fallback|class_clubs",
         ),
     ]
 
